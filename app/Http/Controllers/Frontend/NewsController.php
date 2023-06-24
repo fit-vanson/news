@@ -64,11 +64,14 @@ class NewsController extends Controller
         if(!$site){
             return 1;
         }
-        $news = News::findOrFail($id);
+
+        $newsQuery = $site
+            ->news();
+
+        $news = $newsQuery->findOrFail($id);
         $news->increment('viewers');
 
-        $relatedNews = $site
-            ->news()
+        $relatedNews = $newsQuery
             ->orderByDesc('news.id')
             ->where('news.id', '!=', $id)
             ->where('news.is_publish', 1)
