@@ -48,6 +48,7 @@
 
 
     @if (@$siteInfo['header_code'] != null)
+        <!-- Global site tag (gtag.js) - Google Analytics -->
         {!! $siteInfo['header_code'] !!}
     @endif
 

@@ -222,7 +222,7 @@
       <workItem from="1687420563858" duration="3313000" />
       <workItem from="1687425055182" duration="1158000" />
       <workItem from="1687481643432" duration="27970000" />
-      <workItem from="1687569404126" duration="29930000" />
+      <workItem from="1687569404126" duration="30010000" />
     </task>
     <task id="LOCAL-00001" summary="delete">
       <created>1687422780721</created>
@@ -476,7 +476,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687599805714</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="s">
+      <created>1687600767183</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1687600767183</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -538,6 +545,11 @@
           <url>file://$PROJECT_DIR$/resources/views/frontend/pages/search.blade.php</url>
           <line>101</line>
           <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/app/Http/Controllers/Frontend/NewsController.php</url>
+          <line>67</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
