@@ -2,10 +2,11 @@
 	<table class="table table-borderless table-theme" style="width:100%;">
 		<thead>
 			<tr>
-				<th class="checkboxlist text-center" style="width:5%"><input class="tp-check-all checkAll" type="checkbox"></th>
-                <th class="text-left" style="width:40%">{{ __('Name') }}</th>
+				<th class="checkboxlist text-center" style="width:10%"><input class="tp-check-all checkAll" type="checkbox"></th>
+                <th class="text-left" style="width:50%">{{ __('Name') }}</th>
+                <th class="text-left" style="width:10%">{{ __('Count News') }}</th>
                 <th class="text-center" style="width:10%">{{ __('Image') }} </th>
-                <th class="text-center" style="width:15%">{{ __('Status') }}</th>
+                <th class="text-center" style="width:10%">{{ __('Status') }}</th>
                 <th class="text-center" style="width:10%">{{ __('Action') }}</th>
 			</tr>
 		</thead>
@@ -16,6 +17,7 @@
                 <tr>
                     <td class="checkboxlist text-center"><input name="item_ids[]" value="{{ $row->id }}" class="tp-checkbox selected_item" type="checkbox"></td>
                     <td class="text-left">{{ rawurldecode($row->name) }}</td>
+                    <td class="text-left">{{ count($row->news) }}</td>
                     {{--				<td class="text-left">{{ $row->language_name }}</td>--}}
 
                     @if ($row->thumbnail != '')
