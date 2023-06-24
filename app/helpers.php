@@ -1824,7 +1824,7 @@ function getNewsBreakingSite(){
             ->where('news.is_publish', 1);
 
         $newsCount = $newsQuery->count();
-        $limit = min($newsCount, 5);
+        $limit = min($newsCount, 3);
         $newsBreaking = $newsQuery->where('news.breaking_news', 1)->take($limit)->get();
     }
     return  $newsBreaking;
@@ -1839,7 +1839,7 @@ function getNewsViewersSite(){
             ->where('news.is_publish', 1);
 
         $newsCount = $newsQuery->count();
-        $limit = min($newsCount, 5);
+        $limit = min($newsCount, 3);
         $newsViewers = ($limit > 0) ? $newsQuery->orderBy('news.viewers', 'desc')->take($limit)->get() : collect();
     }
     return  $newsViewers;
