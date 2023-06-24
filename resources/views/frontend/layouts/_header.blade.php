@@ -10,7 +10,7 @@
             </div>
             <div class="col-sm-8 offset-sm-1 offset-lg-2">
                 <div class="maan-header-adds">
-                    @if ($siteInfo['header_ads'] != null)
+                    @if (@$siteInfo['header_ads'] != null)
                         {!! $siteInfo['header_ads'] !!}
                     @else
                         <a href="  https://www.google.com/ " target="_blank">
