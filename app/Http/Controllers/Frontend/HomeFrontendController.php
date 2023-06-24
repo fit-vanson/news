@@ -38,7 +38,7 @@ class HomeFrontendController extends Controller
             ->where('news.is_publish', 1);
 
         $newsCount = $newsQuery->count();
-        $limit = min($newsCount, 5);
+        $limit = min($newsCount, 3);
 
         $newsLatest = $newsQuery->latest()->take($limit)->get();
         $newsRandom = ($limit > 0) ? $newsQuery->inRandomOrder()->take($limit)->get() : collect();
