@@ -47,6 +47,12 @@
     <link rel="stylesheet" href="{{ asset('backend/toastr/toastr.css') }}">
 
 
+    @if (@$siteInfo['header_code'] != null)
+        {!! $siteInfo['header_code'] !!}
+    @endif
+
+
+
 
 
 </head>
