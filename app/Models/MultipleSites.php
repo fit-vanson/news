@@ -19,7 +19,6 @@ class MultipleSites extends Model
         parent::boot();
 
         static::deleting(function($site) {
-            $site->categories()->detach();
             $site->site_options()->delete();
         });
     }
