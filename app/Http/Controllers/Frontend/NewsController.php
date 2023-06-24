@@ -59,17 +59,22 @@ class NewsController extends Controller
 
     public function newsDetails($id, $slug = null)
     {
-        $news = News::findOrFail($id);
 
+        $site = getSite();
+        if(!$site){
+            return 1;
+        }
+        $news = News::findOrFail($id);
         $news->increment('viewers');
 
-        $relatedNews = News::orderByDesc('id')
+        $relatedNews = $site
+            ->news()
+            ->orderByDesc('id')
             ->where('id', '!=', $id)
             ->where('is_publish', 1)
             ->limit(3)
             ->get();
 
-        $site = getSite();
         $site_option = $site->site_options;
         $theme_option_social_media = $site_option->theme_option_social_media ?? null;
         $social_media = $theme_option_social_media ? json_decode($theme_option_social_media, true) : null;
