@@ -2,12 +2,14 @@
 	<table class="table table-borderless table-theme" style="width:100%;">
 		<thead>
 			<tr>
-				<th class="checkboxlist text-center" style="width:5%"><input class="tp-check-all checkAll" type="checkbox"></th>
-				<th class="text-left" style="width:21%">{{ __('Site Name') }}</th>
-				<th class="text-left" style="width:15%">{{ __('Site Web') }}</th>
-				<th class="text-center" style="width:8%">{{ __('Image') }} </th>
-				<th class="text-center" style="width:8%">{{ __('Status') }}</th>
-				<th class="text-center" style="width:8%">{{ __('Action') }}</th>
+				<th class="checkboxlist text-center" style="width:10%"><input class="tp-check-all checkAll" type="checkbox"></th>
+				<th class="text-left" style="width:20%">{{ __('Site Name') }}</th>
+				<th class="text-left" style="width:20%">{{ __('Site Web') }}</th>
+				<th class="text-left" style="width:10%">{{ __('Count Categories') }}</th>
+				<th class="text-left" style="width:10%">{{ __('Count News') }}</th>
+				<th class="text-center" style="width:10%">{{ __('Image') }} </th>
+				<th class="text-center" style="width:10%">{{ __('Status') }}</th>
+				<th class="text-center" style="width:10%">{{ __('Action') }}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -18,6 +20,8 @@
 
 				<td class="text-left"><a href="{{ route('backend.site', [$row->id]) }}" title="{{ __('Edit') }}">{{ $row->site_name }}</a></td>
 				<td class="text-left">{{ $row->site_web }}</td>
+				<td class="text-left">{{ count($row->categories) }}</td>
+				<td class="text-left">{{ count($row->news) }}</td>
 
 				@if ($row->site_options->theme_logo != '')
                     @php
