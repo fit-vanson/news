@@ -32,12 +32,11 @@
                         <td class="text-center"><span class="disable_btn">{{ $row->tp_status->status  }}</span></td>
                     @endif
                     <td class="text-center">
+
                         <div class="btn-group action-group">
-                            <a class="action-btn" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a onclick="onEdit({{ $row->id }})" class="dropdown-item" href="javascript:void(0);">{{ __('Edit') }}</a>
-                                <a onclick="onDelete({{ $row->id }})" class="dropdown-item" href="javascript:void(0);">{{ __('Delete') }}</a>
-                            </div>
+                            <a onclick="onEdit({{ $row->id }})" href="javascript:void(0);"><i class="fa fa-edit" style="font-size: x-large"></i></a>&nbsp;&nbsp;&nbsp;
+                            <a onclick="onDelete({{ $row->id }})" href="javascript:void(0);"><i class="fa fa-trash" style="font-size: x-large"> </i></a>
+                            {{--                        <a onclick="onClone({{ $row->id }})"  href="javascript:void(0);"><i class="fa fa-clone" ></i></a>--}}
                         </div>
                     </td>
                 </tr>

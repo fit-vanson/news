@@ -43,7 +43,7 @@
 				<td class="text-center">
 					<div class="btn-group action-group">
                         <a onclick="onDelete({{ $row->id }})"  href="javascript:void(0);"><i class="fa fa-trash" > </i></a>&nbsp;&nbsp;&nbsp;
-                        <a onclick="onClone({{ $row->id }})"  href="javascript:void(0);"><i class="fa fa-clone" ></i></a>
+{{--                        <a onclick="onClone({{ $row->id }})"  href="javascript:void(0);"><i class="fa fa-clone" ></i></a>--}}
 					</div>
 				</td>
 			</tr>
