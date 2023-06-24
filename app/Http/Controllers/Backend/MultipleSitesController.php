@@ -180,6 +180,8 @@ class MultipleSitesController extends Controller
             'phone' => $general_settings['phone'] ?? null,
             'address' => $general_settings['address'] ?? null,
             'timezone' => $general_settings['timezone'] ?? null,
+
+
         ];
         $datalist = $data;
         $timezonelist = DB::table('timezones')->orderBy('timezone_name', 'asc')->get();

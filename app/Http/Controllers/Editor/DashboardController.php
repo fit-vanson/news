@@ -49,6 +49,6 @@ class DashboardController extends Controller
 		ORDER BY TotalRating DESC LIMIT 10;";
 		$top_rating_products = DB::select(DB::raw($review_sql));
 
-        return view('seller.dashboard', compact('total_order', 'pending_order', 'processing_order', 'ready_for_pickup_order', 'completed_order', 'canceled_order', 'published_product', 'review', 'top_selling_products', 'top_rating_products'));
+        return view('editor.dashboard', compact('total_order', 'pending_order', 'processing_order', 'ready_for_pickup_order', 'completed_order', 'canceled_order', 'published_product', 'review', 'top_selling_products', 'top_rating_products'));
     }
 }

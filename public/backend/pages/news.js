@@ -255,9 +255,9 @@ function onLoadEditData() {
 			var data = response;
             console.log(data.category_id)
 			$("#RecordId").val(data.id);
-			$("#news_title").val(decodeURIComponent(data.title));
-			$("#slug").val(decodeURIComponent(data.slug));
-			$("#summary").val(decodeURIComponent(data.summary));
+			$("#news_title").val(htmlDecode(decodeURIComponent(data.title)));
+			$("#slug").val(htmlDecode(decodeURIComponent(data.slug)));
+			$("#summary").val(htmlDecode(decodeURIComponent(data.summary)));
 
 
 			$("#is_publish").val(data.is_publish).trigger("chosen:updated");
@@ -267,7 +267,7 @@ function onLoadEditData() {
             $("#cate_id").val(data.category_id).trigger("chosen:updated");
 
             if(data.original_url != null){
-                $("#original_url").val(decodeURIComponent(data.original_url));
+                $("#original_url").val(htmlDecode(decodeURIComponent(data.original_url)));
             }else{
                 $('#original_url').val('');
             }
@@ -289,19 +289,19 @@ function onLoadEditData() {
 			}
 
             if(data.og_title != null){
-                $("#og_title").val(decodeURIComponent(data.og_title));
+                $("#og_title").val(htmlDecode(decodeURIComponent(data.og_title)));
             }else{
                 $("#og_title").val('');
             }
 
             if(data.og_keywords != null){
-                $("#og_keywords").val(decodeURIComponent(data.og_keywords));
+                $("#og_keywords").val(htmlDecode(decodeURIComponent(data.og_keywords)));
             }else{
                 $("#og_keywords").val('');
             }
 
             if(data.og_description != null){
-                $("#og_description").val(decodeURIComponent(data.og_description));
+                $("#og_description").val(htmlDecode(decodeURIComponent(data.og_description)));
             }else{
                 $("#og_description").val('');
             }

@@ -1307,6 +1307,142 @@ class ThemeOptionsController extends Controller
 
         return response()->json($res);
     }
+
+
+
+    //Theme Options Social Media
+    public function getThemeOptionsSocialMediaPageLoad() {
+        $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
+        $id = \request()->site_id;
+        $site = MultipleSites::findorFail($id);
+        $site_option = $site->site_options;
+        $socials = [
+            'facebook','youtube','twitter','instagram','linkedin','pinterest'
+        ];
+
+        $data = [
+            'id' => $id,
+            'name' => $site->site_name,
+            'web' => $site->site_web,
+            'title_row' => 'Social Media',
+        ];
+
+        foreach ($socials as $social){
+            $data['socials_media'][$social] = [
+                'url' => 'https://www.'.$social.'.com/',
+                'followers' => rand(50,100),
+                'is_publish' => '2',
+            ];
+        }
+
+        if(isset($site_option)){
+            $results = $site_option->theme_option_social_media;
+            if($results){
+                $dataObj = json_decode($results,true);
+                foreach ($dataObj as $key=>$item){
+                    $data['socials_media'][$key] = [
+                        'url' => $item['url'],
+                        'followers' => $item['followers'],
+                        'is_publish' => $item['is_publish'],
+                    ];
+                }
+            }
+        }
+        $datalist = $data;
+        return view('backend.theme-options-social-media', compact('datalist', 'statuslist'));
+    }
+
+    //Save data for Theme Options Social Media
+    public function saveThemeOptionsSocialMedia(Request $request){
+        $id = $request->input('site_id');
+        $socials_media = $request->input('socials_media');
+        $data = array(
+            'site_id'=>$id,
+            'theme_option_social_media' => json_encode($socials_media)
+        );
+
+        $site_option = Site_option::where('site_id', $id)->first();
+
+        $res = saveOptions($site_option,$data);
+
+        return response()->json($res);
+    }
+
+    //Theme Options Ads Manage
+    public function getThemeOptionsAdsManagePageLoad() {
+        $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
+        $id = \request()->site_id;
+        $site = MultipleSites::findorFail($id);
+        $site_option = $site->site_options;
+
+
+        $data = [
+            'id' => $id,
+            'name' => $site->site_name,
+            'web' => $site->site_web,
+            'title_row' => 'Ads Manage',
+
+
+            'header_code' => '',
+            'header_ads' => '',
+            'sidebar_ads' => '',
+            'before_ads' => '',
+            'after_ads' => '',
+        ];
+
+
+
+        if(isset($site_option)){
+            $results = $site_option->theme_option_ads_manage;
+            if($results){
+                $dataObj = json_decode($results);
+
+                $data['header_code'] = $dataObj->header_code;
+                $data['header_ads'] = $dataObj->header_ads;
+                $data['sidebar_ads'] = $dataObj->sidebar_ads;
+                $data['before_ads'] = $dataObj->before_ads;
+                $data['after_ads'] = $dataObj->after_ads;
+            }
+        }
+        $datalist = $data;
+        return view('backend.theme-options-ads-manage', compact('datalist', 'statuslist'));
+    }
+
+    //Save data for Theme Options Ads Manage
+    public function saveThemeOptionsAdsManage(Request $request){
+        $id = $request->input('site_id');
+
+
+
+        $header_code = $request->input('header_code');
+        $header_ads = $request->input('header_ads');
+        $sidebar_ads = $request->input('sidebar_ads');
+        $before_ads = $request->input('before_ads');
+        $after_ads = $request->input('after_ads');
+
+
+        $option = array(
+            'header_code' => $header_code,
+            'header_ads' => $header_ads,
+            'sidebar_ads' => $sidebar_ads,
+            'before_ads' => $before_ads,
+            'after_ads' => $after_ads,
+
+        );
+
+        $data = array(
+            'site_id'=>$id,
+            'theme_option_ads_manage' => json_encode($option)
+        );
+
+        $site_option = Site_option::where('site_id', $id)->first();
+
+        $res = saveOptions($site_option,$data);
+
+        return response()->json($res);
+    }
+
+
 /**
     public function saveOptions($site_option,$data){
         $res = array();

@@ -27,7 +27,7 @@
 										<div class="form-group">
 											<label for="about_logo">{{ __('Logo') }}</label>
 											<div class="tp-upload-field">
-												<input type="text" value="{{ $datalist['payment_gateway_icon'] }}" name="about_logo" id="about_logo" class="form-control" readonly>
+												<input type="text" value="{{ $datalist['about_logo'] }}" name="about_logo" id="about_logo" class="form-control" readonly>
 												<a id="on_about_logo" href="javascript:void(0);" class="tp-upload-btn"><i class="fa fa-window-restore"></i>{{ __('Browse') }}</a>
 											</div>
 											<div id="remove_about_logo" class="select-image dnone">
@@ -131,39 +131,7 @@
 									<div class="col-md-8"></div>
 								</div>
 
-								<div class="divider_heading">{{ __('Payment Gateway Icon') }}</div>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label for="payment_gateway_icon">{{ __('Payment Gateway Icon') }}</label>
-											<div class="tp-upload-field">
-												<input value="{{ $datalist['payment_gateway_icon'] }}" type="text" name="payment_gateway_icon" id="payment_gateway_icon" class="form-control" readonly>
-												<a id="on_payment_gateway_icon" href="javascript:void(0);" class="tp-upload-btn"><i class="fa fa-window-restore"></i>{{ __('Browse') }}</a>
-											</div>
-											<em>Recommended image size height:22px.</em>
-											<div id="remove_payment_gateway_icon" class="select-image dnone">
-												<div class="inner-image" id="view_payment_gateway_icon">
-												</div>
-												<a onClick="onMediaImageRemove('payment_gateway_icon')" class="media-image-remove" href="javascript:void(0);"><i class="fa fa-remove"></i></a>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-4">
-										<div class="form-group">
-											<label for="is_publish_payment">{{ __('Status') }}</label>
-											<select name="is_publish_payment" id="is_publish_payment" class="chosen-select form-control">
-											@foreach($statuslist as $row)
-												<option {{ $row->id == $datalist['is_publish_payment'] ? "selected=selected" : '' }} value="{{ $row->id }}">
-													{{ $row->status }}
-												</option>
-											@endforeach
-											</select>
-										</div>
-									</div>
-									<div class="col-md-8"></div>
-								</div>
+
 								<div class="row tabs-footer mt-15">
 									<div class="col-lg-12">
 										<a id="submit-form" href="javascript:void(0);" class="btn blue-btn">{{ __('Save') }}</a>

@@ -480,6 +480,40 @@ function FooterMenuList($MenuType){
 	return $li_List;
 }
 
+function seooptimization(){
+
+
+    $data = [
+        'og_title' => '',
+        'og_image' => '',
+        'og_description' => '',
+        'og_keywords' => '',
+    ];
+
+    $site = getSite();
+
+    if(!$site){
+        return $data;
+    }
+
+    $site_option = $site->site_options;
+
+    $theme_option_seo = $site_option->theme_option_seo ?? null ;
+
+    if($theme_option_seo){
+        $SEOObj = json_decode($theme_option_seo);
+        if($SEOObj->is_publish == 1){
+            $data = [
+                'meta_title' => $SEOObj->og_title,
+                'og_image' => $SEOObj->og_image,
+                'meta_description' => $SEOObj->og_description,
+                'keywords' => $SEOObj->og_keywords,
+            ];
+        }
+    }
+    return (object) $data ;
+}
+
 function gtext(){
 
     $site = getSite();
@@ -549,8 +583,7 @@ function gtext(){
 		$data['decimal_digit'] = 2;
 	}
 
-	//theme_option_header
-// 	$theme_option_header = Tp_option::where('option_name', 'theme_option_header')->get();
+
  	$theme_option_header =  $site_option->theme_option_header ?? null ;
 
 	if($theme_option_header){
@@ -1346,6 +1379,19 @@ function esc($string){
 	return $string;
 }
 
+function htmlDecode($string)
+{
+    $string = (string) $string;
+
+    if (strlen($string) === 0) {
+        return '';
+    }
+
+    $decodedString = html_entity_decode($string, ENT_QUOTES, 'UTF-8');
+
+    return $decodedString;
+}
+
 function gSellerSettings(){
 
 	$datalist = Tp_option::where('option_name', 'seller_settings')->get();
@@ -1439,103 +1485,346 @@ function saveOptions($site_option,$data){
 }
 
 
-function MediaUpload($imageUrl){
+function getSiteInfo(){
 
-    $destinationPath = public_path('media');
-    $dateTime = date('dmYHis');
+    $site = getSite();
+    if($site){
+        $site_option = $site->site_options;
+    }
+    $data = array();
 
-    $thumbnail = thumbnail('Thumbnail');
-    $width = $thumbnail['width'];
-    $height = $thumbnail['height'];
-
-
-
-    $fileContents = file_get_contents($imageUrl);
-
-    //Display File Name
-    $FileName = $dateTime.'-'.$file->getClientOriginalName();
-    $ThumFileName = $dateTime.'-'.$width.'x'.$height.'-'.$file->getClientOriginalName();
-    $FileName = $file->getClientOriginalName();
-
-    //get file extension
-    $FileExt = $file->getClientOriginalExtension();
-
-    dd($FileExt);
-
-    //Convert uppercase to lowercase
-    $Filetype = Str::lower($FileExt);
-
-    //Display File Real Path
-    $FileRealPath = $file->getRealPath();
-
-    //Display File Size
-    $FileSize = $file->getSize();
-
-    //Original file name
-    $OriginalFileName = basename($file->getClientOriginalName(), ".".$FileExt);
-
-    //Display File Mime Type
-    $FileMimeType = $file->getMimeType();
-
-    if (file_exists(public_path('media/'.$FileName))) {
-        unlink(public_path('media/'.$FileName));
+    $general_settings = $site_option->general_settings ?? null ;
+    if($general_settings){
+        $general_settingsData = json_decode($general_settings);
+        $data['site_name'] = $site->site_name;
+        $data['site_title'] = $general_settingsData->site_title;
+        $data['company'] = $general_settingsData->company;
+        $data['invoice_email'] = $general_settingsData->email;
+        $data['invoice_phone'] = $general_settingsData->phone;
+        $data['invoice_address'] = $general_settingsData->address;
+        $data['timezone'] = $general_settingsData->timezone;
+    }else{
+        $data['site_name'] = 'zxcv';
+        $data['site_title'] = 'xxxx';
+        $data['company'] = '';
+        $data['invoice_email'] = '';
+        $data['invoice_phone'] = '';
+        $data['invoice_address'] = '';
+        $data['timezone'] = '';
     }
 
-    $msgList = array();
-
-    //The file Check extension
-    if (($Filetype == 'jpg') || ($Filetype == 'JPG') || ($Filetype == 'jpeg') || ($Filetype == 'JPEG') || ($Filetype == 'png') || ($Filetype == 'PNG') || ($Filetype == 'gif') || ($Filetype == 'ico') || ($Filetype == 'ICO') || ($Filetype == 'svg') || ($Filetype == 'SVG')) {
-
-        if(($Filetype == 'gif') || ($Filetype == 'ico') || ($Filetype == 'ICO') || ($Filetype == 'svg') || ($Filetype == 'SVG')){
-            $ThumFileName = $FileName;
-        }else{
-            $img = Image::make($FileRealPath);
-            $img->resize($width, $height, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($destinationPath.'/'.$ThumFileName);
-        }
-
-        if($file->move($destinationPath, $FileName)) {
-
-            $data = array(
-                'title' => $OriginalFileName,
-                'alt_title' => $OriginalFileName,
-                'thumbnail' => $ThumFileName,
-                'large_image' => $FileName,
-                'option_value' => $FileSize
-            );
-
-            $response = Media_option::create($data)->id;
-
-            if($response){
-                $msgList["msgType"] = 'success';
-                $msgList['msg'] = __('The file uploaded Successfully');
-                $msgList["thumbnail"] = $ThumFileName;
-                $msgList["large_image"] = $FileName;
-                $msgList["id"] = $response;
-            }else{
-                $msgList['msgType'] = 'error';
-                $msgList['msg'] = __('Data insert failed');
-                $msgList["thumbnail"] = '';
-                $msgList["large_image"] = '';
-                $msgList["id"] = '';
-            }
-
-        } else {
-            $msgList["msgType"] = 'error';
-            $msgList['msg'] = __('Sorry, there was an error uploading your file');
-            $msgList["thumbnail"] = '';
-            $msgList["large_image"] = '';
-            $msgList["id"] = '';
-        }
-    } else {
-        $msgList["msgType"] = 'error';
-        $msgList['msg'] = __('Sorry only you can upload jpg, png and gif file type');
-        $msgList["thumbnail"] = '';
-        $msgList["large_image"] = '';
-        $msgList["id"] = '';
+    //theme_logo
+    $theme_logo = $site_option->theme_logo ?? null ;
+    if($theme_logo){
+        $theme_logoData = json_decode($theme_logo);
+        $data['favicon'] = $theme_logoData->favicon;
+        $data['front_logo'] = $theme_logoData->front_logo;
+        $data['back_logo'] = $theme_logoData->back_logo;
+    }else{
+        $data['favicon'] = '';
+        $data['front_logo'] = '';
+        $data['back_logo'] = '';
     }
 
-    return response()->json($msgList);
+    //currency
+    $currency = $site_option->currency ?? null ;
+    if($currency){
+        $currencyData = json_decode($currency);
+//		$currencyObj = json_decode($currencyData[0]->option_value);
+        $data['currency_name'] = $currencyData->currency_name;
+        $data['currency_icon'] = $currencyData->currency_icon;
+        $data['currency_position'] = $currencyData->currency_position;
+        $data['thousands_separator'] = $currencyData->thousands_separator ?? ',';
+        $data['decimal_separator'] = $currencyData->decimal_separator ?? '.';
+        $data['decimal_digit'] = $currencyData->decimal_digit ?? 2;
+    }else{
+        $data['currency_name'] = '';
+        $data['currency_icon'] = '';
+        $data['currency_position'] = '';
+        $data['thousands_separator'] = ',';
+        $data['decimal_separator'] = '.';
+        $data['decimal_digit'] = 2;
+    }
+
+
+    $theme_option_header =  $site_option->theme_option_header ?? null ;
+    if($theme_option_header){
+        $theme_option_headerData = json_decode($theme_option_header);
+//		$theme_option_headerObj = json_decode($theme_option_headerData[0]->option_value);
+        $data['address'] = $theme_option_headerData->address;
+        $data['phone'] = $theme_option_headerData->phone;
+        $data['is_publish'] = $theme_option_headerData->is_publish;
+    }else{
+        $data['address'] = '';
+        $data['phone'] = '';
+        $data['is_publish'] = '';
+    }
+
+    //Language Switcher
+    $language_switcher_data =  $site_option->language_switcher ?? null ;
+
+
+    if($language_switcher_data){
+        $wsData = json_decode($language_switcher_data);
+        $data['is_language_switcher'] = $wsData->is_language_switcher;
+    }else{
+        $data['is_language_switcher'] = '';
+    }
+
+    //theme_option_footer
+    $theme_option_footer =  $site_option->theme_option_footer ?? null ;
+    if($theme_option_footer){
+        $theme_option_footerObj = json_decode($theme_option_footer);
+        $data['about_logo_footer'] = $theme_option_footerObj->about_logo;
+        $data['about_desc_footer'] = $theme_option_footerObj->about_desc;
+        $data['is_publish_about'] = $theme_option_footerObj->is_publish_about;
+        $data['address_footer'] = $theme_option_footerObj->address;
+        $data['email_footer'] = $theme_option_footerObj->email;
+        $data['phone_footer'] = $theme_option_footerObj->phone;
+        $data['is_publish_contact'] = $theme_option_footerObj->is_publish_contact;
+        $data['copyright'] = $theme_option_footerObj->copyright;
+        $data['is_publish_copyright'] = $theme_option_footerObj->is_publish_copyright;
+        $data['payment_gateway_icon'] = $theme_option_footerObj->payment_gateway_icon;
+        $data['is_publish_payment'] = $theme_option_footerObj->is_publish_payment;
+    }else{
+        $data['about_logo_footer'] = '';
+        $data['about_desc_footer'] = '';
+        $data['is_publish_about'] = '';
+        $data['address_footer'] = '';
+        $data['email_footer'] = '';
+        $data['phone_footer'] = '';
+        $data['is_publish_contact'] = '';
+        $data['copyright'] = '';
+        $data['is_publish_copyright'] = '';
+        $data['payment_gateway_icon'] = '';
+        $data['is_publish_payment'] = '';
+    }
+
+    //isRTL
+    $isRTL = Language::where('language_code', app()->getLocale())->first();
+    $data['is_rtl'] = $isRTL['is_rtl'];
+
+    //facebook
+    $facebook = $site_option->facebook ?? null ;
+    if($facebook){
+        $facebookObj = json_decode($facebook);
+        $data['fb_app_id'] = $facebookObj->fb_app_id;
+        $data['fb_publish'] = $facebookObj->is_publish;
+    }else{
+        $data['fb_app_id'] = '';
+        $data['fb_publish'] = '';
+    }
+
+    //twitter
+    $twitter = $site_option->twitter ?? null ;
+    if($twitter){
+        $twitterObj = json_decode($twitter);
+        $data['twitter_id'] = $twitterObj->twitter_id;
+        $data['twitter_publish'] = $twitterObj->is_publish;
+    }else{
+        $data['twitter_id'] = '';
+        $data['twitter_publish'] = '';
+    }
+
+    //Theme Option SEO
+    $theme_option_seo = $site_option->theme_option_seo ?? null ;
+    if($theme_option_seo){
+        $SEOObj = json_decode($theme_option_seo);
+        $data['og_title'] = $SEOObj->og_title;
+        $data['og_image'] = $SEOObj->og_image;
+        $data['og_description'] = $SEOObj->og_description;
+        $data['og_keywords'] = $SEOObj->og_keywords;
+        $data['seo_publish'] = $SEOObj->is_publish;
+    }else{
+        $data['og_title'] = '';
+        $data['og_image'] = '';
+        $data['og_description'] = '';
+        $data['og_keywords'] = '';
+        $data['seo_publish'] = '';
+    }
+
+    //Theme Option Facebook Pixel
+    $theme_option_facebook_pixel = $site_option->facebook_pixel ?? null ;
+    if($theme_option_facebook_pixel){
+        $fb_PixelObj = json_decode($theme_option_facebook_pixel);
+        $data['fb_pixel_id'] = $fb_PixelObj->fb_pixel_id;
+        $data['fb_pixel_publish'] = $fb_PixelObj->is_publish;
+    }else{
+        $data['fb_pixel_id'] = '';
+        $data['fb_pixel_publish'] = '';
+    }
+
+    //Theme Option Google Analytics
+    $theme_option_google_analytics = $site_option->google_analytics ?? null ;
+    if($theme_option_google_analytics){
+        $gaObj = json_decode($theme_option_google_analytics);
+        $data['tracking_id'] = $gaObj->tracking_id;
+        $data['ga_publish'] = $gaObj->is_publish;
+    }else{
+        $data['tracking_id'] = '';
+        $data['ga_publish'] = '';
+    }
+
+    //Theme Option Google Tag Manager
+    $theme_option_google_tag_manager = $site_option->google_tag_manager ?? null ;
+
+
+    if($theme_option_google_tag_manager){
+        $gtmObj = json_decode($theme_option_google_tag_manager);
+        $data['google_tag_manager_id'] = $gtmObj->google_tag_manager_id;
+        $data['gtm_publish'] = $gtmObj->is_publish;
+    }else{
+        $data['google_tag_manager_id'] = '';
+        $data['gtm_publish'] = '';
+    }
+
+    //Google Recaptcha
+    $theme_option_google_recaptcha = Tp_option::where('option_name', 'google_recaptcha')->get();
+
+    $google_recaptcha_id = '';
+    foreach ($theme_option_google_recaptcha as $row){
+        $google_recaptcha_id = $row->id;
+    }
+
+    if($google_recaptcha_id != ''){
+        $grData = json_decode($theme_option_google_recaptcha);
+        $grObj = json_decode($grData[0]->option_value);
+        $data['sitekey'] = $grObj->sitekey;
+        $data['secretkey'] = $grObj->secretkey;
+        $data['is_recaptcha'] = $grObj->is_recaptcha;
+    }else{
+        $data['sitekey'] = '';
+        $data['secretkey'] = '';
+        $data['is_recaptcha'] = '';
+    }
+
+    //Google Map
+    $theme_option_google_map = Tp_option::where('option_name', 'google_map')->get();
+
+    $google_map_id = '';
+    foreach ($theme_option_google_map as $row){
+        $google_map_id = $row->id;
+    }
+
+    if($google_map_id != ''){
+        $gmData = json_decode($theme_option_google_map);
+        $gmObj = json_decode($gmData[0]->option_value);
+        $data['googlemap_apikey'] = $gmObj->googlemap_apikey;
+        $data['is_googlemap'] = $gmObj->is_googlemap;
+    }else{
+        $data['googlemap_apikey'] = '';
+        $data['is_googlemap'] = '';
+    }
+
+    //Theme Color
+    $theme_color = $site_option->theme_color ?? null ;
+
+    if($theme_color){
+        $tcObj = json_decode($theme_color);
+        $data['theme_color'] = $tcObj->theme_color;
+        $data['green_color'] = $tcObj->green_color;
+        $data['light_green_color'] = $tcObj->light_green_color;
+        $data['lightness_green_color'] = $tcObj->lightness_green_color;
+        $data['gray_color'] = $tcObj->gray_color;
+        $data['dark_gray_color'] = $tcObj->dark_gray_color;
+        $data['light_gray_color'] = $tcObj->light_gray_color;
+        $data['black_color'] = $tcObj->black_color;
+        $data['white_color'] = $tcObj->white_color;
+    }else{
+        $data['theme_color'] = '#61a402';
+        $data['green_color'] = '#65971e';
+        $data['light_green_color'] = '#daeac5';
+        $data['lightness_green_color'] = '#fdfff8';
+        $data['gray_color'] = '#8d949d';
+        $data['dark_gray_color'] = '#595959';
+        $data['light_gray_color'] = '#e7e7e7';
+        $data['black_color'] = '#232424';
+        $data['white_color'] = '#ffffff';
+    }
+
+    //Mail Settings
+    $theme_option_mail_settings = $site_option->mail_settings ?? null ;
+    if($theme_option_mail_settings){
+        $msObj = json_decode($theme_option_mail_settings);
+        $data['ismail'] = $msObj->ismail;
+        $data['from_name'] = $msObj->from_name;
+        $data['from_mail'] = $msObj->from_mail;
+        $data['to_name'] = $msObj->to_name;
+        $data['to_mail'] = $msObj->to_mail;
+        $data['mailer'] = $msObj->mailer;
+        $data['smtp_host'] = $msObj->smtp_host;
+        $data['smtp_port'] = $msObj->smtp_port;
+        $data['smtp_security'] = $msObj->smtp_security;
+        $data['smtp_username'] = $msObj->smtp_username;
+        $data['smtp_password'] = $msObj->smtp_password;
+    }else{
+        $data['ismail'] = '';
+        $data['from_name'] = '';
+        $data['from_mail'] = '';
+        $data['to_name'] = '';
+        $data['to_mail'] = '';
+        $data['mailer'] = '';
+        $data['smtp_host'] = '';
+        $data['smtp_port'] = '';
+        $data['smtp_security'] = '';
+        $data['smtp_username'] = '';
+        $data['smtp_password'] = '';
+    }
+
+
+
+
+    //theme_option_social_media
+    $theme_option_social_media =  $site_option->theme_option_social_media ?? null ;
+    if($theme_option_social_media){
+        $theme_option_social_mediaArr= json_decode($theme_option_social_media,true);
+        $data['social_media'] = $theme_option_social_mediaArr;
+
+    }else{
+        $data['social_media'] = null;
+    }
+
+    //theme_option_ads_manage
+    $theme_option_ads_manage =  $site_option->theme_option_ads_manage ?? null ;
+    if($theme_option_ads_manage){
+        $theme_option_ads_manageaArr= json_decode($theme_option_ads_manage,true);
+        foreach ($theme_option_ads_manageaArr as $key=>$ads_manage){
+            $data['ads_manage'][$key] = $ads_manage;
+        }
+    }else{
+        $data['ads_manage'] = null;
+    }
+    dd($data);
+
+
+    return $data;
 }
+
+function allCategories(){
+    $allCategories = \App\Models\Categories::orderBy('id')
+        ->get();
+    return $allCategories ;
+}
+
+function getSocialMediaList(){
+    $site = getSite();
+    $datalist = $site->social_medias()->where('is_publish', '=', 1)->orderBy('id','ASC')->get();
+    $data = [];
+
+    $options = array(50, 60, 70, 80, 90);
+    foreach($datalist as $row){
+        $data[] = [
+            'id' => $row->id,
+            'title' => strtolower($row->title),
+            'url' => $row->url,
+            'icon_code' => $row->social_icon,
+            'target' => $row->target ?? '_blank',
+            'follower' => $options[rand(0, count($options) - 1)]
+        ];
+    }
+    return $data;
+}
+
+
+
 

@@ -17,8 +17,8 @@
 			@foreach($news as $row)
                 <tr>
                     <td class="checkboxlist text-center"><input name="item_ids[]" value="{{ $row->id }}" class="tp-checkbox selected_item" type="checkbox"></td>
-                    <td class="text-left">{{ rawurldecode($row->title) }}</td>
-                    <td class="text-left">{{ rawurldecode($row->categories->name) }}</td>
+                    <td class="text-left">{{ htmlDecode(rawurldecode($row->title)) }}</td>
+                    <td class="text-left">{{ htmlDecode(rawurldecode($row->categories->name)) }}</td>
 
                     @if ($row->thumbnail != '')
                         <td class="text-center"><div class="table_col_image"><img src="/media/{{ $row->thumbnail }}" /></div></td>

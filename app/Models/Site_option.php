@@ -23,6 +23,8 @@ class Site_option extends Model
         'currency',
         'theme_option_header',
         'theme_option_footer',
+        'theme_option_social_media',
+        'theme_option_ads_manage',
         'home_video',
         'facebook_pixel',
         'google_analytics',

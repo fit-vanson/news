@@ -17,149 +17,38 @@ use App\Models\Section_manage;
 class HomeFrontendController extends Controller
 {
 	//Get Frontend Data
-    public function homePageLoad(Request $request)
+    public function homePageLoad()
 	{
-		$lan = glan();
         $site = getSite();
 
         if(!$site){
             return 1;
         }
 
-        $site_id = $site->id;
-
-//		$PageVariation = PageVariation();
-//        $home = $PageVariation['home_variation'];
-
-        $SectionManage =  Section_manage::orderBy('section_manages.id','asc')->get();
-        $SiteSectionManage = $site->section_manage;
-        $SectionManages = $SectionManage->merge($SiteSectionManage);
-
-        $section = array();
-        for($i=1; $i<=16; $i++){
-            $section['section'.$i] = searchMultiArray('section_'.$i,$SectionManages,'section');
-            if($section['section'.$i] ==''){
-                $section_array =  array();
-                $section_array['image'] = '';
-                $section_array['is_publish'] = 2;
-                $section['section'.$i] = json_decode(json_encode($section_array));
-            }
-        }
-
-        $section1 = $section['section1'];
-        $section2 = $section['section2'];
-        $section3 = $section['section3'];
-        $section4 = $section['section4'];
-        $section5 = $section['section5'];
-        $section6 = $section['section6'];
-        $section7 = $section['section7'];
-        $section8 = $section['section8'];
-        $section9 = $section['section9'];
-        $section10 = $section['section10'];
-        $section11 = $section['section11'];
-        $section12 = $section['section12'];
-        $section13 = $section['section13'];
-        $section14 = $section['section14'];
-        $section15 = $section['section15'];
-        $section16= $section['section16'];
-
-
-
-        //Home Video Section
-        $site_option = $site->site_options;
-        $home_video = [
-            'title' => '',
-            'short_desc' => '',
-            'url' => '',
-            'video_url' => '',
-            'button_text' => '',
-            'target' => '',
-            'image' => '',
-            'is_publish' => '2',
-
-        ];
-        if(isset($site_option)){
-            $results = $site_option->home_video;
-            if($results){
-                $dataObj = json_decode($results);
-                $home_video['title'] = $dataObj->title;
-                $home_video['short_desc'] = $dataObj->short_desc;
-                $home_video['url'] = $dataObj->url;
-                $home_video['video_url'] = $dataObj->video_url;
-                $home_video['button_text'] = $dataObj->button_text;
-                $home_video['target'] = $dataObj->target;
-                $home_video['image'] = $dataObj->image;
-                $home_video['is_publish'] = $dataObj->is_publish;
-            }
-        }
-
-        //Product Category
-        $pro_category = $site->categories()->where('is_publish', '=', 1)->orderBy('id', 'desc')->get();
-
-        $brand = Brand::whereHas('products.categories.site', function ($query) use ($site_id) {
-            $query->where('multiple_site_id', $site_id);
+        $categories = $site->categories()
+            ->where('is_publish', 1)
+            ->whereHas('news', function ($query) {
+                $query->where('is_publish', 1);
             })
-            ->where('is_publish', '=', 1)->where('is_featured', '=', 1)
             ->get();
 
-        //Popular Products
-        $popular_products = $this->getProduct($site_id,1);
 
-        //New Products
-        $new_products = $this->getProduct($site_id,1,false,false,false,8,'id');
+        $newsQuery = $site->news()
+            ->with('categories')
+            ->where('news.is_publish', 1);
 
-        //Top Selling
-        $top_selling = $this->getProduct($site_id,1,false,false,false,48,'id',true);
+        $newsCount = $newsQuery->count();
+        $limit = min($newsCount, 5);
 
-        //Trending Products
-        $trending_products = $this->getProduct($site_id,1,true,false,false,8,'id');
-
-        //Top Rated
-        $top_rated = $this->getProduct($site_id,1,false,false,false,8,'reviews_avg',false,true);
-
-        //Deals Of The Day
-        $deals_products = $this->getProduct($site_id,1,false,false,true,8,'id');
-
-        //Slider
-        $slider = $site->sliders()->where('is_publish', '=', 1)->orderBy('id', 'desc')->get();
-
-        //Offer & Ads - Position 1
-        $offer_ad_position1 = $site->offer_ads()->where('is_publish', '=', 1)->where('offer_ad_type', '=', 'position1')->orderBy('id', 'desc')->get();
-
-        //Offer & Ads - Position 2
-        $offer_ad_position2 = $site->offer_ads()->where('is_publish', '=', 1)->where('offer_ad_type', '=', 'position2')->orderBy('id', 'desc')->get();
+        $newsLatest = $newsQuery->latest()->take($limit)->get();
+        $newsRandom = ($limit > 0) ? $newsQuery->inRandomOrder()->take($limit)->get() : collect();
+        $newsViewers = ($limit > 0) ? $newsQuery->orderBy('news.viewers', 'desc')->take($limit)->get() : collect();
+        $newsBreaking = $newsQuery->where('news.breaking_news', 1)->take($limit)->get();
 
 
-        return view('frontend.home', compact(
-			'section1',
-			'section2',
-			'section3',
-			'section4',
-			'section5',
-			'section6',
-			'section7',
-			'section8',
-			'section9',
-			'section10',
-			'section11',
-			'section12',
-			'section13',
-			'section14',
-			'section15',
-			'section16',
-			'slider',
-			'pro_category',
-			'offer_ad_position1',
-			'offer_ad_position2',
-			'home_video',
-			'brand',
-			'popular_products',
-			'new_products',
-			'top_selling',
-			'trending_products',
-			'top_rated',
-			'deals_products'
-		));
+        return view('frontend.pages.home',compact('categories','newsLatest','newsViewers','newsRandom','newsBreaking'));
+
+
     }
 
     public function getProduct($site_id, $is_publish = 1,$is_trending = false, $is_popular = false,$is_discount = false  ,$limit = 10,$order='RAND()',$top_selling = false, $top_rate = false){
