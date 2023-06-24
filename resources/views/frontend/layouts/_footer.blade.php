@@ -61,7 +61,7 @@
                     <div class="maan-news-tags">
                         <ul>
                              @foreach(getCategoriesSite() as $category)
-                                <li><a href="">{{ rawurldecode($category->name) }}</a></li>
+                                <li><a href="@if(Route::has(strtolower($category->slug))){{ route(strtolower($category->slug),$category->name) }}@endif">{{ rawurldecode($category->name) }}</a></li>
                             @endforeach
 
 
