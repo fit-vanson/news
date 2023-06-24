@@ -84,7 +84,7 @@
                                             </ul>
                                         </div>
                                         <div class="maan-post-adds">
-                                            @if ($siteInfo['before_post_ads'] !=null)
+                                            @if (@$siteInfo['before_post_ads'] !=null)
                                                 {!! $siteInfo['before_post_ads'] !!}
                                             @else
                                                 <a href="https://www.google.com/" target="_blank">
