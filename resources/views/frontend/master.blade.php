@@ -44,7 +44,7 @@
     <!-- Responsive -->
     <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
     <!-- toastr -->
-    <link rel="stylesheet" href="{{ asset('admin/plugins/toastr/toastr.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/toastr/toastr.css') }}">
 
 
 
@@ -107,7 +107,7 @@
 <!-- Index -->
 <script src="{{ asset('frontend/js/index.js') }} "></script>
 <!-- toastr -->
-<script src="{{ asset('admin/plugins/toastr/toastr.min.js') }} "></script>
+<script src="{{ asset('backend/toastr/toastr.min.js') }} "></script>
 
 <script>
     $("#loginMessage").show().delay(5000).fadeOut('slow');
