@@ -71,7 +71,7 @@ Route::get('lang/{locale}', [App\Http\Controllers\LocalizationController::class,
 //Home
 Route::get('/', [App\Http\Controllers\Frontend\HomeFrontendController::class, 'homePageLoad'])->name('frontend.home');
 
-Route::get('/search', [App\Http\Controllers\Frontend\SearchController::class, 'getSearchData'])->name('frontend.search');
+Route::get('/search', [App\Http\Controllers\Frontend\SearchController::class, 'Search'])->name('frontend.search');
 
 Route::get('/contact/{id}/{title}', [App\Http\Controllers\Frontend\ContactController::class, 'getContactData'])->name('frontend.contact');
 Route::post('/frontend/sentMessage', [App\Http\Controllers\Frontend\ContactController::class, 'sentMessage'])->name('frontend.sentMessage');

@@ -56,33 +56,6 @@ class NewsController extends Controller
         return view('frontend.pages.news',compact('allNews','newsViewers','newsRandom','category'));
     }
 
-/*    public function newsDetails($id,$slug=null)
-    {
-
-        $news = News::find($id);
-
-        $viewers = $news->viewers;
-        $news->viewers = $viewers +1;
-        $news->save();
-
-        //related news
-        $relatedgetsnews = News::orderByDesc('news.id')
-            ->where('news.id','!=',$id)
-            ->where('news.is_publish',1)
-            ->limit(3)
-            ->get();
-
-        $site = getSite();
-        $site_option = $site->site_options;
-        $theme_option_social_media =  $site_option->theme_option_social_media ?? null ;
-        if($theme_option_social_media){
-            $social_media = json_decode($theme_option_social_media,true);
-        }else{
-            $social_media = null;
-        }
-
-        return view('frontend.pages.news_details',compact('news','relatedgetsnews','social_media'));
-    }*/
 
     public function newsDetails($id, $slug = null)
     {
