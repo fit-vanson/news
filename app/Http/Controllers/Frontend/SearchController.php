@@ -16,13 +16,18 @@ class SearchController extends Controller
         if(!$site){
             return 1;
         }
+        $searchValue = htmlDecode(rawurlencode($request->search));
 
         $newsQuery = $site
             ->news()
             ->where('news.is_publish',1)
-            ->where('news.title','LIKE', '%'. htmlDecode(rawurlencode($request->search)). '%')
-            ->orWhere('news.summary','LIKE', '%'. htmlDecode(rawurlencode($request->search)). '%')
-            ->orWhere('news.description','LIKE', '%'. htmlDecode(rawurlencode($request->search)). '%');
+            ->where(function ($query) use ($searchValue) {
+                $query
+                    ->where('news.title', 'like', '%' . $searchValue . '%')
+                    ->orwhere('news.summary', 'like', '%' . $searchValue . '%')
+                    ->orwhere('news.description', 'like', '%' . $searchValue . '%');
+            });
+
 
         $searchNews = $newsQuery
             ->orderByDesc('news.id')
