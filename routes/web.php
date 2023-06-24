@@ -619,12 +619,12 @@ Route::prefix('backend')->group(function(){
     Route::post('/MediaUpload', [App\Http\Controllers\Backend\UploadController::class, 'MediaUpload'])->name('backend.MediaUpload')->middleware(['auth','is_admin_or_editor']);
 
     //Theme Options Social Media
-    Route::get('/theme-options-social-media', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'getThemeOptionsSocialMediaPageLoad'])->name('backend.theme-options-social-media')->middleware(['auth','is_admin']);
-    Route::post('/saveThemeOptionsSocialMedia', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'saveThemeOptionsSocialMedia'])->name('backend.saveThemeOptionsSocialMedia')->middleware(['auth','is_admin']);
+    Route::get('/theme-options-social-media', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'getThemeOptionsSocialMediaPageLoad'])->name('backend.theme-options-social-media')->middleware(['auth','is_admin_or_editor']);
+    Route::post('/saveThemeOptionsSocialMedia', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'saveThemeOptionsSocialMedia'])->name('backend.saveThemeOptionsSocialMedia')->middleware(['auth','is_admin_or_editor']);
 
     //Theme Options ADS Manage
-    Route::get('/theme-options-ads-manage', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'getThemeOptionsAdsManagePageLoad'])->name('backend.theme-options-ads-manage')->middleware(['auth','is_admin']);
-    Route::post('/saveThemeOptionsAdsManage', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'saveThemeOptionsAdsManage'])->name('backend.saveThemeOptionsAdsManage')->middleware(['auth','is_admin']);
+    Route::get('/theme-options-ads-manage', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'getThemeOptionsAdsManagePageLoad'])->name('backend.theme-options-ads-manage')->middleware(['auth','is_admin_or_editor']);
+    Route::post('/saveThemeOptionsAdsManage', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'saveThemeOptionsAdsManage'])->name('backend.saveThemeOptionsAdsManage')->middleware(['auth','is_admin_or_editor']);
 
 
 });
