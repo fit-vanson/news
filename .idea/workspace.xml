@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b44f3bf-fbff-4ad6-95f5-c9d0b05b9daf" name="Changes" comment="s">
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Frontend/NewsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Frontend/NewsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/frontend/pages/news.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/frontend/pages/news.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,7 +216,7 @@
       <workItem from="1687420563858" duration="3313000" />
       <workItem from="1687425055182" duration="1158000" />
       <workItem from="1687481643432" duration="27970000" />
-      <workItem from="1687569404126" duration="21825000" />
+      <workItem from="1687569404126" duration="21881000" />
     </task>
     <task id="LOCAL-00001" summary="delete">
       <created>1687422780721</created>
@@ -323,7 +323,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687592138592</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="s">
+      <created>1687592320922</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1687592320922</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -44,7 +44,7 @@ class NewsController extends Controller
             ->where('news.is_publish',1);
 
         $newsCount = $newsQuery->count();
-        $limit = min($newsCount, 5);
+        $limit = min($newsCount, 3);
 
         $allNews = $newsQuery
             ->orderByDesc('news.id')
