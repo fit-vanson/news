@@ -69,9 +69,9 @@ class NewsController extends Controller
 
         $relatedNews = $site
             ->news()
-            ->orderByDesc('id')
-            ->where('id', '!=', $id)
-            ->where('is_publish', 1)
+            ->orderByDesc('news.id')
+            ->where('news.id', '!=', $id)
+            ->where('news.is_publish', 1)
             ->limit(3)
             ->get();
 
