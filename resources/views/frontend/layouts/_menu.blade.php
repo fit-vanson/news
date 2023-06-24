@@ -46,10 +46,10 @@
                         <li>
                             <a href="{{route('frontend.home')}}">Home</a>
                         </li>
-                        @foreach( $categories as $category )
+                        @foreach( getCategoriesSite() as $category )
                             @if($category->is_publish == 1)
                             <li>
-                                <a href="">{{ rawurldecode($category->name)  }} </a>
+                                <a href="@if(Route::has(strtolower($category->slug))){{ route(strtolower($category->slug),$category->name) }}@endif">{{ rawurldecode($category->name)  }} </a>
                             </li>
                             @endif
                         @endforeach

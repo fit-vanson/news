@@ -262,8 +262,6 @@ function onLoadEditData() {
 
 			$("#is_publish").val(data.is_publish).trigger("chosen:updated");
 			$("#breaking_news").val(data.breaking_news).trigger("chosen:updated");
-
-
             $("#cate_id").val(data.category_id).trigger("chosen:updated");
 
             if(data.original_url != null){

@@ -10,7 +10,7 @@
             <div class="col-md-9 col-xl-10">
                 <div class="maan-slide-text">
 
-                    @foreach($newsBreaking as $breaking_news)
+                    @foreach(getNewsBreakingSite() as $breaking_news)
                     <p><a href="
                     @if($breaking_news->categories)
                         @if(Route::has(strtolower($breaking_news->categories->slug)))

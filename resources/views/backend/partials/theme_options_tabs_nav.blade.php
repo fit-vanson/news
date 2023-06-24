@@ -11,7 +11,7 @@
     <li><a href="{{ route('backend.theme-options-ads-manage', ['site_id' => @$datalist['id']]) }}"><i class="fa fa-cog"></i>{{ __('ADS Manage') }}</a></li>
 
 
-    <li><a href="{{ route('backend.offer-ads', ['site_id' => @$datalist['id']]) }}"><i class="fa fa-cog"></i>{{ __('Offer & Ads') }}</a></li>
+{{--    <li><a href="{{ route('backend.offer-ads', ['site_id' => @$datalist['id']]) }}"><i class="fa fa-cog"></i>{{ __('Offer & Ads') }}</a></li>--}}
 
 
 

@@ -728,8 +728,8 @@ Route::prefix('seller')->group(function(){
 
 
 foreach (allCategories() as $category){
-    Route::get($category->slug.'/{newscategory?}',[\App\Http\Controllers\Frontend\NewsController::class,'maanNews'])->name($category->slug);
-    Route::get($category->slug.'/details/{id}/{slug?}',[\App\Http\Controllers\Frontend\NewsController::class,'maanNewsDetails'])->name($category->slug.'.details');
+    Route::get($category->slug.'/{newscategory?}',[\App\Http\Controllers\Frontend\NewsController::class,'news'])->name($category->slug);
+    Route::get($category->slug.'/details/{id}/{slug?}',[\App\Http\Controllers\Frontend\NewsController::class,'newsDetails'])->name($category->slug.'.details');
 
 }
 

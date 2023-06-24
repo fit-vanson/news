@@ -10,13 +10,13 @@
             </div>
             <div class="col-sm-8 offset-sm-1 offset-lg-2">
                 <div class="maan-header-adds">
-{{--                    @if (advertisement())--}}
-{{--                        {!! advertisement()->header_ads !!}--}}
-{{--                    @else--}}
+                    @if ($siteInfo['header_ads'] != null)
+                        {!! $siteInfo['header_ads'] !!}
+                    @else
                         <a href="  https://www.google.com/ " target="_blank">
                             <img src=" {{ asset('frontend/img/header-adds/adds.jpg') }} " alt="{{ asset('frontend/img/header-adds/adds.jpg') }}">
                         </a>
-{{--                    @endif--}}
+                    @endif
 
 
                 </div>

@@ -28,7 +28,7 @@
                         <ul>
 
 
-                            @foreach( $newsViewers as $item)
+                            @foreach( getNewsViewersSite() as $item)
                                 <li>
                                     <div class="maan-list-img">
                                         @if($item->thumbnail)
@@ -60,7 +60,7 @@
                     </div>
                     <div class="maan-news-tags">
                         <ul>
-                             @foreach($categories as $category)
+                             @foreach(getCategoriesSite() as $category)
                                 <li><a href="">{{ rawurldecode($category->name) }}</a></li>
                             @endforeach
 

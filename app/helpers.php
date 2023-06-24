@@ -1771,9 +1771,6 @@ function getSiteInfo(){
         $data['smtp_password'] = '';
     }
 
-
-
-
     //theme_option_social_media
     $theme_option_social_media =  $site_option->theme_option_social_media ?? null ;
     if($theme_option_social_media){
@@ -1789,12 +1786,9 @@ function getSiteInfo(){
     if($theme_option_ads_manage){
         $theme_option_ads_manageaArr= json_decode($theme_option_ads_manage,true);
         foreach ($theme_option_ads_manageaArr as $key=>$ads_manage){
-            $data['ads_manage'][$key] = $ads_manage;
+            $data[$key] = $ads_manage;
         }
-    }else{
-        $data['ads_manage'] = null;
     }
-    dd($data);
 
 
     return $data;
@@ -1804,6 +1798,51 @@ function allCategories(){
     $allCategories = \App\Models\Categories::orderBy('id')
         ->get();
     return $allCategories ;
+}
+
+function getCategoriesSite(){
+    $site = getSite();
+    $categories = collect();
+    if($site){
+        $categories = $site->categories()
+            ->where('is_publish', 1)
+            ->whereHas('news', function ($query) {
+                $query->where('is_publish', 1);
+            })
+            ->get();
+    }
+    return  $categories;
+}
+
+
+function getNewsBreakingSite(){
+    $site = getSite();
+    $newsBreaking = collect();
+    if ($site){
+        $newsQuery = $site->news()
+            ->with('categories')
+            ->where('news.is_publish', 1);
+
+        $newsCount = $newsQuery->count();
+        $limit = min($newsCount, 5);
+        $newsBreaking = $newsQuery->where('news.breaking_news', 1)->take($limit)->get();
+    }
+    return  $newsBreaking;
+}
+
+function getNewsViewersSite(){
+    $site = getSite();
+    $newsViewers = collect();
+    if ($site){
+        $newsQuery = $site->news()
+            ->with('categories')
+            ->where('news.is_publish', 1);
+
+        $newsCount = $newsQuery->count();
+        $limit = min($newsCount, 5);
+        $newsViewers = ($limit > 0) ? $newsQuery->orderBy('news.viewers', 'desc')->take($limit)->get() : collect();
+    }
+    return  $newsViewers;
 }
 
 function getSocialMediaList(){
