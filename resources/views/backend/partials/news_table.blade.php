@@ -4,10 +4,11 @@
 			<tr>
 				<th class="checkboxlist text-center" style="width:5%"><input class="tp-check-all checkAll" type="checkbox"></th>
                 <th class="text-left" style="width:40%">{{ __('Title') }}</th>
-                <th class="text-left" style="width:20%">{{ __('Category') }}</th>
+                <th class="text-left" style="width:10%">{{ __('Category') }}</th>
+                <th class="text-left" style="width:10%">{{ __('User Create') }}</th>
                 <th class="text-center" style="width:10%">{{ __('Image') }} </th>
-                <th class="text-center" style="width:10%">{{ __('Status') }}</th>
-                <th class="text-center" style="width:10%">{{ __('Breaking News') }}</th>
+                <th class="text-center" style="width:5%">{{ __('Status') }}</th>
+                <th class="text-center" style="width:5">{{ __('Breaking News') }}</th>
                 <th class="text-center" style="width:10%">{{ __('Action') }}</th>
 			</tr>
 		</thead>
@@ -19,6 +20,7 @@
                     <td class="checkboxlist text-center"><input name="item_ids[]" value="{{ $row->id }}" class="tp-checkbox selected_item" type="checkbox"></td>
                     <td class="text-left">{{ htmlDecode(rawurldecode($row->title)) }}</td>
                     <td class="text-left">{{ htmlDecode(rawurldecode($row->categories->name)) }}</td>
+                    <td class="text-left">{{ $row->user->name }}</td>
 
                     @if ($row->thumbnail != '')
                         <td class="text-center"><div class="table_col_image"><img src="/media/{{ $row->thumbnail }}" /></div></td>
