@@ -233,6 +233,30 @@
                             </ul>
                         </div>
                     </div>
+                    <div class="maan-news-side-add">
+                        @if (@$siteInfo['sidebar_ads'] !=null)
+                            {!! $siteInfo['sidebar_ads'] !!}
+                        @else
+                            <a class=side-add-thumb href="">
+                                <img src=" {{ asset('frontend/img/sidebar-ads/adds.jpg') }} "
+                                     alt="{{ asset('frontend/img/header-adds/adds.jpg') }}">
+                            </a>
+                            <div class="add-text">
+                                        <span
+                                            class="add-title">{{__('Awesome News & Blog Theme For Your Next Project')}}</span>
+                                <a href="" class="add-btn">{{__('Buy Now')}}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="9.036" height="13.233"
+                                         viewBox="0 0 9.036 13.233">
+                                        <path id="Path_4286" data-name="Path 4286"
+                                              d="M3097.58-672l5.818,5.606-5.818,5.453"
+                                              transform="translate(-3096.539 673.08)" fill="none" stroke="#fff"
+                                              stroke-width="3"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        @endif
+
+                    </div>
                     <div class="maan-title">
                         <div class="maan-title-text">
                             <h2>{{ __('Tags') }}</h2>
