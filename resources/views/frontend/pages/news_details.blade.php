@@ -84,7 +84,7 @@
                                             </ul>
                                         </div>
                                         <div class="maan-post-adds">
-                                            @if ($siteInfo['sidebar_ads'] !=null)
+                                            @if ($siteInfo['before_post_ads'] !=null)
                                                 {!! $siteInfo['before_post_ads'] !!}
                                             @else
                                                 <a href="https://www.google.com/" target="_blank">
@@ -102,7 +102,7 @@
                         </div>
 
                         <div class="maan-post-adds">
-                            @if ($siteInfo['sidebar_ads'] !=null)
+                            @if (@$siteInfo['after_post_ads'] !=null)
                                 {!! $siteInfo['after_post_ads'] !!}
                             @else
                                 <a href="https://www.google.com/" target="_blank">
@@ -173,7 +173,7 @@
                             </div>
                         </div>
                         <div class="maan-news-side-add">
-                            @if ($siteInfo['sidebar_ads'] !=null)
+                            @if (@$siteInfo['sidebar_ads'] !=null)
                                 {!! $siteInfo['sidebar_ads'] !!}
                             @else
                                 <a class=side-add-thumb href="">

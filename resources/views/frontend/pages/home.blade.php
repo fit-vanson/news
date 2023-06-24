@@ -599,7 +599,7 @@
                                 </div>
                             @endif
                             <div class="maan-news-side-add">
-                                @if ($siteInfo['sidebar_ads'] !=null)
+                                @if (@$siteInfo['sidebar_ads'] !=null)
                                     {!! $siteInfo['sidebar_ads'] !!}
                                 @else
                                     <a class=side-add-thumb href="">
