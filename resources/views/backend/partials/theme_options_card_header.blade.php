@@ -4,11 +4,12 @@
             {{ __($datalist['title_row']) }}
         </div>
         <div class="col-lg-4">
-            {{ $datalist['name'] .' ('.$datalist['web'].')' }}
+            {{ $datalist['name'] }} -
+            <a href="http://{{$datalist['web']}}" target="_blank"> {{$datalist['web']}}</a>
         </div>
         <div class="col-lg-4">
             <div class="float-right">
-                <a href="{{ route('backend.MultipleSites') }}" class="btn warning-btn"><i class="fa fa-reply"></i> {{ __('Back to List') }}</a>
+                <a href="http://{{ route('backend.MultipleSites') }}" class="btn warning-btn"><i class="fa fa-reply"></i> {{ __('Back to List') }}</a>
             </div>
         </div>
     </div>
