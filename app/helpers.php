@@ -46,7 +46,7 @@ function get_ip(){
 
 function getSite(){
     $server = \request()->getHost();
-    $site = \App\Models\MultipleSites::where('site_web',$server)->first();
+    $site = \App\Models\MultipleSites::where('site_web',$server)->where('is_publish',1)->first();
     return $site;
 }
 
