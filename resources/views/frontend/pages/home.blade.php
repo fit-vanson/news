@@ -721,15 +721,13 @@
                         <div class="col-lg-3">
                             <div class="card maan-default-post">
                                 <div class="maan-post-img">
-                                    @if($lastnewslifestyle->image)
-                                        <a href="@if($categories[3]->slug) {{ route(strtolower($categories[3]->slug).'.details',['id'=>$item->id,'slug'=>$item->slug]) }} @endif">
-                                            @if($item->thumbnail)
-                                                <img src="/media/{{ $item->thumbnail }}"/>
-                                            @else
-                                                <img src="/backend/images/album_icon.png"/>
-                                            @endif
-                                        </a>
-                                    @endif
+                                    <a href="@if($categories[3]->slug) {{ route(strtolower($categories[3]->slug).'.details',['id'=>$item->id,'slug'=>$item->slug]) }} @endif">
+                                        @if($item->thumbnail)
+                                            <img src="/media/{{ $item->thumbnail }}"/>
+                                        @else
+                                            <img src="/backend/images/album_icon.png"/>
+                                        @endif
+                                    </a>
                                 </div>
                                 <div class="card-body maan-card-body">
                                     <div class="maan-text">

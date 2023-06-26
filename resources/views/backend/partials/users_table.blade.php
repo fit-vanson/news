@@ -7,6 +7,7 @@
 				<th style="width:20%">{{ __('Email') }}</th>
 				<th style="width:15%">{{ __('Phone') }}</th>
 				<th style="width:20%">{{ __('Address') }}</th>
+{{--				<th style="width:10%">{{ __('Count News') }}</th>--}}
 				<th class="text-center" style="width:10%">{{ __('Roles') }}</th>
 				<th class="text-center" style="width:7%">{{ __('Status') }}</th>
 				<th class="text-center" style="width:7%">{{ __('Action') }}</th>
@@ -16,11 +17,12 @@
 			@if (count($datalist)>0)
 			@foreach($datalist as $row)
 			<tr>
-				<td class="checkboxlist text-center"><input name="item_ids[]" value="{{ $row->id }}" class="tp-checkbox selected_item" type="checkbox"></td> 
-				<td class="text-left">{{ $row->name }}</td> 
+				<td class="checkboxlist text-center"><input name="item_ids[]" value="{{ $row->id }}" class="tp-checkbox selected_item" type="checkbox"></td>
+				<td class="text-left">{{ $row->name }}</td>
 				<td class="text-left">{{ $row->email }}</td>
 				<td class="text-left">{{ $row->phone }}</td>
 				<td class="text-left">{{ $row->address }}</td>
+{{--				<td class="text-left">{{ count($row->news) }}</td>--}}
 				<td class="text-center">{{ $row->role }}</td>
 				@if ($row->status_id == 1)
 				<td class="text-center"><span class="enable_btn">{{ $row->status }}</span></td>

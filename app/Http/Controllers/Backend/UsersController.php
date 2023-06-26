@@ -167,13 +167,23 @@ class UsersController extends Controller
 		$id = $request->id;
 
 		if($id != ''){
-			$response = User::where('id', $id)->delete();
-			if($response){
-				$res['msgType'] = 'success';
-				$res['msg'] = __('Data Removed Successfully');
-			}else{
+			$response = User::where('id', $id)->first();
+            if (count($response->news) == 0 ){
+                $response->delete();
+                if($response){
+                    $res['msgType'] = 'success';
+                    $res['msg'] = __('Data Removed Successfully');
+                }else{
+                    $res['msgType'] = 'error';
+                    $res['msg'] = __('Data remove failed');
+                }
+			}
+            elseif ($response->id == Auth::id()){
+                $res['msgType'] = 'error';
+                $res['msg'] = __('Không thể xoá');
+            }else{
 				$res['msgType'] = 'error';
-				$res['msg'] = __('Data remove failed');
+				$res['msg'] = __('User không thể xoá');
 			}
 		}
 
