@@ -35,11 +35,8 @@ class LoginController extends Controller
 
     protected function redirectTo()
     {
-		if(auth()->user()->role_id == 1){
-            return 'backend/dashboard';
-		} else if(auth()->user()->role_id == 3) {
-			return 'editor/dashboard';
-        }
+        return 'backend/dashboard';
+
     }
 
 
