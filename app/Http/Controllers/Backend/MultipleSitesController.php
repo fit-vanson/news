@@ -22,14 +22,13 @@ class MultipleSitesController extends Controller
         $AllCount = MultipleSites::count();
         $PublishedCount = MultipleSites::where('is_publish', '=', 1)->count();
         $DraftCount = MultipleSites::where('is_publish', '=', 2)->count();
-        $categorylist = Pro_category::where('is_publish', 1)->orderBy('name','asc')->get();
         $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
 
 
         $datalist = MultipleSites::orderBy('id','desc')
             ->with('tp_status','categories')
             ->paginate(20);
-        return view('backend.multiple_sites', compact('AllCount', 'PublishedCount', 'DraftCount', 'categorylist','statuslist', 'datalist'));
+        return view('backend.multiple_sites', compact('AllCount', 'PublishedCount', 'DraftCount', 'statuslist', 'datalist'));
     }
     //Get data for Products Pagination
     public function getMultipleSitesTableData(Request $request){
@@ -187,9 +186,8 @@ class MultipleSitesController extends Controller
         $timezonelist = DB::table('timezones')->orderBy('timezone_name', 'asc')->get();
 
         $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
-        $categorylist = Pro_category::where('is_publish', '=', 1)->orderBy('name','asc')->get();
         $media_datalist = Media_option::orderBy('id','desc')->paginate(28);
-        return view('backend.theme-site', compact('datalist','statuslist','categorylist','media_datalist','timezonelist'));
+        return view('backend.theme-site', compact('datalist','statuslist','media_datalist','timezonelist'));
 
     }
 

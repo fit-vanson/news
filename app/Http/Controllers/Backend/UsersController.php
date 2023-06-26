@@ -19,14 +19,17 @@ class UsersController extends Controller
 		$roleslist = DB::table('user_roles')->whereNotIn('id', [2])->orderBy('id', 'asc')->get();
 		$media_datalist = Media_option::orderBy('id','desc')->paginate(28);
 
-		$datalist = DB::table('users')
-			->join('user_roles', 'users.role_id', '=', 'user_roles.id')
-			->join('user_status', 'users.status_id', '=', 'user_status.id')
-			->select('users.id', 'users.name', 'users.email', 'users.phone', 'users.address', 'users.photo', 'user_roles.role', 'user_status.status', 'users.status_id')
-//			->where('users.role_id', 1)
-			->orderBy('users.name','asc')
-			->paginate(20);
+//		$datalist = DB::table('users')
+//			->join('user_roles', 'users.role_id', '=', 'user_roles.id')
+//			->join('user_status', 'users.status_id', '=', 'user_status.id')
+//			->select('users.id', 'users.name', 'users.email', 'users.phone', 'users.address', 'users.photo', 'user_roles.role', 'user_status.status', 'users.status_id')
+////			->where('users.role_id', 1)
+//			->orderBy('users.name','asc')
+//			->paginate(20);
 
+
+        $datalist = User::orderBy('users.name','asc')
+            ->paginate(20);
         return view('backend.users', compact('statuslist', 'roleslist', 'media_datalist', 'datalist'));
     }
 
