@@ -1775,7 +1775,13 @@ function getSiteInfo(){
     $theme_option_social_media =  $site_option->theme_option_social_media ?? null ;
     if($theme_option_social_media){
         $theme_option_social_mediaArr= json_decode($theme_option_social_media,true);
-        $data['social_media'] = $theme_option_social_mediaArr;
+        $social_mediaArr = [];
+        foreach ($theme_option_social_mediaArr as $key=>$value ){
+            if ($value['is_publish'] == 1) {
+                $social_mediaArr[$key] = $value;
+            }
+        }
+        $data['social_media'] = $social_mediaArr;
 
     }else{
         $data['social_media'] = null;

@@ -214,7 +214,7 @@
                                 </ul>
                             </div>
                         </div>
-                        @if($siteInfo['social_media'] != null)
+                        @if($siteInfo['social_media'] != null )
                             <div class="maan-title">
                                 <div class="maan-title-text">
                                     <h2>{{ __('Social Media') }}</h2>
