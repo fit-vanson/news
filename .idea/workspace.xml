@@ -6,8 +6,219 @@
   <component name="ChangeListManager">
     <list default="true" id="8b44f3bf-fbff-4ad6-95f5-c9d0b05b9daf" name="Changes" comment="s">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/NewsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/NewsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/AttributesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/BrandsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/CollectionsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/ComboController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/ContactController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/CountriesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/CouponsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/CurrencyController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/CustomerAuthController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/CustomerController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Backend/DashboardController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/HomeSliderController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/InventoryController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/LabelsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/LanguagesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/MenuBuilderController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/MenuController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/NewslettersController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/Offer_adsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/OrdersController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/OrdersExportController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/PageController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/Pro_categoriesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/ProductsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/ReviewsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/SectionManageController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/SellerController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/SellerSettingsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/SettingsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/ShippingController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/SocialMediasController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/TaxesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/TransactionController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/TransactionsExportController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Backend/WithdrawalController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Editor/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Editor/DashboardController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/attributes.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/brands.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/collections.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/contacts_page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/countries.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/coupons.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/currency.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/custom-css.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/custom-js.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/customers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/general.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/google-map.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/google-recaptcha.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/google_analytics.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/google_tag_manager.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/home-video.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/inventory.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/inventory_seller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/labels.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/language_switcher.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/languages-keywords.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/languages.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/mail-setting.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/manage-stock.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/media-setting.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/menu-builder.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/menu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/newsletters.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/offer-ads.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/orders.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/page.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/page_variation.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/payment-gateway.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/price.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/price_seller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/product-categories.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/product.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/product_images.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/product_images_seller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/product_seller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/product_seo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/product_seo_seller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/products.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/products_seller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/related-products.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/related-products_seller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/review-seller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/review.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/section_manage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/seller-orders.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/seller-settings.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/sellers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/settings-seller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/shipping.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/slider.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/social_media.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/tax.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/theme-register.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/theme_option_bank_transfer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/theme_option_color.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/theme_option_facebook.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/theme_option_facebook_pixel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/theme_option_footer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/theme_option_telegram.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/theme_option_twitter.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/theme_option_whatsapp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/transactions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/variations.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/variations_seller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/withdrawals.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/backend/pages/withdrawals_seller.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/attributes.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/bank-transfer.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/brands.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/collections.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/contact.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/countries.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/coupons.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/currency.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/custom-css.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/custom-js.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/customers.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/general.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/google-analytics.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/google-map.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/google-recaptcha.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/google-tag-manager.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/home-video.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/inventory.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/labels.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/language-keywords.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/language-switcher.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/languages.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/mail-settings.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/mailchimp-settings.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/manage-stock.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/media-settings.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/menu-builder.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/menu.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/offer-ads.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/order.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/orders.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/page-variation.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/page.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/attributes_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/brand_menu_builder.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/brands_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/collections_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/contact_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/countries_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/coupons_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/customers_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/labels_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/languages_keywords_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/languages_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/make_menu_list.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/manage_stock_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/menu_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/offer_ads_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/orders_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/page_menu_builder.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/page_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/payment_methods_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/product_categories_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/product_category_menu_builder.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/product_images_list.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/product_menu_builder.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/product_tabs_nav.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/products_list_for_related_product.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/products_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/purchase_code.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/related_products_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/review_ratings_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/section_manage_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/sellers_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/settings_tabs_nav.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/shipping_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/sidebar.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/partials/sidebar.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/subscribers_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/topnav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/backend/partials/topnav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/transactions_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/vipc.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/partials/withdrawals_table.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/payment-methods.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/price.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/product-categories.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/product-images.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/product-seo.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/product.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/products.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/profile.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/related-products.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/review.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/section-manage.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/seller-settings.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/sellers.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/shipping.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/slider.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/social-media.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/subscribe-settings.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/subscribe-settings1.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/subscribers.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/tax.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/theme-options-color.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/theme-options-facebook-pixel.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/theme-options-facebook.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/theme-options-telegram.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/theme-options-twitter.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/theme-options-whatsapp.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/theme-register.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/transactions.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/variations.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/backend/withdrawals.blade.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/editor/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/editor/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,27 +389,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/code/php/news/public/backend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "last_opened_file_path": "F:/code/php/news/resources/views/frontend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\code\php\news\resources\views\frontend" />
+      <recent name="F:\code\php\news\app\Http\Controllers\Frontend" />
       <recent name="F:\code\php\news\public\backend" />
       <recent name="F:\code\php\news\public\frontend\img\sidebar-ads" />
       <recent name="F:\code\php\news\public\backend\pages" />
-      <recent name="F:\code\php\news\resources\views\backend" />
-      <recent name="F:\code\php\news\resources\views\editor" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="F:\code\php\news\public\backend" />
@@ -223,7 +434,8 @@
       <workItem from="1687425055182" duration="1158000" />
       <workItem from="1687481643432" duration="27970000" />
       <workItem from="1687569404126" duration="30696000" />
-      <workItem from="1687742214294" duration="1432000" />
+      <workItem from="1687742214294" duration="2710000" />
+      <workItem from="1687745003152" duration="4790000" />
     </task>
     <task id="LOCAL-00001" summary="delete">
       <created>1687422780721</created>
@@ -491,7 +703,14 @@
       <option name="project" value="LOCAL" />
       <updated>1687600803903</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="s">
+      <created>1687743732057</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1687743732057</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

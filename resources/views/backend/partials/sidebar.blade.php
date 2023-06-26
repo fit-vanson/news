@@ -4,15 +4,16 @@
 			<img src="{{ $gtext['back_logo'] ? asset('media/'.$gtext['back_logo']) : asset('backend/images/backend-logo.png') }}" alt="logo">
 		</a>
 	</div>
-	<div class="version">Theme V 1.0.0</div>
 	<ul class="left-navbar">
 		@if (Auth::user()->role_id == 1)
 		<li><a href="{{ route('backend.dashboard') }}"><i class="fa fa-tachometer"></i>{{ __('Dashboard') }}</a></li>
 		<li><a href="{{ route('backend.media') }}"><i class="fa fa-picture-o"></i>{{ __('Media') }}</a></li>
-		<li><a href="{{ route('backend.page') }}"><i class="fa fa-clipboard"></i>{{ __('Pages') }}</a></li>
+        <li><a href="{{ route('backend.MultipleSites') }}" id="select_MultipleSites"><i class="fa fa-globe"></i>{{ __('Multiple Sites') }}</a></li>
+
+{{--
+        <li><a href="{{ route('backend.page') }}"><i class="fa fa-clipboard"></i>{{ __('Pages') }}</a></li>
 		<li><a href="{{ route('backend.orders') }}" id="select_orders"><i class="fa fa-rocket"></i>{{ __('Orders') }}</a></li>
-		<li><a href="{{ route('backend.MultipleSites') }}" id="select_MultipleSites"><i class="fa fa-globe"></i>{{ __('Multiple Sites') }}</a></li>
-		<li class="dnone"><a href="{{ route('backend.transactions') }}"><i class="fa fa-credit-card"></i>{{ __('Transactions') }}</a></li>
+		<li class="dropdown"><a href="{{ route('backend.transactions') }}"><i class="fa fa-credit-card"></i>{{ __('Transactions') }}</a></li>
 		<li class="dropdown"><a class="nav-link has-dropdown" href="#" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i>{{ __('eCommerce') }}</a>
 			<ul class="dropdown-menu">
 				<li><a href="{{ route('backend.products') }}">{{ __('Products') }}</a></li>
@@ -56,8 +57,10 @@
 				<li><a href="{{ route('backend.language-keywords') }}">{{ __('Language Keywords') }}</a></li>
 			</ul>
 		</li>
-{{--		<li><a id="active-settings" href="{{ route('backend.general') }}"><i class="fa fa-cogs"></i>{{ __('Settings') }}</a></li>--}}
+		<li><a id="active-settings" href="{{ route('backend.general') }}"><i class="fa fa-cogs"></i>{{ __('Settings') }}</a></li>
 		<li><a id="active-settings" href="{{ route('backend.google-recaptcha') }}"><i class="fa fa-cogs"></i>{{ __('Settings') }}</a></li>
+
+        --}}
 		<li><a href="{{ route('backend.users') }}"><i class="fa fa-user-plus"></i>{{ __('Users') }}</a></li>
 		@elseif (Auth::user()->role_id == 3)
 
