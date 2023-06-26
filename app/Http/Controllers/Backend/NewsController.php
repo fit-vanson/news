@@ -159,7 +159,6 @@ class NewsController extends Controller
 
 
         $data = array(
-            'user_id' =>$user,
             'category_id' =>$category_id,
 
             'title' => rawurlencode($title),
@@ -180,7 +179,10 @@ class NewsController extends Controller
         );
 
 
+
         if($id ==''){
+            $data['user_id'] = $user ;
+
             $response = News::create($data);
             if($response){
                 $res['msgType'] = 'success';
@@ -190,14 +192,21 @@ class NewsController extends Controller
                 $res['msg'] = __('Data insert failed');
             }
         }else{
-            $response = News::where('id', $id)->update($data);
-            if($response){
-                $res['msgType'] = 'success';
-                $res['msg'] = __('Data Updated Successfully');
+            $response = News::where('id', $id)->first();
+            if(auth()->user()->role_id == 1 || $user == $response->user_id){
+                $response->update($data);
+                if($response){
+                    $res['msgType'] = 'success';
+                    $res['msg'] = __('Data Updated Successfully');
+                }else{
+                    $res['msgType'] = 'error';
+                    $res['msg'] = __('Data update failed');
+                }
             }else{
                 $res['msgType'] = 'error';
-                $res['msg'] = __('Data update failed');
+                $res['msg'] = __('Tài khoản không thể chỉnh sửa bài viết này');
             }
+
         }
 
         return response()->json($res);
@@ -215,17 +224,24 @@ class NewsController extends Controller
     public function deleteNews(Request $request){
 
         $res = array();
-
         $id = $request->id;
+        $user = Auth::id();
+
 
         if($id != ''){
-            $response = News::where('id', $id)->delete();
-            if($response){
-                $res['msgType'] = 'success';
-                $res['msg'] = __('Data Removed Successfully');
+            $response = News::where('id', $id)->first();
+            if(auth()->user()->role_id == 1 || $user == $response->user_id) {
+                $response->delete();
+                if ($response) {
+                    $res['msgType'] = 'success';
+                    $res['msg'] = __('Data Removed Successfully');
+                } else {
+                    $res['msgType'] = 'error';
+                    $res['msg'] = __('Data remove failed');
+                }
             }else{
                 $res['msgType'] = 'error';
-                $res['msg'] = __('Data remove failed');
+                $res['msg'] = __('Tài khoản không thể xoá bài viết này');
             }
         }
 
