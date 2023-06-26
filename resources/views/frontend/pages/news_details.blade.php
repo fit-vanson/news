@@ -173,12 +173,12 @@
                             </div>
                         </div>
                         <div class="maan-news-side-add">
-                            @if (@$siteInfo['sidebar_ads'] !=null)
+                            @if (@$siteInfo['sidebar_ads'] != null || @$siteInfo['sidebar_ads'] != '')
                                 {!! $siteInfo['sidebar_ads'] !!}
                             @else
                                 <a class=side-add-thumb href="">
                                     <img src=" {{ asset('frontend/img/sidebar-ads/adds.jpg') }} "
-                                         alt="{{ asset('frontend/img/header-adds/adds.jpg') }}">
+                                         alt="{{ asset('frontend/img/sidebar-ads/adds.jpg') }}">
                                 </a>
                                 <div class="add-text">
                                         <span
