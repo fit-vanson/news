@@ -122,7 +122,7 @@ Route::prefix('backend')->group(function(){
     Route::get('/news', [App\Http\Controllers\Backend\NewsController::class, 'getNewsPageLoad'])->name('backend.news')->middleware(['auth','is_admin_or_editor']);
     Route::get('/getNewsTableData', [App\Http\Controllers\Backend\NewsController::class, 'getNewsTableData'])->name('backend.getNewsTableData')->middleware(['auth','is_admin_or_editor']);
     Route::post('/saveNewsData', [App\Http\Controllers\Backend\NewsController::class, 'saveNewsData'])->name('backend.saveNewsData')->middleware(['auth','is_admin_or_editor']);
-    Route::post('/getNewsById', [App\Http\Controllers\Backend\NewsController::class, 'getNewsById'])->name('backend.getNewsById')->middleware(['auth','is_admin_or_editor']);
+    Route::get('/getNewsById', [App\Http\Controllers\Backend\NewsController::class, 'getNewsById'])->name('backend.getNewsById')->middleware(['auth','is_admin_or_editor']);
     Route::post('/deleteNews', [App\Http\Controllers\Backend\NewsController::class, 'deleteNews'])->name('backend.deleteNews')->middleware(['auth','is_admin_or_editor']);
     Route::post('/bulkActionNews', [App\Http\Controllers\Backend\NewsController::class, 'bulkActionNews'])->name('backend.bulkActionNews')->middleware(['auth','is_admin_or_editor']);
     Route::post('/hasNewsSlug', [App\Http\Controllers\Backend\NewsController::class, 'hasNewsSlug'])->name('backend.hasNewsSlug')->middleware(['auth','is_admin_or_editor']);

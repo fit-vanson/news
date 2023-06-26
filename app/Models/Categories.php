@@ -17,4 +17,9 @@ class Categories extends Model
     {
         return $this->hasMany(News::class,'category_id');
     }
+
+    public function site()
+    {
+        return $this->belongsTo(MultipleSites::class, 'site_id');
+    }
 }

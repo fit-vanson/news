@@ -164,14 +164,22 @@ class CategoriesController extends Controller
         $id = $request->id;
 
         if($id != ''){
-            $response = Categories::where('id', $id)->delete();
-            if($response){
-                $res['msgType'] = 'success';
-                $res['msg'] = __('Data Removed Successfully');
+            $response = Categories::where('id', $id)->first();
+
+            if(count($response->news) == 0){
+                $response->delete();
+                if($response){
+                    $res['msgType'] = 'success';
+                    $res['msg'] = __('Data Removed Successfully');
+                }else{
+                    $res['msgType'] = 'error';
+                    $res['msg'] = __('Data remove failed');
+                }
             }else{
                 $res['msgType'] = 'error';
-                $res['msg'] = __('Data remove failed');
+                $res['msg'] = __('Không thể xoá!');
             }
+
         }
 
         return response()->json($res);

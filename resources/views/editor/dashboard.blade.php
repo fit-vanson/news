@@ -157,7 +157,7 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-6 mt-25">
+            <div class="col-lg-12 mt-25">
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
@@ -171,7 +171,8 @@
                             <table class="table table-borderless table-theme" style="width:100%;">
                                 <thead>
                                 <tr>
-                                    <th class="text-left" style="width:80%">{{ __('News') }}</th>
+                                    <th class="text-left" style="width:50%">{{ __('News') }}</th>
+                                    <th class="text-left" style="width:30%">{{ __('Site ') }}</th>
                                     <th class="text-center" style="width:20%">{{ __('Viewers') }}</th>
                                 </tr>
                                 </thead>
@@ -179,8 +180,10 @@
                                 @if (count($newsViewers)>0)
                                     @foreach($newsViewers as $row)
                                         <tr>
-                                            <td class="text-left"><a href="">{{ htmlDecode(rawurldecode($row->title))  }}</a></td>
+                                            <td class="text-left"><a href="@if($row->categories) {{ route('backend.news',['site_id'=>$row->categories->site->id, 'news_id'=> $row->id]) }} @endif">{{ htmlDecode(rawurldecode($row->title))  }}</a></td>
+                                            <td class="text-left"><a href="@if($row->categories) {{ route('backend.site',['id'=>$row->categories->site->id]) }} @endif">{{ @$row->categories->site->site_name }}</a></td>
                                             <td class="text-center">{{ $row->viewers }}</td>
+
                                         </tr>
                                     @endforeach
                                 @else

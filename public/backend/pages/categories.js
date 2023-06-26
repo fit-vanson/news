@@ -13,6 +13,7 @@ $(function () {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		}
 	});
+    $("#select_MultipleSites").addClass("active");
 
 	resetForm("DataEntry_formId");
 

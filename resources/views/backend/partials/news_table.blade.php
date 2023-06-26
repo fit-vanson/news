@@ -8,7 +8,7 @@
                 <th class="text-left" style="width:10%">{{ __('User Create') }}</th>
                 <th class="text-center" style="width:10%">{{ __('Image') }} </th>
                 <th class="text-center" style="width:5%">{{ __('Status') }}</th>
-                <th class="text-center" style="width:5">{{ __('Breaking News') }}</th>
+                <th class="text-center" style="width:5%">{{ __('Breaking News') }}</th>
                 <th class="text-center" style="width:10%">{{ __('Action') }}</th>
 			</tr>
 		</thead>
@@ -19,6 +19,8 @@
                 <tr>
                     <td class="checkboxlist text-center"><input name="item_ids[]" value="{{ $row->id }}" class="tp-checkbox selected_item" type="checkbox"></td>
                     <td class="text-left">{{ htmlDecode(rawurldecode($row->title)) }}</td>
+{{--                    <td class="text-left"><a href="@if($row->categories) {{ route(strtolower($row->categories->slug).'.details',['id'=>$row->id,'slug'=>$row->slug]) }} @endif" target="_blank">{{ htmlDecode(rawurldecode($row->title))  }}</a></td>--}}
+
                     <td class="text-left">{{ htmlDecode(rawurldecode($row->categories->name)) }}</td>
                     <td class="text-left">{{ $row->user->name }}</td>
 

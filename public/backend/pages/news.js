@@ -4,6 +4,9 @@ var BulkAction = '';
 var ids = [];
 var site_id = $("#site_id").val();
 
+const url = new URL(window.location.href);
+const searchParams = new URLSearchParams(url.search);
+
 
 $(function () {
 	"use strict";
@@ -14,7 +17,12 @@ $(function () {
 		}
 	});
 
-	resetForm("DataEntry_formId");
+    $("#select_MultipleSites").addClass("active");
+
+
+
+
+    resetForm("DataEntry_formId");
 
 	$("#submit-form").on("click", function () {
         $("#DataEntry_formId").submit();
@@ -92,7 +100,17 @@ $(function () {
         ]
     });
 
+    if (searchParams.has("news_id")) {
+        const newsId = searchParams.get("news_id");
+        onEdit(newsId);
+        $("#tabs_nav_site_news").addClass("active");
+
+        searchParams.delete("news_id");
+        const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
+        history.replaceState({}, document.title, newUrl);
+    }
 });
+
 
 function onCheckAll() {
     $(".checkAll").on("click", function () {
@@ -248,7 +266,7 @@ function htmlDecode(input) {
 function onLoadEditData() {
 
     $.ajax({
-		type : 'POST',
+		type : 'GET',
 		url: base_url + '/backend/getNewsById',
 		data: 'id='+RecordId,
 		success: function (response) {

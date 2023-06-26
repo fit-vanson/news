@@ -171,7 +171,8 @@
 							<table class="table table-borderless table-theme" style="width:100%;">
 								<thead>
 									<tr>
-										<th class="text-left" style="width:80%">{{ __('News') }}</th>
+										<th class="text-left" style="width:50%">{{ __('News') }}</th>
+										<th class="text-left" style="width:30%">{{ __('Site ') }}</th>
 										<th class="text-center" style="width:20%">{{ __('Viewers') }}</th>
 									</tr>
 								</thead>
@@ -179,8 +180,9 @@
 									@if (count($newsViewers)>0)
 									@foreach($newsViewers as $row)
 									<tr>
-										<td class="text-left"><a href="">{{ htmlDecode(rawurldecode($row->title))  }}</a></td>
-										<td class="text-center">{{ $row->viewers }}</td>
+                                        <td class="text-left"><a href="@if($row->categories) {{ route('backend.news',['site_id'=>$row->categories->site->id, 'news_id'=> $row->id]) }} @endif">{{ htmlDecode(rawurldecode($row->title))  }}</a></td>
+                                        <td class="text-left"><a href="@if($row->categories) {{ route('backend.site',['id'=>$row->categories->site->id]) }} @endif">{{ @$row->categories->site->site_name }}</a></td>
+                                        <td class="text-center">{{ $row->viewers }}</td>
 									</tr>
 									@endforeach
 									@else
@@ -208,7 +210,8 @@
 							<table class="table table-borderless table-theme" style="width:100%;">
 								<thead>
 									<tr>
-										<th class="text-left" style="width:70%">{{ __('Products') }}</th>
+										<th class="text-left" style="width:50%">{{ __('Products') }}</th>
+										<th class="text-left" style="width:20%">{{ __('Site') }}</th>
 										<th class="text-center" style="width:15%">{{ __('Viewers') }}</th>
 										<th class="text-center" style="width:15%">{{ __('User Created') }}</th>
 									</tr>
@@ -217,7 +220,8 @@
 									@if (count($newsLatest)>0)
 									@foreach($newsLatest as $row)
 									<tr>
-										<td class="text-left"><a href="">{{  htmlDecode(rawurldecode($row->title)) }}</a></td>
+                                        <td class="text-left"><a href="@if($row->categories) {{ route('backend.news',['site_id'=>$row->categories->site->id, 'news_id'=> $row->id]) }} @endif">{{ htmlDecode(rawurldecode($row->title))  }}</a></td>
+                                        <td class="text-left"><a href="@if($row->categories) {{ route('backend.site',['id'=>$row->categories->site->id]) }} @endif">{{ @$row->categories->site->site_name }}</a></td>
 										<td class="text-center">{{ $row->viewers }}</td>
 										<td class="text-center">{{ $row->user->name }}</td>
 									</tr>

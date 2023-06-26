@@ -17,6 +17,7 @@ $(function () {
 
 
 });
+$("#select_MultipleSites").addClass("active");
 
 
 function showPerslyError() {
