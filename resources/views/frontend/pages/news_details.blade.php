@@ -209,8 +209,6 @@
                                             <a href="{{route($category->slug,$category->name)}}">{{ htmlDecode(rawurldecode($category->name)) }}</a>
                                         </li>
                                     @endforeach
-
-
                                 </ul>
                             </div>
                         </div>

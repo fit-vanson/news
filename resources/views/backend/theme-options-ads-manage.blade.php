@@ -11,19 +11,12 @@
 			<div class="col-lg-12">
 				<div class="card">
                     @include('backend.partials.theme_options_card_header')
-
 					<div class="card-body tabs-area p-0">
 						@include('backend.partials.theme_options_tabs_nav')
 						<div class="tabs-body">
 							<!--Data Entry Form-->
 							<form novalidate="" data-validate="parsley" id="DataEntry_formId">
                                 <input value="{{ $datalist['id'] }}" type="text" name="site_id" id="site_id" class="dnone">
-
-
-
-
-
-
 								<div class="row">
 									<div class="col-lg-6">
 										<div class="form-group">
