@@ -158,7 +158,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
 
                                         <div class="divider_heading">{{ __('SEO') }}</div>
