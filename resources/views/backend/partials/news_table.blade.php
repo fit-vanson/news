@@ -18,9 +18,9 @@
 			@foreach($news as $row)
                 <tr>
                     <td class="checkboxlist text-center"><input name="item_ids[]" value="{{ $row->id }}" class="tp-checkbox selected_item" type="checkbox"></td>
-                    <td class="text-left">{{ htmlDecode(rawurldecode($row->title)) }}</td>
-{{--                    <td class="text-left"><a href="@if($row->categories) {{ route(strtolower($row->categories->slug).'.details',['id'=>$row->id,'slug'=>$row->slug]) }} @endif" target="_blank">{{ htmlDecode(rawurldecode($row->title))  }}</a></td>--}}
-
+{{--                    <td class="text-left">{{ htmlDecode(rawurldecode($row->title)) }}</td>--}}
+                        <?php $url = '//' . $row->categories->site->site_web . '/' . $row->categories->slug . '/details/' . $row->id . '/' . $row->slug; ?>
+                    <td class="text-left"><a href="{{ $url}}" target="_blank">{{ htmlDecode(rawurldecode($row->title))  }}</a></td>
                     <td class="text-left">{{ htmlDecode(rawurldecode($row->categories->name)) }}</td>
                     <td class="text-left">{{ $row->user->name }}</td>
 
