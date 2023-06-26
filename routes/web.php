@@ -79,7 +79,7 @@ Route::prefix('backend')->group(function(){
 	Route::get('/notfound', [App\Http\Controllers\HomeController::class, 'notFoundPage'])->name('backend.notfound')->middleware('auth');
 
 	//Dashboard
-	Route::get('/dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'getDashboardData'])->name('backend.dashboard')->middleware(['auth','is_admin']);
+	Route::get('/dashboard', [App\Http\Controllers\Backend\DashboardController::class, 'getDashboardData'])->name('backend.dashboard')->middleware(['auth']);
 
 
 
@@ -159,10 +159,6 @@ Route::prefix('backend')->group(function(){
     Route::get('/theme-options-footer', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'getThemeOptionsFooterPageLoad'])->name('backend.theme-options-footer')->middleware(['auth','is_admin_or_editor']);
     Route::post('/saveThemeOptionsFooter', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'saveThemeOptionsFooter'])->name('backend.saveThemeOptionsFooter')->middleware(['auth','is_admin_or_editor']);
 
-});
-
-Route::prefix('editor')->group(function(){
-    Route::get('/dashboard', [App\Http\Controllers\Editor\DashboardController::class, 'getDashboardData'])->name('editor.dashboard')->middleware(['auth','is_editor']);
 });
 
 
