@@ -42,7 +42,6 @@ $(function () {
         history.replaceState({}, document.title, newUrl);
     }
 
-
     $(document).on('click', '.click_search', function (event) {
         event.preventDefault();
         var tdValue = $(this).text(); // Lấy giá trị của thẻ <td>
