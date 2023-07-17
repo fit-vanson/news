@@ -40,8 +40,6 @@
                             <div class="table_col_image"><img src="/backend/images/album_icon.png"/></div>
                         </td>
                     @endif
-
-
                     @if ($row->is_publish == 1)
                         <td class="text-center">
                             <span class="enable_btn">{{ $row->tp_status->status }}</span>
@@ -51,8 +49,9 @@
                     @endif
                     <td class="text-center">
                         <div class="btn-group action-group">
-                            <a onclick="onDelete({{ $row->id }})" href="javascript:void(0);"><i
-                                    class="fa fa-trash"> </i></a>&nbsp;&nbsp;&nbsp;
+                            <a onclick="onDelete({{ $row->id }})" href="javascript:void(0);">
+                                <i class="fa fa-trash"> </i>
+                            </a>&nbsp;&nbsp;&nbsp;
 {{--                        <a onclick="onClone({{ $row->id }})"  href="javascript:void(0);"><i class="fa fa-clone" ></i></a>--}}
                         </div>
                     </td>
