@@ -413,13 +413,12 @@ class NewsController extends Controller
                     ->where(function ($query) use ($search) {
                         $query->whereRaw("LOWER(title) LIKE '%" . strtolower(rawurlencode($search)) . "%'");
                     })
-                    ->orderBy('news.id', 'desc')
+                    ->orderBy('track_news_urls.created_at', 'desc')
                     ->paginate(10);
             } else {
                 $trackNews = TrackNewsUrl::query()
                     ->whereIn('news_id',$news_id)
-                    ->orderBy('news.id', 'desc')
-
+                    ->orderBy('track_news_urls.created_at', 'desc')
                     ->paginate(10);
             }
             return view('backend.partials.track_news_table', compact('trackNews'))->render();
