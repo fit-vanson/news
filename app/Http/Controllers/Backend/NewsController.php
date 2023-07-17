@@ -412,7 +412,9 @@ class NewsController extends Controller
                     ->whereIn('news_id',$news_id)
                     ->whereHas('news', function ($query) use ($search) {
                         $query->whereRaw("LOWER(title) LIKE '%" . strtolower(rawurlencode($search)) . "%'");
+
                     })
+                    ->OrwhereRaw("ip_address LIKE '%" . $search . "%'")
                     ->orderBy('track_news_urls.created_at', 'desc')
                     ->paginate(10);
             } else {

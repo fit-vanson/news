@@ -26,7 +26,7 @@
                     <td class="text-left click_search">{{ htmlDecode(rawurldecode($row->news->title))  }}</td>
 
 
-                    <td class="text-left">{{ $row->ip_address }}</td>
+                    <td class="text-left click_search">{{ $row->ip_address }}</td>
                     <td class="text-left">{{ $row->platform_name}} - {{ $row->device_name}}  </td>
                     <td class="text-left">{{ $row->device_name_full}} </td>
                     <td class="text-left">{{ $row->country}} </td>
