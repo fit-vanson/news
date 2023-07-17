@@ -22,7 +22,7 @@
 
                     <td class="text-left"><a href="{{ route('backend.site', [$row->id]) }}"
                                              title="{{ __('Edit') }}">{{ $row->site_name }}</a></td>
-                    <td class="text-left"><a href="{{ $row->site_web }}" target="_blank">{{ $row->site_web }}</a></td>
+                    <td class="text-left"><a href="//{{ $row->site_web }}" target="_blank">{{ $row->site_web }}</a></td>
                     <td class="text-left">{{ count($row->categories) }}</td>
                     <td class="text-left">{{ count($row->news) }}</td>
 
