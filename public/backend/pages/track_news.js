@@ -49,6 +49,10 @@ $(function () {
         onSearch();
     });
 
+    $("#search").on("change", function() {
+        onSearch();
+    });
+
 });
 
 
