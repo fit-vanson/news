@@ -404,22 +404,25 @@ class NewsController extends Controller
         $site_id = $request->site_id;
 
         $site = MultipleSites::findorFail($site_id);
+
+        $news_id = $site->news->pluck('id')->toArray();
         if ($request->ajax()) {
             if ($search != '') {
-                $news = $site->news()
+                $trackNews = TrackNewsUrl::query()
+                    ->whereIn('news_id',$news_id)
                     ->where(function ($query) use ($search) {
                         $query->whereRaw("LOWER(title) LIKE '%" . strtolower(rawurlencode($search)) . "%'");
                     })
-
                     ->orderBy('news.id', 'desc')
                     ->paginate(10);
             } else {
-                $news = $site->news()
+                $trackNews = TrackNewsUrl::query()
+                    ->whereIn('news_id',$news_id)
                     ->orderBy('news.id', 'desc')
 
                     ->paginate(10);
             }
-            return view('backend.partials.news_table', compact('news'))->render();
+            return view('backend.partials.track_news_table', compact('trackNews'))->render();
         }
     }
 }
