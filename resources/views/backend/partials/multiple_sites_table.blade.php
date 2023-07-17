@@ -17,11 +17,13 @@
         @if (count($datalist)>0)
             @foreach($datalist as $row)
                 <tr>
-                    <td class="checkboxlist text-center"><input name="item_ids[]" value="{{ $row->id }}"
-                                                                class="tp-checkbox selected_item" type="checkbox"></td>
+                    <td class="checkboxlist text-center">
+                        <input name="item_ids[]" value="{{ $row->id }}" class="tp-checkbox selected_item" type="checkbox">
+                    </td>
 
-                    <td class="text-left"><a href="{{ route('backend.site', [$row->id]) }}"
-                                             title="{{ __('Edit') }}">{{ $row->site_name }}</a></td>
+                    <td class="text-left">
+                        <a href="{{ route('backend.site', [$row->id]) }}" title="{{ __('Edit') }}">{{ $row->site_name }}</a>
+                    </td>
                     <td class="text-left"><a href="//{{ $row->site_web }}" target="_blank">{{ $row->site_web }}</a></td>
                     <td class="text-left">{{ count($row->categories) }}</td>
                     <td class="text-left">{{ count($row->news) }}</td>
@@ -51,7 +53,7 @@
                         <div class="btn-group action-group">
                             <a onclick="onDelete({{ $row->id }})" href="javascript:void(0);"><i
                                     class="fa fa-trash"> </i></a>&nbsp;&nbsp;&nbsp;
-                            {{--                        <a onclick="onClone({{ $row->id }})"  href="javascript:void(0);"><i class="fa fa-clone" ></i></a>--}}
+{{--                        <a onclick="onClone({{ $row->id }})"  href="javascript:void(0);"><i class="fa fa-clone" ></i></a>--}}
                         </div>
                     </td>
                 </tr>
