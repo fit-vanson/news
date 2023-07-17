@@ -21,10 +21,6 @@ $(function () {
 
     resetForm("DataEntry_formId");
 
-
-
-
-
     $(document).on('click', '.tp_pagination nav ul.pagination a', function (event) {
         event.preventDefault();
         var page = $(this).attr('href').split('page=')[1];
@@ -40,14 +36,20 @@ $(function () {
 
 
     if (searchParams.has("news_id")) {
-        const newsId = searchParams.get("news_id");
-        onEdit(newsId);
         $("#tabs_nav_site_news").addClass("active");
-
         searchParams.delete("news_id");
         const newUrl = `${window.location.pathname}?${searchParams.toString()}`;
         history.replaceState({}, document.title, newUrl);
     }
+
+
+    $(document).on('click', '.click_search', function (event) {
+        event.preventDefault();
+        var tdValue = $(this).text(); // Lấy giá trị của thẻ <td>
+        $("#search").val(tdValue)
+        onSearch();
+    });
+
 });
 
 

@@ -8,9 +8,9 @@
             <th class="text-left" style="width:10%">{{ __('IP Address') }}</th>
             <th class="text-left" style="width:10%">{{ __('Platform Name') }}</th>
             <th class="text-left" style="width:30%">{{ __('Device Name') }}</th>
-            <th class="text-center" style="width:10%">{{ __('Country') }} </th>
-            <th class="text-center" style="width:10%">{{ __('Robot') }}</th>
-            <th class="text-center" style="width:10%">{{ __('Count') }}</th>
+            <th class="text-left" style="width:10%">{{ __('Country') }} </th>
+            <th class="text-left" style="width:10%">{{ __('Robot') }}</th>
+            <th class="text-left" style="width:10%">{{ __('Count') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -23,8 +23,7 @@
                                                                 class="tp-checkbox selected_item" type="checkbox"></td>
 
                         <?php $url = '//' . $row->news->categories->site->site_web . '/' . $row->news->categories->slug . '/details/' . $row->news->id . '/' . $row->news->slug; ?>
-                    <td class="text-left"><a href="{{ $url}}"
-                                             target="_blank">{{ htmlDecode(rawurldecode($row->news->title))  }}</a></td>
+                    <td class="text-left click_search">{{ htmlDecode(rawurldecode($row->news->title))  }}</td>
 
 
                     <td class="text-left">{{ $row->ip_address }}</td>

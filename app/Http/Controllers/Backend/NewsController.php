@@ -410,7 +410,7 @@ class NewsController extends Controller
             if ($search != '') {
                 $trackNews = TrackNewsUrl::query()
                     ->whereIn('news_id',$news_id)
-                    ->where(function ($query) use ($search) {
+                    ->whereHas('news', function ($query) use ($search) {
                         $query->whereRaw("LOWER(title) LIKE '%" . strtolower(rawurlencode($search)) . "%'");
                     })
                     ->orderBy('track_news_urls.created_at', 'desc')
