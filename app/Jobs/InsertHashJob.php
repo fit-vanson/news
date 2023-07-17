@@ -4,12 +4,10 @@ namespace App\Jobs;
 
 use App\Models\Media_option;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class InsertHashJob implements ShouldQueue
@@ -45,7 +43,7 @@ class InsertHashJob implements ShouldQueue
             $insertData = [];
 
             foreach ($images as $image) {
-                $image_path = storage_path('app/public/media/'.$image->thumbnail);
+                $image_path = storage_path('app/public/media/' . $image->thumbnail);
                 $insertData[] = [
                     'id' => $image->id,
                     'hash_image' => md5_file($image_path),

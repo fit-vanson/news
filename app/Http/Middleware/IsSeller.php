@@ -11,20 +11,20 @@ class IsSeller
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next)
     {
-		if(Auth::check()) {
-			if(auth()->user()->role_id == 3){
-				return $next($request);
-			}else{
-				return redirect('/');
-			}
-		}else{
-			return redirect('/login');
-		}
+        if (Auth::check()) {
+            if (auth()->user()->role_id == 3) {
+                return $next($request);
+            } else {
+                return redirect('/');
+            }
+        } else {
+            return redirect('/login');
+        }
     }
 }

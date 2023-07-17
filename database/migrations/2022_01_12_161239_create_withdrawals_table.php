@@ -15,13 +15,13 @@ class CreateWithdrawalsTable extends Migration
     {
         Schema::create('withdrawals', function (Blueprint $table) {
             $table->id();
-			$table->integer('seller_id')->nullable();
-			$table->double('amount', 8, 2)->nullable();
-			$table->double('fee_amount', 8, 2)->nullable();
-			$table->string('payment_method')->nullable();
-			$table->string('transaction_id')->nullable();
-			$table->text('description')->nullable();
-			$table->integer('status_id')->nullable();
+            $table->integer('seller_id')->nullable();
+            $table->double('amount', 8, 2)->nullable();
+            $table->double('fee_amount', 8, 2)->nullable();
+            $table->string('payment_method')->nullable();
+            $table->string('transaction_id')->nullable();
+            $table->text('description')->nullable();
+            $table->integer('status_id')->nullable();
             $table->timestamps();
         });
     }

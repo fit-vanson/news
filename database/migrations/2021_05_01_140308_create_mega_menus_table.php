@@ -15,19 +15,19 @@ class CreateMegaMenusTable extends Migration
     {
         Schema::create('mega_menus', function (Blueprint $table) {
             $table->id();
-			$table->integer('menu_id')->nullable();
-			$table->integer('menu_parent_id')->nullable();
-			$table->text('mega_menu_title')->nullable();
-			$table->integer('is_title')->nullable();
-			$table->integer('is_image')->nullable();
-			$table->text('image')->nullable();
-			$table->string('css_class')->nullable();
-			$table->string('lan')->nullable();
-			$table->integer('sort_order')->nullable();
+            $table->integer('menu_id')->nullable();
+            $table->integer('menu_parent_id')->nullable();
+            $table->text('mega_menu_title')->nullable();
+            $table->integer('is_title')->nullable();
+            $table->integer('is_image')->nullable();
+            $table->text('image')->nullable();
+            $table->string('css_class')->nullable();
+            $table->string('lan')->nullable();
+            $table->integer('sort_order')->nullable();
             $table->timestamps();
         });
-    }	
-	
+    }
+
     /**
      * Reverse the migrations.
      *

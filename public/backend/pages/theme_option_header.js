@@ -1,15 +1,15 @@
 var $ = jQuery.noConflict();
 
 $(function () {
-	"use strict";
+    "use strict";
 
-	$.ajaxSetup({
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		}
-	});
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
-	$("#submit-form").on("click", function () {
+    $("#submit-form").on("click", function () {
         $("#DataEntry_formId").submit();
     });
 
@@ -43,18 +43,18 @@ jQuery('#DataEntry_formId').parsley({
 function onConfirmWhenAddEdit() {
 
     $.ajax({
-		type : 'POST',
-		url: base_url + '/backend/saveThemeOptionsHeader',
-		data: $('#DataEntry_formId').serialize(),
-		success: function (response) {
-			var msgType = response.msgType;
-			var msg = response.msg;
-			if (msgType == "success") {
-				onSuccessMsg(msg);
-			} else {
-				onErrorMsg(msg);
-			}
-		}
-	});
+        type: 'POST',
+        url: base_url + '/backend/saveThemeOptionsHeader',
+        data: $('#DataEntry_formId').serialize(),
+        success: function (response) {
+            var msgType = response.msgType;
+            var msg = response.msg;
+            if (msgType == "success") {
+                onSuccessMsg(msg);
+            } else {
+                onErrorMsg(msg);
+            }
+        }
+    });
 }
 

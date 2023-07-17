@@ -15,10 +15,10 @@ class CreateMediaSettingsTable extends Migration
     {
         Schema::create('media_settings', function (Blueprint $table) {
             $table->id();
-			$table->string('media_type')->unique();
-			$table->string('media_desc', 200)->nullable();
-			$table->string('media_width', 100)->nullable();
-			$table->string('media_height', 100)->nullable();
+            $table->string('media_type')->unique();
+            $table->string('media_desc', 200)->nullable();
+            $table->string('media_width', 100)->nullable();
+            $table->string('media_height', 100)->nullable();
             $table->timestamps();
         });
     }

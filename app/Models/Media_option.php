@@ -11,11 +11,11 @@ class Media_option extends Model
 
     protected $fillable = [
         'title',
-		'alt_title',
-		'thumbnail',
-		'large_image',
-		'option_value',
-		'hash_image',
+        'alt_title',
+        'thumbnail',
+        'large_image',
+        'option_value',
+        'hash_image',
     ];
 
 

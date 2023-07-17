@@ -13,14 +13,18 @@
 
     @yield('meta_content')
 
-    <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
 
     <title>{{ $siteInfo['site_title'] }}</title>
 
-    <link rel="shortcut icon" href="{{ $siteInfo['favicon'] ? asset('media/'.$siteInfo['favicon']) : asset('backend/images/favicon.ico') }}" type="image/x-icon">
-    <link rel="icon" href="{{ $siteInfo['favicon'] ? asset('media/'.$siteInfo['favicon']) : asset('backend/images/favicon.ico') }}" type="image/x-icon">
+    <link rel="shortcut icon"
+          href="{{ $siteInfo['favicon'] ? asset('media/'.$siteInfo['favicon']) : asset('backend/images/favicon.ico') }}"
+          type="image/x-icon">
+    <link rel="icon"
+          href="{{ $siteInfo['favicon'] ? asset('media/'.$siteInfo['favicon']) : asset('backend/images/favicon.ico') }}"
+          type="image/x-icon">
     <!-- Apple Favicon -->
     <!-- All Device Favicon -->
     <!-- Font Awesome -->
@@ -53,9 +57,6 @@
     @endif
 
 
-
-
-
 </head>
 
 <body>
@@ -63,22 +64,22 @@
 <div id="main-wrapper">
     <header class="sticky-manu">
         <!-- Maan Top Bar Start -->
-    @include('frontend.layouts._topheader')
+        @include('frontend.layouts._topheader')
         <!-- Maan Top Bar End -->
         <!-- Maan Mid Bar Start -->
-    @include('frontend.layouts._header')
+        @include('frontend.layouts._header')
         <!-- Maan Mid Bar End -->
         <!-- Maan Manu Bar Start -->
-    @include('frontend.layouts._menu')
+        @include('frontend.layouts._menu')
         <!-- Maan Manu Bar End -->
     </header>
     <main>
         <!-- Maan Breaking News Start -->
-    @if(Route::currentRouteName() !='signup'&& Route::currentRouteName() !='signin')
+        @if(Route::currentRouteName() !='signup'&& Route::currentRouteName() !='signin')
 
-        @include('frontend.layouts._breakingnews')
+            @include('frontend.layouts._breakingnews')
 
-    @endif
+        @endif
         <!-- Maan Breaking News End -->
         <!-- Maan news  preloader start -->
         <div class="loader-inner ball-scale-multiple">
@@ -86,7 +87,7 @@
             <div></div>
             <div></div>
         </div>
-         <link rel="stylesheet" href="{{ asset('frontend/css/loaders.css') }}">
+        <link rel="stylesheet" href="{{ asset('frontend/css/loaders.css') }}">
 
 
         <!-- Maan news  preloader end -->
@@ -94,7 +95,7 @@
         @yield('main_content')
         <!-- Main Content End -->
     </main>
- @include('frontend.layouts._footer')
+    @include('frontend.layouts._footer')
 </div>
 
 <!-- jQuery -->

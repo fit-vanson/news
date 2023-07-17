@@ -3,12 +3,9 @@
 namespace App\Imports;
 
 use App\Jobs\ImportProductRow;
-
 use Illuminate\Support\Facades\Log;
-
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\OnEachRow;
-
 use Maatwebsite\Excel\Concerns\RegistersEventListeners;
 use Maatwebsite\Excel\Concerns\WithBatchInserts;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
@@ -22,11 +19,11 @@ class ProductsImport implements OnEachRow, WithChunkReading, WithBatchInserts, W
     use RegistersEventListeners;
 
     /**
-    * @param array $row
-    *
+     * @param array $row
      *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
 
     public function onRow(Row $row)
     {

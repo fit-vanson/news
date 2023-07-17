@@ -6,18 +6,18 @@ var site_id = $("#site_id").val();
 
 
 $(function () {
-	"use strict";
+    "use strict";
 
-	$.ajaxSetup({
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		}
-	});
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
     $("#select_MultipleSites").addClass("active");
 
-	resetForm("DataEntry_formId");
+    resetForm("DataEntry_formId");
 
-	$("#submit-form").on("click", function () {
+    $("#submit-form").on("click", function () {
         $("#DataEntry_formId").submit();
     });
 
@@ -25,75 +25,74 @@ $(function () {
         $("#Bulk_formId").submit();
     });
 
-	$(document).on('click', '.tp_pagination nav ul.pagination a', function(event){
-		event.preventDefault();
-		var page = $(this).attr('href').split('page=')[1];
-		onPaginationDataLoad(page);
-	});
+    $(document).on('click', '.tp_pagination nav ul.pagination a', function (event) {
+        event.preventDefault();
+        var page = $(this).attr('href').split('page=')[1];
+        onPaginationDataLoad(page);
+    });
 
-	$('input:checkbox').prop('checked',false);
+    $('input:checkbox').prop('checked', false);
 
     $(".checkAll").on("click", function () {
         $("input:checkbox").not(this).prop("checked", this.checked);
     });
 
 
+    $("#is_publish").chosen();
+    $("#is_publish").trigger("chosen:updated");
 
-	$("#is_publish").chosen();
-	$("#is_publish").trigger("chosen:updated");
-
-	$("#on_thumbnail").on("click", function () {
-		media_type = 'Thumbnail';
-		onGlobalMediaModalView();
+    $("#on_thumbnail").on("click", function () {
+        media_type = 'Thumbnail';
+        onGlobalMediaModalView();
     });
 
-	$("#on_subheader_image").on("click", function () {
-		media_type = 'Subheader';
-		onGlobalMediaModalView();
+    $("#on_subheader_image").on("click", function () {
+        media_type = 'Subheader';
+        onGlobalMediaModalView();
     });
 
-	$("#on_og_image").on("click", function () {
-		media_type = 'SEO_Image';
-		onGlobalMediaModalView();
+    $("#on_og_image").on("click", function () {
+        media_type = 'SEO_Image';
+        onGlobalMediaModalView();
     });
 
-	$("#media_select_file").on("click", function () {
+    $("#media_select_file").on("click", function () {
 
-		var thumbnail = $("#thumbnail").val();
+        var thumbnail = $("#thumbnail").val();
 
-		if(media_type == 'Thumbnail'){
+        if (media_type == 'Thumbnail') {
 
-			if(thumbnail !=''){
-				$("#category_thumbnail").val(thumbnail);
-				$("#view_category_thumbnail").html('<img src="'+public_path+'/media/'+thumbnail+'">');
-			}else if (media_type == 'SEO_Image') {
+            if (thumbnail != '') {
+                $("#category_thumbnail").val(thumbnail);
+                $("#view_category_thumbnail").html('<img src="' + public_path + '/media/' + thumbnail + '">');
+            } else if (media_type == 'SEO_Image') {
 
-                if(thumbnail !=''){
+                if (thumbnail != '') {
                     $("#og_image").val(thumbnail);
-                    $("#view_og_image").html('<img src="'+public_path+'/media/'+thumbnail+'">');
+                    $("#view_og_image").html('<img src="' + public_path + '/media/' + thumbnail + '">');
                 }
 
                 $("#remove_og_image").show();
             }
 
-			$("#remove_category_thumbnail").show();
+            $("#remove_category_thumbnail").show();
 
-		}
+        }
 
-		$('#global_media_modal_view').modal('hide');
+        $('#global_media_modal_view').modal('hide');
     });
 
-	$("#name").on("blur", function () {
-		// if(RecordId ==''){
-			onCategorySlug();
-		// }
-	});
+    $("#name").on("blur", function () {
+        // if(RecordId ==''){
+        onCategorySlug();
+        // }
+    });
 
-	$("#language_code").val(0).trigger("chosen:updated");
+    $("#language_code").val(0).trigger("chosen:updated");
 
-	$("#language_code").on("change", function () {
-		onRefreshData();
-	});
+    $("#language_code").on("change", function () {
+        onRefreshData();
+    });
 
 });
 
@@ -104,34 +103,34 @@ function onCheckAll() {
 }
 
 function onPaginationDataLoad(page) {
-	$.ajax({
-		url:base_url + "/backend/getCategoriesTableData?site_id="+site_id+"&page="+page
-		+"&search="+$("#search").val(),
-		success:function(data){
-			$('#tp_datalist').html(data);
-			onCheckAll();
-		}
-	});
+    $.ajax({
+        url: base_url + "/backend/getCategoriesTableData?site_id=" + site_id + "&page=" + page
+            + "&search=" + $("#search").val(),
+        success: function (data) {
+            $('#tp_datalist').html(data);
+            onCheckAll();
+        }
+    });
 }
 
 function onRefreshData() {
-	$.ajax({
-		url:base_url + "/backend/getCategoriesTableData?site_id="+site_id+"&search="+$("#search").val(),
-		success:function(data){
-			$('#tp_datalist').html(data);
-			onCheckAll();
-		}
-	});
+    $.ajax({
+        url: base_url + "/backend/getCategoriesTableData?site_id=" + site_id + "&search=" + $("#search").val(),
+        success: function (data) {
+            $('#tp_datalist').html(data);
+            onCheckAll();
+        }
+    });
 }
 
 function onSearch() {
-	$.ajax({
-		url: base_url + "/backend/getCategoriesTableData?site_id="+site_id+"&search="+$("#search").val(),
-		success:function(data){
-			$('#tp_datalist').html(data);
-			onCheckAll();
-		}
-	});
+    $.ajax({
+        url: base_url + "/backend/getCategoriesTableData?site_id=" + site_id + "&search=" + $("#search").val(),
+        success: function (data) {
+            $('#tp_datalist').html(data);
+            onCheckAll();
+        }
+    });
 }
 
 function resetForm(id) {
@@ -139,28 +138,27 @@ function resetForm(id) {
         this.reset();
     });
 
-	$("#is_publish").trigger("chosen:updated");
+    $("#is_publish").trigger("chosen:updated");
 }
 
 function onListPanel() {
-	$('.parsley-error-list').hide();
+    $('.parsley-error-list').hide();
     $('#list-panel, .btn-form').show();
     $('#form-panel, #form-bulk, .btn-list').hide();
 }
 
 function onFormPanel() {
     resetForm("DataEntry_formId");
-	RecordId = '';
+    RecordId = '';
 
-	$("#remove_category_thumbnail").hide();
-	$("#category_thumbnail").html('');
+    $("#remove_category_thumbnail").hide();
+    $("#category_thumbnail").html('');
 
     $("#remove_og_image").hide();
     $("#og_image").html('');
 
 
-
-	$("#is_publish").trigger("chosen:updated");
+    $("#is_publish").trigger("chosen:updated");
 
     $('#list-panel, .btn-form').hide();
     $('#form-panel, .btn-list').show();
@@ -176,12 +174,12 @@ function onEditPanel() {
 }
 
 function onMediaImageRemove(type) {
-	if(type == 'category_thumbnail'){
+    if (type == 'category_thumbnail') {
 
-		$('#category_thumbnail').val('');
-		$("#remove_category_thumbnail").hide();
+        $('#category_thumbnail').val('');
+        $("#remove_category_thumbnail").hide();
 
-	}
+    }
 }
 
 function showPerslyError() {
@@ -193,8 +191,7 @@ jQuery('#DataEntry_formId').parsley({
         onFieldValidate: function (elem) {
             if (!$(elem).is(':visible')) {
                 return true;
-            }
-            else {
+            } else {
                 showPerslyError();
                 return false;
             }
@@ -211,195 +208,195 @@ jQuery('#DataEntry_formId').parsley({
 function onConfirmWhenAddEdit() {
 
     $.ajax({
-		type : 'POST',
-		url: base_url + '/backend/saveCategoriesData?site_id='+site_id,
-		data: $('#DataEntry_formId').serialize(),
-		success: function (response) {
-			var msgType = response.msgType;
-			var msg = response.msg;
+        type: 'POST',
+        url: base_url + '/backend/saveCategoriesData?site_id=' + site_id,
+        data: $('#DataEntry_formId').serialize(),
+        success: function (response) {
+            var msgType = response.msgType;
+            var msg = response.msg;
 
-			if (msgType == "success") {
-				resetForm("DataEntry_formId");
-				onRefreshData();
-				onSuccessMsg(msg);
-				onListPanel();
-			} else {
-				onErrorMsg(msg);
-			}
+            if (msgType == "success") {
+                resetForm("DataEntry_formId");
+                onRefreshData();
+                onSuccessMsg(msg);
+                onListPanel();
+            } else {
+                onErrorMsg(msg);
+            }
 
-			onCheckAll();
-		}
-	});
+            onCheckAll();
+        }
+    });
 }
 
 function onEdit(id) {
-	RecordId = id;
-	// var msg = TEXT["Do you really want to edit this record"];
+    RecordId = id;
+    // var msg = TEXT["Do you really want to edit this record"];
     onLoadEditData()
-	// onCustomModal("onLoadEditData");
+    // onCustomModal("onLoadEditData");
 }
 
 function onLoadEditData() {
 
     $.ajax({
-		type : 'POST',
-		url: base_url + '/backend/getCategoriesById',
-		data: 'id='+RecordId,
-		success: function (response) {
-			var data = response;
-			$("#RecordId").val(data.id);
-			$("#name").val(decodeURIComponent(data.name));
-			$("#slug").val(decodeURIComponent(data.slug));
+        type: 'POST',
+        url: base_url + '/backend/getCategoriesById',
+        data: 'id=' + RecordId,
+        success: function (response) {
+            var data = response;
+            $("#RecordId").val(data.id);
+            $("#name").val(decodeURIComponent(data.name));
+            $("#slug").val(decodeURIComponent(data.slug));
 
-			$("#is_publish").val(data.is_publish).trigger("chosen:updated");
+            $("#is_publish").val(data.is_publish).trigger("chosen:updated");
 
-			if(data.description != null){
-				$("#description").val(decodeURIComponent(data.description));
-			}else{
-				$("#description").val('');
-			}
+            if (data.description != null) {
+                $("#description").val(decodeURIComponent(data.description));
+            } else {
+                $("#description").val('');
+            }
 
- 			if(data.thumbnail != null){
-				$("#category_thumbnail").val(data.thumbnail);
-				$("#view_category_thumbnail").html('<img src="'+public_path+'/media/'+data.thumbnail+'">');
-				$("#remove_category_thumbnail").show();
-			}else{
-				$("#category_thumbnail").val('');
-				$("#view_category_thumbnail").html('');
-				$("#remove_category_thumbnail").hide();
-			}
+            if (data.thumbnail != null) {
+                $("#category_thumbnail").val(data.thumbnail);
+                $("#view_category_thumbnail").html('<img src="' + public_path + '/media/' + data.thumbnail + '">');
+                $("#remove_category_thumbnail").show();
+            } else {
+                $("#category_thumbnail").val('');
+                $("#view_category_thumbnail").html('');
+                $("#remove_category_thumbnail").hide();
+            }
 
-            if(data.og_title != null){
+            if (data.og_title != null) {
                 $("#og_title").val(decodeURIComponent(data.og_title));
-            }else{
+            } else {
                 $("#og_title").val('');
             }
 
-            if(data.og_keywords != null){
+            if (data.og_keywords != null) {
                 $("#og_keywords").val(decodeURIComponent(data.og_keywords));
-            }else{
+            } else {
                 $("#og_keywords").val('');
             }
 
-            if(data.og_description != null){
+            if (data.og_description != null) {
                 $("#og_description").val(decodeURIComponent(data.og_description));
-            }else{
+            } else {
                 $("#og_description").val('');
             }
 
-            if(data.og_image != null){
+            if (data.og_image != null) {
                 $("#og_image").val(data.og_image);
-                $("#view_og_image").html('<img src="'+public_path+'/media/'+data.og_image+'">');
+                $("#view_og_image").html('<img src="' + public_path + '/media/' + data.og_image + '">');
                 $("#remove_og_image").show();
-            }else{
+            } else {
                 $("#og_image").val('');
                 $("#view_og_image").html('');
                 $("#remove_og_image").hide();
             }
 
 
-			onEditPanel();
-		}
+            onEditPanel();
+        }
     });
 }
 
 function onDelete(id) {
-	RecordId = id;
-	var msg = TEXT["Do you really want to delete this record"];
-	onCustomModal(msg, "onConfirmDelete");
+    RecordId = id;
+    var msg = TEXT["Do you really want to delete this record"];
+    onCustomModal(msg, "onConfirmDelete");
 }
 
 function onConfirmDelete() {
 
     $.ajax({
-		type : 'POST',
-		url: base_url + '/backend/deleteCategories',
-		data: 'id='+RecordId,
-		success: function (response) {
-			var msgType = response.msgType;
-			var msg = response.msg;
+        type: 'POST',
+        url: base_url + '/backend/deleteCategories',
+        data: 'id=' + RecordId,
+        success: function (response) {
+            var msgType = response.msgType;
+            var msg = response.msg;
 
-			if(msgType == "success"){
-				onSuccessMsg(msg);
-				onRefreshData();
-			}else{
-				onErrorMsg(msg);
-			}
+            if (msgType == "success") {
+                onSuccessMsg(msg);
+                onRefreshData();
+            } else {
+                onErrorMsg(msg);
+            }
 
-			onCheckAll();
-		}
+            onCheckAll();
+        }
     });
 }
 
 function onBulkAction() {
-	ids = [];
-	$('.selected_item:checked').each(function(){
-		ids.push($(this).val());
-	});
+    ids = [];
+    $('.selected_item:checked').each(function () {
+        ids.push($(this).val());
+    });
 
-	if(ids.length == 0){
-		var msg = TEXT["Please select record"];
-		onErrorMsg(msg);
-		return;
-	}
+    if (ids.length == 0) {
+        var msg = TEXT["Please select record"];
+        onErrorMsg(msg);
+        return;
+    }
 
-	BulkAction = $("#bulk-action").val();
-	if(BulkAction == ''){
-		var msg = TEXT["Please select action"];
-		onErrorMsg(msg);
-		return;
-	}
+    BulkAction = $("#bulk-action").val();
+    if (BulkAction == '') {
+        var msg = TEXT["Please select action"];
+        onErrorMsg(msg);
+        return;
+    }
 
-	if(BulkAction == 'publish'){
-		var msg = TEXT["Do you really want to publish this records"];
-	}else if(BulkAction == 'draft'){
-		var msg = TEXT["Do you really want to draft this records"];
-	}else if(BulkAction == 'delete'){
-		var msg = TEXT["Do you really want to delete this records"];
-	}
+    if (BulkAction == 'publish') {
+        var msg = TEXT["Do you really want to publish this records"];
+    } else if (BulkAction == 'draft') {
+        var msg = TEXT["Do you really want to draft this records"];
+    } else if (BulkAction == 'delete') {
+        var msg = TEXT["Do you really want to delete this records"];
+    }
 
-	onCustomModal(msg, "onConfirmBulkAction");
+    onCustomModal(msg, "onConfirmBulkAction");
 }
 
 function onConfirmBulkAction() {
 
     $.ajax({
-		type : 'POST',
-		url: base_url + '/backend/bulkActionCategories',
-		data: 'ids='+ids+'&BulkAction='+BulkAction,
-		success: function (response) {
-			var msgType = response.msgType;
-			var msg = response.msg;
+        type: 'POST',
+        url: base_url + '/backend/bulkActionCategories',
+        data: 'ids=' + ids + '&BulkAction=' + BulkAction,
+        success: function (response) {
+            var msgType = response.msgType;
+            var msg = response.msg;
 
-			if(msgType == "success"){
-				onSuccessMsg(msg);
-				onRefreshData();
-				ids = [];
-			}else{
-				onErrorMsg(msg);
-			}
+            if (msgType == "success") {
+                onSuccessMsg(msg);
+                onRefreshData();
+                ids = [];
+            } else {
+                onErrorMsg(msg);
+            }
 
-			onCheckAll();
-		}
+            onCheckAll();
+        }
     });
 }
 
 //Category Slug
 function onCategorySlug() {
-	var StrName = $("#name").val();
-	var str_name = StrName.trim();
-	var strLength = str_name.length;
-	if(strLength>0){
-		$.ajax({
-			type : 'POST',
-			url: base_url + '/backend/hasCategorySlug',
-			data: 'slug='+StrName,
-			success: function (response) {
-				var slug = response.slug;
-				$("#slug").val(slug);
-			}
-		});
-	}
+    var StrName = $("#name").val();
+    var str_name = StrName.trim();
+    var strLength = str_name.length;
+    if (strLength > 0) {
+        $.ajax({
+            type: 'POST',
+            url: base_url + '/backend/hasCategorySlug',
+            data: 'slug=' + StrName,
+            success: function (response) {
+                var slug = response.slug;
+                $("#slug").val(slug);
+            }
+        });
+    }
 }
 
 
@@ -415,8 +412,7 @@ jQuery('#Bulk_formId').parsley({
         onFieldValidate: function (elem) {
             if (!$(elem).is(':visible')) {
                 return true;
-            }
-            else {
+            } else {
                 showPerslyError();
                 return false;
             }
@@ -433,7 +429,7 @@ jQuery('#Bulk_formId').parsley({
 function onConfirmWhenAddBulk() {
     var formData = new FormData($("#Bulk_formId")[0]);
     $.ajax({
-        type : 'POST',
+        type: 'POST',
         url: base_url + '/backend/saveProductCategoriesBulk',
         data: formData,
         dataType: 'json',

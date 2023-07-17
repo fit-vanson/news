@@ -223,7 +223,8 @@
                                 <div class="social-media">
                                     <ul>
                                         @foreach($siteInfo['social_media'] as $key=>$social)
-                                            <li><a href="{{$social['url']}}" target="_blank"><i class="fab fa-{{$key}}"></i></a></li>
+                                            <li><a href="{{$social['url']}}" target="_blank"><i
+                                                        class="fab fa-{{$key}}"></i></a></li>
                                         @endforeach
 
                                     </ul>

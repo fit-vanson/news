@@ -15,8 +15,8 @@ class CreateWithdrawalImagesTable extends Migration
     {
         Schema::create('withdrawal_images', function (Blueprint $table) {
             $table->id();
-			$table->integer('withdrawal_id')->nullable();
-			$table->text('images')->nullable();
+            $table->integer('withdrawal_id')->nullable();
+            $table->text('images')->nullable();
             $table->timestamps();
         });
     }

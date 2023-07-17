@@ -15,9 +15,9 @@ class CreateLankeyvaluesTable extends Migration
     {
         Schema::create('lankeyvalues', function (Blueprint $table) {
             $table->id();
-			$table->string('language_code', 30)->nullable();
-			$table->string('language_key')->nullable();
-			$table->text('language_value')->nullable();
+            $table->string('language_code', 30)->nullable();
+            $table->string('language_key')->nullable();
+            $table->text('language_value')->nullable();
             $table->timestamps();
         });
     }

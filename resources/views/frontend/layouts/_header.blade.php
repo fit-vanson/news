@@ -4,7 +4,7 @@
             <div class="col-sm-3 col-lg-2">
                 <div class="maan-logo">
                     <a href="{{ URL('/') }}">
-                        <img src="{{ asset('media/'.$siteInfo['front_logo']) }}" alt="logo" />
+                        <img src="{{ asset('media/'.$siteInfo['front_logo']) }}" alt="logo"/>
                     </a>
                 </div>
             </div>
@@ -14,7 +14,8 @@
                         {!! $siteInfo['header_ads'] !!}
                     @else
                         <a href="  https://www.google.com/ " target="_blank">
-                            <img src=" {{ asset('frontend/img/header-adds/adds.jpg') }} " alt="{{ asset('frontend/img/header-adds/adds.jpg') }}">
+                            <img src=" {{ asset('frontend/img/header-adds/adds.jpg') }} "
+                                 alt="{{ asset('frontend/img/header-adds/adds.jpg') }}">
                         </a>
                     @endif
 

@@ -11,6 +11,7 @@ Tags:
 body {
     overflow: hidden;
 }
+
 #preloader {
     position: fixed;
     top: 0;
@@ -18,11 +19,12 @@ body {
     right: 0;
     bottom: 0;
     background-color: #fff;
-     background-color:rgba(3, 137, 255, 0.5);
+    background-color: rgba(3, 137, 255, 0.5);
     /* change if the mask should have another color then white */
     z-index: 99;
     /* makes sure it stays on top */
 }
+
 #status {
     width: 200px;
     height: 200px;

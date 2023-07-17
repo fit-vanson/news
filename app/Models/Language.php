@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Language extends Model
 {
     use HasFactory;
-	
+
     protected $fillable = [
-        'language_code', 
-		'language_name', 
-		'flag', 
-		'language_default',
-		'is_rtl',
-		'status',
-    ];	
+        'language_code',
+        'language_name',
+        'flag',
+        'language_default',
+        'is_rtl',
+        'status',
+    ];
 }

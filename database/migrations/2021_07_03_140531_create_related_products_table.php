@@ -15,8 +15,8 @@ class CreateRelatedProductsTable extends Migration
     {
         Schema::create('related_products', function (Blueprint $table) {
             $table->id();
-			$table->integer('product_id')->nullable();
-			$table->integer('related_item_id')->nullable();
+            $table->integer('product_id')->nullable();
+            $table->integer('related_item_id')->nullable();
             $table->timestamps();
         });
     }

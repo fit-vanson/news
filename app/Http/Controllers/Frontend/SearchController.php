@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\News;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
@@ -13,14 +11,14 @@ class SearchController extends Controller
     {
 
         $site = getSite();
-        if(!$site){
+        if (!$site) {
             return 1;
         }
         $searchValue = htmlDecode(rawurlencode($request->search));
 
         $newsQuery = $site
             ->news()
-            ->where('news.is_publish',1)
+            ->where('news.is_publish', 1)
             ->where(function ($query) use ($searchValue) {
                 $query
                     ->where('news.title', 'like', '%' . $searchValue . '%')
@@ -44,6 +42,6 @@ class SearchController extends Controller
             ->get();
 
 
-        return view('frontend.pages.search',compact('searchNews','popularsNews','recentNews'));
+        return view('frontend.pages.search', compact('searchNews', 'popularsNews', 'recentNews'));
     }
 }

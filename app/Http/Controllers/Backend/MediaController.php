@@ -3,202 +3,202 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Jobs\DeleteFilesJob;
-use App\Jobs\DeleteMediaOptionsJob;
 use App\Jobs\InsertHashJob;
+use App\Models\Media_option;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use App\Models\Media_option;
-
-use Jenssegers\ImageHash\ImageHash;
-use Jenssegers\ImageHash\Implementations\DifferenceHash;
 
 class MediaController extends Controller
 {
     //Media page load
-    public function getMediaPageLoad(Request $request){
+    public function getMediaPageLoad(Request $request)
+    {
 
-		$search = $request->search;
+        $search = $request->search;
 
-        if($search != ''){
-            $media_datalist = Media_option::where(function ($query) use ($search){
-                $query->where('title', 'like', '%'.$search.'%')
-                    ->orWhere('alt_title', 'like', '%'.$search.'%');
+        if ($search != '') {
+            $media_datalist = Media_option::where(function ($query) use ($search) {
+                $query->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('alt_title', 'like', '%' . $search . '%');
             })
-			->orderBy('id','desc')
-			->paginate(28);
+                ->orderBy('id', 'desc')
+                ->paginate(28);
 
             $media_datalist->appends(['search' => $search]);
 
-        }else{
-            $media_datalist = Media_option::orderBy('id','desc')->paginate(28);
+        } else {
+            $media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
         }
 
-		return view('backend.media', compact('media_datalist'));
+        return view('backend.media', compact('media_datalist'));
     }
 
-	//Get data for Media Pagination
-	public function getMediaPaginationData(Request $request){
-
-		$search = $request->search;
-
-		if($request->ajax()){
-
-			if($search != ''){
-				$media_datalist = Media_option::where(function ($query) use ($search){
-					$query->where('title', 'like', '%'.$search.'%')
-						->orWhere('alt_title', 'like', '%'.$search.'%');
-				})
-				->orderBy('id', 'desc')
-				->paginate(28);
-
-				$media_datalist->appends(['search' => $search]);
-
-			}else{
-				$media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
-			}
-
-			return view('backend.partials.media_pagination_data', compact('media_datalist'))->render();
-		}
-	}
-
-	//Get data for media by id
-    public function getMediaById(Request $request){
-
-		$id = $request->id;
-
-		$data = Media_option::where('id', $id)->first();
-
-		return response()->json($data);
-	}
-
-	//Save data for media
-    public function mediaUpdate(Request $request){
-		$res = array();
-
-		$id = $request->input('RecordId');
-		$title = $request->input('title');
-		$alt_title = $request->input('alternative_text');
-
-		$data = array(
-			'title' => $title,
-			'alt_title' => $alt_title
-		);
-
-		$response = Media_option::where('id', $id)->update($data);
-		if($response){
-			$res['msgType'] = 'success';
-			$res['msg'] = __('Data Updated Successfully');
-		}else{
-			$res['msgType'] = 'error';
-			$res['msg'] = __('Data update failed');
-		}
-
-		return response()->json($res);
-    }
-
-	//Delete data for Media
-	public function onMediaDelete(Request $request){
-
-		$res = array();
-
-		$id = $request->id;
-
-		if($id != ''){
-
-			$datalist = Media_option::where('id', $id)->first();
-			$thumbnail = $datalist['thumbnail'];
-			$large_image = $datalist['large_image'];
-
-			if (file_exists(public_path('media/'.$thumbnail))) {
-				unlink(public_path('media/'.$thumbnail));
-			}
-
-			if (file_exists(public_path('media/'.$large_image))) {
-				unlink(public_path('media/'.$large_image));
-			}
-
-			$response = Media_option::where('id', $id)->delete();
-			if($response){
-				$res['msgType'] = 'success';
-				$res['msg'] = __('Data Removed Successfully');
-			}else{
-				$res['msgType'] = 'error';
-				$res['msg'] = __('Data remove failed');
-			}
-		}
-
-		return response()->json($res);
-	}
-
-	//Get data for Global Media
-	public function getGlobalMediaData(Request $request){
-
-		$search = $request->search;
-
-		if($request->ajax()){
-
-			if($search != ''){
-				$media_datalist = Media_option::where(function ($query) use ($search){
-					$query->where('title', 'like', '%'.$search.'%')
-						->orWhere('alt_title', 'like', '%'.$search.'%');
-				})
-				->orderBy('id', 'desc')
-				->paginate(28);
-
-				$media_datalist->appends(['search' => $search]);
-
-			}else{
-				$media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
-			}
-
-			return view('backend.partials.global_media_pagination_data', compact('media_datalist'))->render();
-		}
-	}
-/**
-    public function syncImagesAndTable()
+    //Get data for Media Pagination
+    public function getMediaPaginationData(Request $request)
     {
-        $mediaOptions = Media_option::select('id', 'thumbnail', 'large_image')->get();
 
-        $allFiles = $this->getFilesRecursively('public/media');
+        $search = $request->search;
 
+        if ($request->ajax()) {
 
-        // Xóa tiền tố 'public/media/' khỏi các tệp hình ảnh
-        $allFiles = array_map(function($file) {
-            return str_replace('public/media/', '', $file);
-        }, $allFiles);
+            if ($search != '') {
+                $media_datalist = Media_option::where(function ($query) use ($search) {
+                    $query->where('title', 'like', '%' . $search . '%')
+                        ->orWhere('alt_title', 'like', '%' . $search . '%');
+                })
+                    ->orderBy('id', 'desc')
+                    ->paginate(28);
 
-        $deletedFiles = [];
-        $deletedRows = [];
+                $media_datalist->appends(['search' => $search]);
 
-        // Xóa các hình ảnh không có trong table media_options
-        foreach ($allFiles as $file) {
-            $thumbnailExists = $mediaOptions->contains('thumbnail', $file);
-            $largeImageExists = $mediaOptions->contains('large_image', $file);
-
-            if (!$thumbnailExists && !$largeImageExists) {
-                Storage::delete('public/media/' . $file);
-                $deletedFiles[] = $file;
+            } else {
+                $media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
             }
+
+            return view('backend.partials.media_pagination_data', compact('media_datalist'))->render();
         }
-
-        // Xóa các row không có trong thư mục
-        foreach ($mediaOptions as $mediaOption) {
-            $thumbnailExists = in_array($mediaOption->thumbnail, $allFiles);
-            $largeImageExists = in_array($mediaOption->large_image, $allFiles);
-
-            if (!$thumbnailExists || !$largeImageExists) {
-                $deletedRows[] = $mediaOption->toArray();
-                $mediaOption->delete();
-            }
-        }
-
-        return ['deleted_files' => $deletedFiles, 'deleted_rows' => $deletedRows];
     }
-**/
+
+    //Get data for media by id
+    public function getMediaById(Request $request)
+    {
+
+        $id = $request->id;
+
+        $data = Media_option::where('id', $id)->first();
+
+        return response()->json($data);
+    }
+
+    //Save data for media
+    public function mediaUpdate(Request $request)
+    {
+        $res = array();
+
+        $id = $request->input('RecordId');
+        $title = $request->input('title');
+        $alt_title = $request->input('alternative_text');
+
+        $data = array(
+            'title' => $title,
+            'alt_title' => $alt_title
+        );
+
+        $response = Media_option::where('id', $id)->update($data);
+        if ($response) {
+            $res['msgType'] = 'success';
+            $res['msg'] = __('Data Updated Successfully');
+        } else {
+            $res['msgType'] = 'error';
+            $res['msg'] = __('Data update failed');
+        }
+
+        return response()->json($res);
+    }
+
+    //Delete data for Media
+    public function onMediaDelete(Request $request)
+    {
+
+        $res = array();
+
+        $id = $request->id;
+
+        if ($id != '') {
+
+            $datalist = Media_option::where('id', $id)->first();
+            $thumbnail = $datalist['thumbnail'];
+            $large_image = $datalist['large_image'];
+
+            if (file_exists(public_path('media/' . $thumbnail))) {
+                unlink(public_path('media/' . $thumbnail));
+            }
+
+            if (file_exists(public_path('media/' . $large_image))) {
+                unlink(public_path('media/' . $large_image));
+            }
+
+            $response = Media_option::where('id', $id)->delete();
+            if ($response) {
+                $res['msgType'] = 'success';
+                $res['msg'] = __('Data Removed Successfully');
+            } else {
+                $res['msgType'] = 'error';
+                $res['msg'] = __('Data remove failed');
+            }
+        }
+
+        return response()->json($res);
+    }
+
+    //Get data for Global Media
+    public function getGlobalMediaData(Request $request)
+    {
+
+        $search = $request->search;
+
+        if ($request->ajax()) {
+
+            if ($search != '') {
+                $media_datalist = Media_option::where(function ($query) use ($search) {
+                    $query->where('title', 'like', '%' . $search . '%')
+                        ->orWhere('alt_title', 'like', '%' . $search . '%');
+                })
+                    ->orderBy('id', 'desc')
+                    ->paginate(28);
+
+                $media_datalist->appends(['search' => $search]);
+
+            } else {
+                $media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
+            }
+
+            return view('backend.partials.global_media_pagination_data', compact('media_datalist'))->render();
+        }
+    }
+
+    /**
+     * public function syncImagesAndTable()
+     * {
+     * $mediaOptions = Media_option::select('id', 'thumbnail', 'large_image')->get();
+     *
+     * $allFiles = $this->getFilesRecursively('public/media');
+     *
+     *
+     * // Xóa tiền tố 'public/media/' khỏi các tệp hình ảnh
+     * $allFiles = array_map(function($file) {
+     * return str_replace('public/media/', '', $file);
+     * }, $allFiles);
+     *
+     * $deletedFiles = [];
+     * $deletedRows = [];
+     *
+     * // Xóa các hình ảnh không có trong table media_options
+     * foreach ($allFiles as $file) {
+     * $thumbnailExists = $mediaOptions->contains('thumbnail', $file);
+     * $largeImageExists = $mediaOptions->contains('large_image', $file);
+     *
+     * if (!$thumbnailExists && !$largeImageExists) {
+     * Storage::delete('public/media/' . $file);
+     * $deletedFiles[] = $file;
+     * }
+     * }
+     *
+     * // Xóa các row không có trong thư mục
+     * foreach ($mediaOptions as $mediaOption) {
+     * $thumbnailExists = in_array($mediaOption->thumbnail, $allFiles);
+     * $largeImageExists = in_array($mediaOption->large_image, $allFiles);
+     *
+     * if (!$thumbnailExists || !$largeImageExists) {
+     * $deletedRows[] = $mediaOption->toArray();
+     * $mediaOption->delete();
+     * }
+     * }
+     *
+     * return ['deleted_files' => $deletedFiles, 'deleted_rows' => $deletedRows];
+     * }
+     **/
     public function syncImagesAndTable()
     {
         Log::info('Entering syncImagesAndTable');
@@ -331,7 +331,6 @@ class MediaController extends Controller
 //            DB::table('product')->where('f_thumbnail', $row->thumbnail)->update(['f_thumbnail' => '']);
 //        }
 //    }
-
 
 
 }

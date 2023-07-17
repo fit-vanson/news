@@ -15,9 +15,9 @@ class CreateAttributesTable extends Migration
     {
         Schema::create('attributes', function (Blueprint $table) {
             $table->id();
-			$table->string('att_type', 100)->nullable();
-			$table->string('name', 100)->nullable();
-			$table->string('color', 100)->nullable();
+            $table->string('att_type', 100)->nullable();
+            $table->string('name', 100)->nullable();
+            $table->string('color', 100)->nullable();
             $table->timestamps();
         });
     }

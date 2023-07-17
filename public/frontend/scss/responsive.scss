@@ -4,11 +4,11 @@
 Theme Name: Maan News HTML5 Template
 Theme URI: https://maantheme.com/maan-news
 Author: Maan Theme
-Author URI: https://maantheme.com 
+Author URI: https://maantheme.com
 Desing by: Maan Theme
 Version: 1.0
-License: 
-Tags: 
+License:
+Tags:
 */
 
 
@@ -17,12 +17,12 @@ Tags:
 ================================================
 
     1 Theme Default
-    
+
 ======================================
 [ End table content ]
 ======================================*/
 
- :root {
+:root {
     --maan-color-white: #FFFFFF;
     --maan-color-white3: #F1F1F1;
     --maan-color-black: #1F2024;
@@ -32,7 +32,7 @@ Tags:
     --maan-color-tr: transparent;
 }
 
-//Color 
+//Color
 $maan-color-white: var(--maan-color-white);
 $maan-color-white3: var(--maan-color-white3);
 $maan-color-black: var(--maan-color-black);
@@ -71,9 +71,10 @@ $maan-color-tr: var(--maan-color-tr);
     box-shadow: $property;
 }
 
-@media(max-width:1399px) {
+@media(max-width: 1399px) {
     .maan-widgets .social-media ul {
         grid-template-columns: auto auto auto auto;
+
         li a {
             width: 100%;
         }
@@ -87,7 +88,7 @@ $maan-color-tr: var(--maan-color-tr);
     }
 }
 
-@media(max-width:991px) {
+@media(max-width: 991px) {
     section .maan-title-center.v2::before,
     section .maan-title-center.v2::after {
         width: calc(100% - 70% + 11px);
@@ -109,6 +110,7 @@ $maan-color-tr: var(--maan-color-tr);
     .maan-manu-bar {
         padding: 24px 0px;
         background: $maan-color-white3;
+
         .close-btn {
             position: absolute;
             width: 30px;
@@ -118,6 +120,7 @@ $maan-color-tr: var(--maan-color-tr);
             border: none;
             border-radius: 50px;
             background: $maan-color-tr;
+
             span {
                 position: absolute;
                 display: block;
@@ -126,14 +129,17 @@ $maan-color-tr: var(--maan-color-tr);
                 top: 13px;
                 left: 0;
                 background: $maan-color-white;
+
                 &:nth-child(1) {
                     @include maan_transform(rotate(45deg));
                 }
+
                 &:nth-child(2) {
                     @include maan_transform(rotate(-45deg));
                 }
             }
         }
+
         .overlay {
             display: block;
             position: fixed;
@@ -146,12 +152,14 @@ $maan-color-tr: var(--maan-color-tr);
             visibility: hidden;
             background: $maan-color-black;
             @include maan_transition(all 0.4s ease);
+
             &.active {
                 opacity: 0.3;
                 left: 320px;
                 visibility: visible;
             }
         }
+
         .maan-main-manu {
             position: fixed;
             width: 320px;
@@ -165,29 +173,36 @@ $maan-color-tr: var(--maan-color-tr);
             background: $maan-color-black;
             z-index: 5;
             @include maan_transition(all 0.4s ease);
+
             &.active {
                 left: 0;
                 opacity: 1;
                 visibility: visible;
             }
+
             .maan-home-icon,
             .maan-more-icon {
                 display: none;
             }
+
             ul {
                 display: block;
                 text-align: center;
                 margin-top: 80px;
             }
+
             li {
                 display: block;
                 margin: 0px;
+
                 a {
                     display: block;
                     font-size: 12px;
                     padding: 10px 0px;
+
                     &:hover {
                         background: $maan-color-blue;
+
                         &::before {
                             content: none;
                         }
@@ -195,12 +210,14 @@ $maan-color-tr: var(--maan-color-tr);
                 }
             }
         }
+
         .maan-right-btns .maan-search-btn,
         .maan-right-btns .maan-profile-btn {
             &::before,
             &::before {
                 background: $maan-color-blue;
             }
+
             &:hover svg {
                 fill: $maan-color-white;
             }
@@ -208,10 +225,12 @@ $maan-color-tr: var(--maan-color-tr);
     }
     .maan-top-news-section {
         padding-bottom: 24px;
+
         .maan-card-img {
             margin-bottom: 24px;
         }
-        .row>div:last-child .maan-card-img {
+
+        .row > div:last-child .maan-card-img {
             margin-bottom: 0;
         }
     }
@@ -228,10 +247,12 @@ $maan-color-tr: var(--maan-color-tr);
     .maan-lifestyle-news,
     .maan-entertainment-news {
         padding-bottom: 40px;
+
         .maan-default-post {
             margin-bottom: 24px;
         }
-        .row>div:last-child .maan-default-post {
+
+        .row > div:last-child .maan-default-post {
             margin-bottom: 0;
         }
     }
@@ -243,6 +264,7 @@ $maan-color-tr: var(--maan-color-tr);
         .maan-card-slide .slick-arrow {
             top: -20px;
         }
+
         .maan-title {
             margin-bottom: 0px;
         }
@@ -251,10 +273,12 @@ $maan-color-tr: var(--maan-color-tr);
         .maan-title {
             margin-top: 0px;
         }
+
         .maan-news-list li {
             margin: 0px 0px 24px 0px;
         }
-        &~.maan-video-news-section>.container {
+
+        & ~ .maan-video-news-section > .container {
             margin-top: 0;
         }
     }
@@ -267,8 +291,10 @@ $maan-color-tr: var(--maan-color-tr);
         .logo {
             margin-bottom: 24px;
         }
+
         .row {
             padding: 40px 0px;
+
             &.maan-link-footer .maan-news-tags ul {
                 grid-template-columns: auto auto;
                 grid-gap: 12px;
@@ -277,19 +303,21 @@ $maan-color-tr: var(--maan-color-tr);
     }
     .maan-breadcrumb {
         display: none;
-        &~.maan-archive-details {
+
+        & ~ .maan-archive-details {
             padding-bottom: 0px;
         }
     }
     .maan-widgets {
         margin-bottom: 24px;
+
         &:last-child {
             margin-bottom: 0px;
         }
     }
 }
 
-@media(max-width:767px) {
+@media(max-width: 767px) {
     section .maan-title-center.v2::before,
     section .maan-title-center.v2::after {
         content: none;
@@ -305,13 +333,14 @@ $maan-color-tr: var(--maan-color-tr);
             width: 100%;
             margin-top: 24px;
         }
+
         .slick-slider .slick-arrow {
             display: none !important;
         }
     }
 }
 
-@media(max-width:575px) {
+@media(max-width: 575px) {
     .maan-top-bar {
         .maan-weider-news,
         .maan-current-date,
@@ -319,19 +348,21 @@ $maan-color-tr: var(--maan-color-tr);
             text-align: center;
             margin-bottom: 12px;
         }
+
         .maan-social-link {
             margin-bottom: 0px;
+
             ul {
                 border-left: none;
             }
         }
     }
-    .maan-entertainment-news .maan-stay-connected .maan-s-follower>div:nth-last-child(2) .follower-btn {
+    .maan-entertainment-news .maan-stay-connected .maan-s-follower > div:nth-last-child(2) .follower-btn {
         margin-bottom: 24px;
     }
 }
 
-@media(max-width:479px) {
+@media(max-width: 479px) {
     .maan-manu-bar {
         .overlay,
         .maan-main-manu {

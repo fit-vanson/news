@@ -15,7 +15,7 @@ class CreateWithdrawalStatusTable extends Migration
     {
         Schema::create('withdrawal_status', function (Blueprint $table) {
             $table->id();
-			$table->string('status', 150)->nullable();
+            $table->string('status', 150)->nullable();
             $table->timestamps();
         });
     }

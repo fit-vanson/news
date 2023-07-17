@@ -15,13 +15,13 @@ class CreateBankInformationsTable extends Migration
     {
         Schema::create('bank_informations', function (Blueprint $table) {
             $table->id();
-			$table->integer('seller_id')->nullable();
-			$table->string('bank_name')->nullable();
-			$table->string('bank_code')->nullable();
-			$table->string('account_number')->nullable();
-			$table->string('account_holder')->nullable();
-			$table->string('paypal_id')->nullable();
-			$table->text('description')->nullable();
+            $table->integer('seller_id')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('bank_code')->nullable();
+            $table->string('account_number')->nullable();
+            $table->string('account_holder')->nullable();
+            $table->string('paypal_id')->nullable();
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

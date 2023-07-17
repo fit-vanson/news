@@ -15,15 +15,15 @@ class CreateContactsTable extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-			$table->string('title')->nullable();
-			$table->longText('contact_info')->nullable();
-			$table->longText('contact_form')->nullable();
-			$table->longText('contact_map')->nullable();
-			$table->integer('is_recaptcha')->nullable();
-			$table->string('mail_subject', 100)->nullable();
-			$table->integer('is_copy')->nullable();
-			$table->integer('is_publish')->nullable();
-			$table->string('lan', 100)->nullable();
+            $table->string('title')->nullable();
+            $table->longText('contact_info')->nullable();
+            $table->longText('contact_form')->nullable();
+            $table->longText('contact_map')->nullable();
+            $table->integer('is_recaptcha')->nullable();
+            $table->string('mail_subject', 100)->nullable();
+            $table->integer('is_copy')->nullable();
+            $table->integer('is_publish')->nullable();
+            $table->string('lan', 100)->nullable();
             $table->timestamps();
         });
     }

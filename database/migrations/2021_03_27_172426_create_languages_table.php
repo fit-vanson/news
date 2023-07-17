@@ -15,12 +15,12 @@ class CreateLanguagesTable extends Migration
     {
         Schema::create('languages', function (Blueprint $table) {
             $table->id();
-			$table->string('language_code', 30)->unique();
-			$table->string('language_name', 100)->nullable();
-			$table->text('flag')->nullable();
-			$table->tinyInteger('language_default')->default(0);
-			$table->tinyInteger('is_rtl')->default(0);
-			$table->tinyInteger('status')->default(0);
+            $table->string('language_code', 30)->unique();
+            $table->string('language_name', 100)->nullable();
+            $table->text('flag')->nullable();
+            $table->tinyInteger('language_default')->default(0);
+            $table->tinyInteger('is_rtl')->default(0);
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }

@@ -15,17 +15,17 @@ class CreateOrderItemsTable extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-			$table->integer('order_master_id')->nullable();
-			$table->integer('customer_id')->nullable();
-			$table->integer('seller_id')->nullable();
-			$table->integer('product_id')->nullable();
-			$table->string('variation_size', 100)->nullable();
-			$table->string('variation_color', 100)->nullable();
-			$table->integer('quantity')->nullable();
-			$table->double('price', 8, 2)->nullable();
-			$table->double('total_price', 8, 2)->nullable();
-			$table->double('tax', 8, 2)->nullable();
-			$table->double('discount', 8, 2)->nullable();
+            $table->integer('order_master_id')->nullable();
+            $table->integer('customer_id')->nullable();
+            $table->integer('seller_id')->nullable();
+            $table->integer('product_id')->nullable();
+            $table->string('variation_size', 100)->nullable();
+            $table->string('variation_color', 100)->nullable();
+            $table->integer('quantity')->nullable();
+            $table->double('price', 8, 2)->nullable();
+            $table->double('total_price', 8, 2)->nullable();
+            $table->double('tax', 8, 2)->nullable();
+            $table->double('discount', 8, 2)->nullable();
             $table->timestamps();
         });
     }

@@ -15,8 +15,8 @@ class CreateLabelsTable extends Migration
     {
         Schema::create('labels', function (Blueprint $table) {
             $table->id();
-			$table->string('title')->nullable();
-			$table->string('color')->nullable();
+            $table->string('title')->nullable();
+            $table->string('color')->nullable();
             $table->timestamps();
         });
     }

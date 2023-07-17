@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Validator;
 class CategoriesController extends Controller
 {
     //Categories page load
-    public function getCategoriesPageLoad() {
-        $media_datalist = Media_option::orderBy('id','desc')->paginate(28);
+    public function getCategoriesPageLoad()
+    {
+        $media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
 
         $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
 
@@ -28,29 +29,30 @@ class CategoriesController extends Controller
             'web' => $site->site_web,
         ];
         $datalist = $data;
-        $categories = $site->categories()->orderBy('categories.id','desc')->paginate(10);
-        return view('backend.categories', compact('media_datalist', 'statuslist', 'datalist','categories'));
+        $categories = $site->categories()->orderBy('categories.id', 'desc')->paginate(10);
+        return view('backend.categories', compact('media_datalist', 'statuslist', 'datalist', 'categories'));
 
     }
 
     //Get data for Categories Pagination
-    public function getCategoriesTableData(Request $request){
+    public function getCategoriesTableData(Request $request)
+    {
 
         $search = $request->search;
         $site_id = $request->site_id;
         $site = MultipleSites::findorFail($site_id);
-        if($request->ajax()){
-            if($search != ''){
-                $categories =  $site->categories()
-                    ->where(function ($query) use ($search){
-                        $query->where('name', 'like', '%'.rawurlencode($search).'%')
-                            ->orWhere('description', 'like', '%'.$search.'%');
+        if ($request->ajax()) {
+            if ($search != '') {
+                $categories = $site->categories()
+                    ->where(function ($query) use ($search) {
+                        $query->where('name', 'like', '%' . rawurlencode($search) . '%')
+                            ->orWhere('description', 'like', '%' . $search . '%');
                     })
-                    ->orderBy('categories.id','desc')
+                    ->orderBy('categories.id', 'desc')
                     ->paginate(10);
-            }else{
-                $categories =  $site->categories()
-                    ->orderBy('categories.id','desc')
+            } else {
+                $categories = $site->categories()
+                    ->orderBy('categories.id', 'desc')
                     ->paginate(10);
             }
 
@@ -60,7 +62,8 @@ class CategoriesController extends Controller
     }
 
     //Save data for Categories
-    public function saveCategoriesData(Request $request){
+    public function saveCategoriesData(Request $request)
+    {
         $res = array();
         $site_id = \request()->site_id;
         $id = $request->input('RecordId');
@@ -82,7 +85,7 @@ class CategoriesController extends Controller
             'is_publish' => $request->input('is_publish')
         );
 
-        $rId = $id == '' ? '' : ','.$id;
+        $rId = $id == '' ? '' : ',' . $id;
         $validator = Validator::make($validator_array, [
             'name' => 'required|max:191',
             'slug' => 'required|max:191|unique:categories,slug' . $rId,
@@ -91,26 +94,26 @@ class CategoriesController extends Controller
 
         $errors = $validator->errors();
 
-        if($errors->has('name')){
+        if ($errors->has('name')) {
             $res['msgType'] = 'error';
             $res['msg'] = $errors->first('name');
             return response()->json($res);
         }
 
-        if($errors->has('slug')){
+        if ($errors->has('slug')) {
             $res['msgType'] = 'error';
             $res['msg'] = $errors->first('slug');
             return response()->json($res);
         }
 
-        if($errors->has('is_publish')){
+        if ($errors->has('is_publish')) {
             $res['msgType'] = 'error';
             $res['msg'] = $errors->first('is_publish');
             return response()->json($res);
         }
 
         $data = array(
-            'site_id' =>$site_id,
+            'site_id' => $site_id,
             'name' => rawurlencode($name),
             'slug' => rawurlencode($slug),
             'description' => rawurlencode($description),
@@ -125,21 +128,21 @@ class CategoriesController extends Controller
             'og_keywords' => rawurlencode($og_keywords)
         );
 
-        if($id ==''){
+        if ($id == '') {
             $response = Categories::create($data);
-            if($response){
+            if ($response) {
                 $res['msgType'] = 'success';
                 $res['msg'] = __('New Data Added Successfully');
-            }else{
+            } else {
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Data insert failed');
             }
-        }else{
+        } else {
             $response = Categories::where('id', $id)->update($data);
-            if($response){
+            if ($response) {
                 $res['msgType'] = 'success';
                 $res['msg'] = __('Data Updated Successfully');
-            }else{
+            } else {
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Data update failed');
             }
@@ -149,7 +152,8 @@ class CategoriesController extends Controller
     }
 
     //Get data for Categories by id
-    public function getCategoriesById(Request $request){
+    public function getCategoriesById(Request $request)
+    {
 
         $id = $request->id;
         $data = Categories::where('id', $id)->first();
@@ -157,25 +161,26 @@ class CategoriesController extends Controller
     }
 
     //Delete data for Categories
-    public function deleteCategories(Request $request){
+    public function deleteCategories(Request $request)
+    {
 
         $res = array();
 
         $id = $request->id;
 
-        if($id != ''){
+        if ($id != '') {
             $response = Categories::where('id', $id)->first();
 
-            if(count($response->news) == 0){
+            if (count($response->news) == 0) {
                 $response->delete();
-                if($response){
+                if ($response) {
                     $res['msgType'] = 'success';
                     $res['msg'] = __('Data Removed Successfully');
-                }else{
+                } else {
                     $res['msgType'] = 'error';
                     $res['msg'] = __('Data remove failed');
                 }
-            }else{
+            } else {
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Không thể xoá!');
             }
@@ -186,7 +191,8 @@ class CategoriesController extends Controller
     }
 
     //Bulk Action for Categories
-    public function bulkActionCategories(Request $request){
+    public function bulkActionCategories(Request $request)
+    {
 
         $res = array();
 
@@ -195,33 +201,33 @@ class CategoriesController extends Controller
 
         $BulkAction = $request->BulkAction;
 
-        if($BulkAction == 'publish'){
+        if ($BulkAction == 'publish') {
             $response = Categories::whereIn('id', $idsArray)->update(['is_publish' => 1]);
-            if($response){
+            if ($response) {
                 $res['msgType'] = 'success';
                 $res['msg'] = __('Data Updated Successfully');
-            }else{
+            } else {
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Data update failed');
             }
 
-        }elseif($BulkAction == 'draft'){
+        } elseif ($BulkAction == 'draft') {
 
             $response = Categories::whereIn('id', $idsArray)->update(['is_publish' => 2]);
-            if($response){
+            if ($response) {
                 $res['msgType'] = 'success';
                 $res['msg'] = __('Data Updated Successfully');
-            }else{
+            } else {
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Data update failed');
             }
 
-        }elseif($BulkAction == 'delete'){
+        } elseif ($BulkAction == 'delete') {
             $response = Categories::whereIn('id', $idsArray)->delete();
-            if($response){
+            if ($response) {
                 $res['msgType'] = 'success';
                 $res['msg'] = __('Data Removed Successfully');
-            }else{
+            } else {
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Data remove failed');
             }
@@ -231,23 +237,25 @@ class CategoriesController extends Controller
     }
 
     //has Category Slug
-    public function hasCategorySlug(Request $request){
+    public function hasCategorySlug(Request $request)
+    {
         $res = array();
 
         $slug = str_slug($request->slug);
-        $count = Categories::where('slug', 'like', '%'.$slug.'%') ->count();
-        if($count == 0){
+        $count = Categories::where('slug', 'like', '%' . $slug . '%')->count();
+        if ($count == 0) {
             $res['slug'] = $slug;
-        }else{
-            $incr = $count+1;
-            $res['slug'] = $slug.'-'.$incr;
+        } else {
+            $incr = $count + 1;
+            $res['slug'] = $slug . '-' . $incr;
         }
 
         return response()->json($res);
     }
 
     //Save data for Categories Bulk
-    public function saveCategoriesBulk(Request $request){
+    public function saveCategoriesBulk(Request $request)
+    {
         $file = $request->file('csv_file');
         $validator_array = array(
             'csv_file' => $file
@@ -256,7 +264,7 @@ class CategoriesController extends Controller
             'csv_file' => 'required|mimes:csv,txt'
         ]);
         $errors = $validator->errors();
-        if($errors->has('csv_file')){
+        if ($errors->has('csv_file')) {
             $res['msgType'] = 'error';
             $res['msg'] = $errors->first('csv_file');
             return response()->json($res);
@@ -283,19 +291,19 @@ class CategoriesController extends Controller
                     $categories[] = [
                         'name' => $row[0],
                         'slug' => $row[1] != "" ? $row[1] : str_slug($row[0]),
-                        'is_publish'    => $row[2]  !="" ?  $row[2] : 1,
-                        'description'   => $row[3]  !="" ?  $row[3] :  null,
-                        'created_at'    => now(),
-                        'updated_at'    => now(),
+                        'is_publish' => $row[2] != "" ? $row[2] : 1,
+                        'description' => $row[3] != "" ? $row[3] : null,
+                        'created_at' => now(),
+                        'updated_at' => now(),
                     ];
                 }
             }
         }
         $response = Pro_category::insert($categories);
-        if($response){
+        if ($response) {
             $res['msgType'] = 'success';
             $res['msg'] = __('Data Updated Successfully');
-        }else{
+        } else {
             $res['msgType'] = 'error';
             $res['msg'] = __('Data update failed');
         }

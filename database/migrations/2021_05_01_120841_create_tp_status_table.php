@@ -15,7 +15,7 @@ class CreateTpStatusTable extends Migration
     {
         Schema::create('tp_status', function (Blueprint $table) {
             $table->id();
-			$table->string('status')->unique();
+            $table->string('status')->unique();
             $table->timestamps();
         });
     }

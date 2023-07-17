@@ -7,7 +7,6 @@ use App\Models\Media_option;
 use App\Models\MultipleSites;
 use App\Models\Pro_category;
 use App\Models\Site_option;
-use App\Models\Tp_option;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -17,7 +16,8 @@ class MultipleSitesController extends Controller
 {
 
     //Multiple Site page load
-    public function getMultipleSitesPageLoad() {
+    public function getMultipleSitesPageLoad()
+    {
 
         $AllCount = MultipleSites::count();
         $PublishedCount = MultipleSites::where('is_publish', '=', 1)->count();
@@ -25,33 +25,35 @@ class MultipleSitesController extends Controller
         $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
 
 
-        $datalist = MultipleSites::orderBy('id','desc')
-            ->with('tp_status','categories')
+        $datalist = MultipleSites::orderBy('id', 'desc')
+            ->with('tp_status', 'categories')
             ->paginate(20);
         return view('backend.multiple_sites', compact('AllCount', 'PublishedCount', 'DraftCount', 'statuslist', 'datalist'));
     }
+
     //Get data for Products Pagination
-    public function getMultipleSitesTableData(Request $request){
+    public function getMultipleSitesTableData(Request $request)
+    {
         $search = $request->search;
         $status = $request->status;
 
         $category_id = $request->category_id;
-        if($request->ajax()){
-            if($search != ''){
-                $datalist =  MultipleSites::orderBy('id','desc')
-                    ->where(function ($query) use ($search){
+        if ($request->ajax()) {
+            if ($search != '') {
+                $datalist = MultipleSites::orderBy('id', 'desc')
+                    ->where(function ($query) use ($search) {
                         $query
-                            ->where('multiple_sites.site_name', 'like', '%'.$search.'%')
-                            ->orwhere('multiple_sites.site_web', 'like', '%'.$search.'%');
+                            ->where('multiple_sites.site_name', 'like', '%' . $search . '%')
+                            ->orwhere('multiple_sites.site_web', 'like', '%' . $search . '%');
                     })
-                    ->where(function ($query) use ($status){
-                        $query->whereRaw("multiple_sites.is_publish = '".$status."' OR '".$status."' = '0'");
+                    ->where(function ($query) use ($status) {
+                        $query->whereRaw("multiple_sites.is_publish = '" . $status . "' OR '" . $status . "' = '0'");
                     })
                     ->paginate(20);
-            }else{
-                $datalist =  MultipleSites::orderBy('id','desc')
-                    ->where(function ($query) use ($status){
-                        $query->whereRaw("multiple_sites.is_publish = '".$status."' OR '".$status."' = '0'");
+            } else {
+                $datalist = MultipleSites::orderBy('id', 'desc')
+                    ->where(function ($query) use ($status) {
+                        $query->whereRaw("multiple_sites.is_publish = '" . $status . "' OR '" . $status . "' = '0'");
                     })
                     ->paginate(20);
             }
@@ -61,7 +63,8 @@ class MultipleSitesController extends Controller
     }
 
     //Save data for Multiple Sites
-    public function saveMultipleSitesData(Request $request){
+    public function saveMultipleSitesData(Request $request)
+    {
         $res = array();
 
         $id = $request->input('RecordId');
@@ -85,7 +88,7 @@ class MultipleSitesController extends Controller
             'category' => $request->input('categoryid'),
         );
 
-        $rId = $id == '' ? '' : ','.$id;
+        $rId = $id == '' ? '' : ',' . $id;
         $validator = Validator::make($validator_array, [
             'site_name' => 'required|max:191|unique:multiple_sites,site_name' . $rId,
             'site_web' => 'required|max:191|unique:multiple_sites,site_web' . $rId,
@@ -95,12 +98,12 @@ class MultipleSitesController extends Controller
 
         $errors = $validator->errors();
 
-        if($errors->has('site_name')){
+        if ($errors->has('site_name')) {
             $res['msgType'] = 'error';
             $res['msg'] = $errors->first('site_name');
             return response()->json($res);
         }
-        if($errors->has('site_web')){
+        if ($errors->has('site_web')) {
             $res['msgType'] = 'error';
             $res['msg'] = $errors->first('site_web');
             return response()->json($res);
@@ -123,36 +126,36 @@ class MultipleSitesController extends Controller
             'timezone' => $timezone
         );
 
-        if($id ==''){
+        if ($id == '') {
             $response = MultipleSites::create($data);
-            if($response){
+            if ($response) {
                 $site_options = new Site_option([
-                    'site_id'=>$response->id,
-                    'general_settings'=>json_encode($option_value)
-                    ]);
+                    'site_id' => $response->id,
+                    'general_settings' => json_encode($option_value)
+                ]);
                 $response->site_options()->save($site_options);
 
                 $res['id'] = $response->id;
                 $res['msgType'] = 'success';
                 $res['msg'] = __('New Data Added Successfully');
-            }else{
+            } else {
                 $res['id'] = '';
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Data insert failed');
             }
-        }else{
+        } else {
             $response = MultipleSites::where('id', $id)->first();
 
-            if($response){
+            if ($response) {
                 $response->update($data);
                 $response->site_options()->update([
-                    'site_id'=>$response->id,
-                    'general_settings'=>json_encode($option_value)
+                    'site_id' => $response->id,
+                    'general_settings' => json_encode($option_value)
                 ]);
                 $res['id'] = $id;
                 $res['msgType'] = 'success';
                 $res['msg'] = __('Data Updated Successfully');
-            }else{
+            } else {
                 $res['id'] = '';
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Data update failed');
@@ -162,10 +165,11 @@ class MultipleSitesController extends Controller
     }
 
     //get Multiple Sites
-    public function getMultipleSitesPageData($id=null){
+    public function getMultipleSitesPageData($id = null)
+    {
 
         $site = MultipleSites::where('id', $id)->firstOrFail();
-        $general_settings = json_decode($site->site_options->general_settings,true);
+        $general_settings = json_decode($site->site_options->general_settings, true);
 
         $data = [
             'id' => $id,
@@ -186,21 +190,22 @@ class MultipleSitesController extends Controller
         $timezonelist = DB::table('timezones')->orderBy('timezone_name', 'asc')->get();
 
         $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
-        $media_datalist = Media_option::orderBy('id','desc')->paginate(28);
-        return view('backend.theme-site', compact('datalist','statuslist','media_datalist','timezonelist'));
+        $media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
+        return view('backend.theme-site', compact('datalist', 'statuslist', 'media_datalist', 'timezonelist'));
 
     }
 
     //Delete data for Multiple Sites
-    public function deleteMultipleSites(Request $request){
+    public function deleteMultipleSites(Request $request)
+    {
 
         $res = array();
         $id = $request->id;
         $site = MultipleSites::find($id)->delete();
-        if($site){
+        if ($site) {
             $res['msgType'] = 'success';
             $res['msg'] = __('Data Removed Successfully');
-        }else{
+        } else {
             $res['msgType'] = 'error';
             $res['msg'] = __('Data remove failed');
         }
@@ -209,7 +214,8 @@ class MultipleSitesController extends Controller
     }
 
     //Delete data for cloneMultipleSites
-    public function cloneMultipleSites(Request $request){
+    public function cloneMultipleSites(Request $request)
+    {
 
 
         $res = array();
@@ -217,12 +223,11 @@ class MultipleSitesController extends Controller
         $site = MultipleSites::find($id);
 
         $newSite = $site->replicate();
-        $newSite->site_name = $site->site_name.'_copy';
+        $newSite->site_name = $site->site_name . '_copy';
 
         $newSite->push();
 
-        foreach($site->categories as $category)
-        {
+        foreach ($site->categories as $category) {
             $newSite->categories()->attach($category);
             // you may set the timestamps to the second argument of attach()
         }
@@ -234,10 +239,10 @@ class MultipleSitesController extends Controller
 
         $newSite->push();
 
-        if($site){
+        if ($site) {
             $res['msgType'] = 'success';
             $res['msg'] = __('Data Removed Successfully');
-        }else{
+        } else {
             $res['msgType'] = 'error';
             $res['msg'] = __('Data remove failed');
         }

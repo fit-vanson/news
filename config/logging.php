@@ -37,7 +37,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single','insert-hash'],
+            'channels' => ['single', 'insert-hash'],
             'ignore_exceptions' => false,
         ],
 

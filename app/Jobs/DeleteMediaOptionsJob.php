@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Models\Media_option;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -16,6 +15,7 @@ class DeleteMediaOptionsJob implements ShouldQueue
 
     protected $idsToDelete;
     protected $rowsToDelete;
+
     /**
      * Create a new job instance.
      *

@@ -15,11 +15,11 @@ class CreateProImagesTable extends Migration
     {
         Schema::create('pro_images', function (Blueprint $table) {
             $table->id();
-			$table->integer('product_id')->nullable();
-			$table->text('thumbnail')->nullable();
-			$table->text('large_image')->nullable();
-			$table->text('desc')->nullable();
-			
+            $table->integer('product_id')->nullable();
+            $table->text('thumbnail')->nullable();
+            $table->text('large_image')->nullable();
+            $table->text('desc')->nullable();
+
             $table->timestamps();
         });
     }

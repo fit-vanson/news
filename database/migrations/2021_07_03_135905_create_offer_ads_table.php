@@ -15,12 +15,12 @@ class CreateOfferAdsTable extends Migration
     {
         Schema::create('offer_ads', function (Blueprint $table) {
             $table->id();
-			$table->string('offer_ad_type')->nullable();
-			$table->string('title')->nullable();
-			$table->text('url')->nullable();
-			$table->text('image')->nullable();
-			$table->text('desc')->nullable();
-			$table->integer('is_publish')->nullable();
+            $table->string('offer_ad_type')->nullable();
+            $table->string('title')->nullable();
+            $table->text('url')->nullable();
+            $table->text('image')->nullable();
+            $table->text('desc')->nullable();
+            $table->integer('is_publish')->nullable();
             $table->timestamps();
         });
     }

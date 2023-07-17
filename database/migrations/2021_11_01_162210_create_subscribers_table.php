@@ -15,12 +15,12 @@ class CreateSubscribersTable extends Migration
     {
         Schema::create('subscribers', function (Blueprint $table) {
             $table->id();
-			$table->string('email_address')->nullable()->unique();
-			$table->string('first_name')->nullable();
-			$table->string('last_name')->nullable();
-			$table->string('address')->nullable();
-			$table->string('phone_number')->nullable();
-			$table->string('status', 100)->nullable();
+            $table->string('email_address')->nullable()->unique();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('status', 100)->nullable();
             $table->timestamps();
         });
     }

@@ -21,7 +21,8 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ URL('/') }}">{{ __('Home') }}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{ htmlDecode(rawurldecode($category->name)) }}</li>
+                <li class="breadcrumb-item active"
+                    aria-current="page">{{ htmlDecode(rawurldecode($category->name)) }}</li>
             </ol>
         </div>
     </nav>
@@ -266,7 +267,9 @@
                         <div class="widgets-tags">
                             <ul>
                                 @foreach(getCategoriesSite() as $newscategory)
-                                <li><a href="{{route($newscategory->slug,strtolower($newscategory->name))}}">{{ htmlDecode(rawurldecode($newscategory->name)) }}</a></li>
+                                    <li>
+                                        <a href="{{route($newscategory->slug,strtolower($newscategory->name))}}">{{ htmlDecode(rawurldecode($newscategory->name)) }}</a>
+                                    </li>
                                 @endforeach
 
                             </ul>

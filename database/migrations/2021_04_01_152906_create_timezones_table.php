@@ -15,8 +15,8 @@ class CreateTimezonesTable extends Migration
     {
         Schema::create('timezones', function (Blueprint $table) {
             $table->id();
-			$table->string('timezone', 100)->nullable();
-			$table->string('timezone_name', 100)->nullable();
+            $table->string('timezone', 100)->nullable();
+            $table->string('timezone_name', 100)->nullable();
             $table->timestamps();
         });
     }

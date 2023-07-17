@@ -14,18 +14,18 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 
-
 class NewsController extends Controller
 {
     //Categories page load
-    public function getNewsPageLoad() {
-        $media_datalist = Media_option::orderBy('id','desc')->paginate(28);
+    public function getNewsPageLoad()
+    {
+        $media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
 
         $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
         $id = \request()->site_id;
 
-        $categorylist = Categories::orderBy('name','asc')
-            ->where('site_id',$id)
+        $categorylist = Categories::orderBy('name', 'asc')
+            ->where('site_id', $id)
             ->where('is_publish', 1)
             ->get();
 
@@ -39,35 +39,36 @@ class NewsController extends Controller
         ];
         $datalist = $data;
 
-        $news = $site->news()->orderBy('news.id','desc')->paginate(10);
-        return view('backend.news', compact('media_datalist', 'statuslist', 'datalist','news','categorylist'));
+        $news = $site->news()->orderBy('news.id', 'desc')->paginate(10);
+        return view('backend.news', compact('media_datalist', 'statuslist', 'datalist', 'news', 'categorylist'));
 
     }
 
     //Get data for Categories Pagination
-    public function getNewsTableData(Request $request){
+    public function getNewsTableData(Request $request)
+    {
 
         $search = $request->search;
         $site_id = $request->site_id;
         $category_id = $request->category_id;
 
         $site = MultipleSites::findorFail($site_id);
-        if($request->ajax()){
-            if($search != ''){
-                $news =  $site->news()
-                    ->where(function ($query) use ($search){
+        if ($request->ajax()) {
+            if ($search != '') {
+                $news = $site->news()
+                    ->where(function ($query) use ($search) {
                         $query->whereRaw("title LIKE '%" . rawurlencode($search) . "%'");
                     })
-                    ->where(function ($query) use ($category_id){
-                        $query->whereRaw("categories.id = '".$category_id."' OR '".$category_id."' = '0'");
+                    ->where(function ($query) use ($category_id) {
+                        $query->whereRaw("categories.id = '" . $category_id . "' OR '" . $category_id . "' = '0'");
                     })
-                    ->orderBy('news.id','desc')
+                    ->orderBy('news.id', 'desc')
                     ->paginate(10);
-            }else{
-                $news =  $site->news()
-                    ->orderBy('news.id','desc')
-                    ->where(function ($query) use ($category_id){
-                        $query->whereRaw("categories.id = '".$category_id."' OR '".$category_id."' = '0'");
+            } else {
+                $news = $site->news()
+                    ->orderBy('news.id', 'desc')
+                    ->where(function ($query) use ($category_id) {
+                        $query->whereRaw("categories.id = '" . $category_id . "' OR '" . $category_id . "' = '0'");
                     })
                     ->paginate(10);
             }
@@ -76,7 +77,8 @@ class NewsController extends Controller
     }
 
     //Save data for Categories
-    public function saveNewsData(Request $request){
+    public function saveNewsData(Request $request)
+    {
         $res = array();
 
         $id = $request->input('RecordId');
@@ -109,7 +111,7 @@ class NewsController extends Controller
             'is_publish' => $request->input('is_publish')
         );
 
-        $rId = $id == '' ? '' : ','.$id;
+        $rId = $id == '' ? '' : ',' . $id;
         $validator = Validator::make($validator_array, [
             'news_title' => 'required|max:191',
             'slug' => 'required|max:191|unique:news,slug' . $rId,
@@ -121,35 +123,35 @@ class NewsController extends Controller
 
         $errors = $validator->errors();
 
-        if($errors->has('news_title')){
+        if ($errors->has('news_title')) {
             $res['msgType'] = 'error';
             $res['msg'] = $errors->first('title');
             return response()->json($res);
         }
 
-        if($errors->has('slug')){
+        if ($errors->has('slug')) {
             $res['msgType'] = 'error';
             $res['msg'] = $errors->first('slug');
             return response()->json($res);
         }
 
-        if($errors->has('summary')){
+        if ($errors->has('summary')) {
             $res['msgType'] = 'error';
             $res['msg'] = $errors->first('summary');
             return response()->json($res);
         }
-        if($errors->has('content')){
+        if ($errors->has('content')) {
             $res['msgType'] = 'error';
             $res['msg'] = $errors->first('content');
             return response()->json($res);
         }
-        if($errors->has('cate_id')){
+        if ($errors->has('cate_id')) {
             $res['msgType'] = 'error';
             $res['msg'] = $errors->first('cate_id');
             return response()->json($res);
         }
 
-        if($errors->has('is_publish')){
+        if ($errors->has('is_publish')) {
             $res['msgType'] = 'error';
             $res['msg'] = $errors->first('is_publish');
             return response()->json($res);
@@ -159,7 +161,7 @@ class NewsController extends Controller
 
 
         $data = array(
-            'category_id' =>$category_id,
+            'category_id' => $category_id,
 
             'title' => rawurlencode($title),
             'slug' => rawurlencode($slug),
@@ -179,30 +181,29 @@ class NewsController extends Controller
         );
 
 
-
-        if($id ==''){
-            $data['user_id'] = $user ;
+        if ($id == '') {
+            $data['user_id'] = $user;
 
             $response = News::create($data);
-            if($response){
+            if ($response) {
                 $res['msgType'] = 'success';
                 $res['msg'] = __('New Data Added Successfully');
-            }else{
+            } else {
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Data insert failed');
             }
-        }else{
+        } else {
             $response = News::where('id', $id)->first();
-            if(auth()->user()->role_id == 1 || $user == $response->user_id){
+            if (auth()->user()->role_id == 1 || $user == $response->user_id) {
                 $response->update($data);
-                if($response){
+                if ($response) {
                     $res['msgType'] = 'success';
                     $res['msg'] = __('Data Updated Successfully');
-                }else{
+                } else {
                     $res['msgType'] = 'error';
                     $res['msg'] = __('Data update failed');
                 }
-            }else{
+            } else {
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Tài khoản không thể chỉnh sửa bài viết này');
             }
@@ -213,7 +214,8 @@ class NewsController extends Controller
     }
 
     //Get data for Categories by id
-    public function getNewsById(Request $request){
+    public function getNewsById(Request $request)
+    {
 
         $id = $request->id;
         $data = News::where('id', $id)->first()->toArray();
@@ -221,16 +223,17 @@ class NewsController extends Controller
     }
 
     //Delete data for Categories
-    public function deleteNews(Request $request){
+    public function deleteNews(Request $request)
+    {
 
         $res = array();
         $id = $request->id;
         $user = Auth::id();
 
 
-        if($id != ''){
+        if ($id != '') {
             $response = News::where('id', $id)->first();
-            if(auth()->user()->role_id == 1 || $user == $response->user_id) {
+            if (auth()->user()->role_id == 1 || $user == $response->user_id) {
                 $response->delete();
                 if ($response) {
                     $res['msgType'] = 'success';
@@ -239,7 +242,7 @@ class NewsController extends Controller
                     $res['msgType'] = 'error';
                     $res['msg'] = __('Data remove failed');
                 }
-            }else{
+            } else {
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Tài khoản không thể xoá bài viết này');
             }
@@ -249,7 +252,8 @@ class NewsController extends Controller
     }
 
     //Bulk Action for Categories
-    public function bulkActionNews(Request $request){
+    public function bulkActionNews(Request $request)
+    {
 
         $res = array();
 
@@ -258,33 +262,33 @@ class NewsController extends Controller
 
         $BulkAction = $request->BulkAction;
 
-        if($BulkAction == 'publish'){
+        if ($BulkAction == 'publish') {
             $response = News::whereIn('id', $idsArray)->update(['is_publish' => 1]);
-            if($response){
+            if ($response) {
                 $res['msgType'] = 'success';
                 $res['msg'] = __('Data Updated Successfully');
-            }else{
+            } else {
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Data update failed');
             }
 
-        }elseif($BulkAction == 'draft'){
+        } elseif ($BulkAction == 'draft') {
 
             $response = News::whereIn('id', $idsArray)->update(['is_publish' => 2]);
-            if($response){
+            if ($response) {
                 $res['msgType'] = 'success';
                 $res['msg'] = __('Data Updated Successfully');
-            }else{
+            } else {
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Data update failed');
             }
 
-        }elseif($BulkAction == 'delete'){
+        } elseif ($BulkAction == 'delete') {
             $response = News::whereIn('id', $idsArray)->delete();
-            if($response){
+            if ($response) {
                 $res['msgType'] = 'success';
                 $res['msg'] = __('Data Removed Successfully');
-            }else{
+            } else {
                 $res['msgType'] = 'error';
                 $res['msg'] = __('Data remove failed');
             }
@@ -294,23 +298,25 @@ class NewsController extends Controller
     }
 
     //has Category Slug
-    public function hasNewsSlug(Request $request){
+    public function hasNewsSlug(Request $request)
+    {
         $res = array();
 
         $slug = str_slug($request->slug);
-        $count = News::where('slug', 'like', '%'.$slug.'%') ->count();
-        if($count == 0){
+        $count = News::where('slug', 'like', '%' . $slug . '%')->count();
+        if ($count == 0) {
             $res['slug'] = $slug;
-        }else{
-            $incr = $count+1;
-            $res['slug'] = $slug.'-'.$incr;
+        } else {
+            $incr = $count + 1;
+            $res['slug'] = $slug . '-' . $incr;
         }
 
         return response()->json($res);
     }
 
     //Save data for Categories Bulk
-    public function saveNewsBulk(Request $request){
+    public function saveNewsBulk(Request $request)
+    {
         $file = $request->file('csv_file');
         $validator_array = array(
             'csv_file' => $file
@@ -319,7 +325,7 @@ class NewsController extends Controller
             'csv_file' => 'required|mimes:csv,txt'
         ]);
         $errors = $validator->errors();
-        if($errors->has('csv_file')){
+        if ($errors->has('csv_file')) {
             $res['msgType'] = 'error';
             $res['msg'] = $errors->first('csv_file');
             return response()->json($res);
@@ -346,19 +352,19 @@ class NewsController extends Controller
                     $categories[] = [
                         'name' => $row[0],
                         'slug' => $row[1] != "" ? $row[1] : str_slug($row[0]),
-                        'is_publish'    => $row[2]  !="" ?  $row[2] : 1,
-                        'description'   => $row[3]  !="" ?  $row[3] :  null,
-                        'created_at'    => now(),
-                        'updated_at'    => now(),
+                        'is_publish' => $row[2] != "" ? $row[2] : 1,
+                        'description' => $row[3] != "" ? $row[3] : null,
+                        'created_at' => now(),
+                        'updated_at' => now(),
                     ];
                 }
             }
         }
         $response = News::insert($categories);
-        if($response){
+        if ($response) {
             $res['msgType'] = 'success';
             $res['msg'] = __('Data Updated Successfully');
-        }else{
+        } else {
             $res['msgType'] = 'error';
             $res['msg'] = __('Data update failed');
         }

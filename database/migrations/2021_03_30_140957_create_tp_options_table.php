@@ -15,8 +15,8 @@ class CreateTpOptionsTable extends Migration
     {
         Schema::create('tp_options', function (Blueprint $table) {
             $table->id();
-			$table->string('option_name', 191)->unique();
-			$table->longText('option_value')->nullable();
+            $table->string('option_name', 191)->unique();
+            $table->longText('option_value')->nullable();
             $table->timestamps();
         });
     }

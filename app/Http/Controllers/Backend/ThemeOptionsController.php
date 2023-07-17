@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Media_option;
 use App\Models\MultipleSites;
 use App\Models\Site_option;
+use App\Models\Tp_option;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Tp_option;
-use App\Models\Media_option;
-use function PHPUnit\Framework\isNull;
 
 class ThemeOptionsController extends Controller
 {
     //Theme Options page load
-    public function getThemeOptionsPageLoad() {
+    public function getThemeOptionsPageLoad()
+    {
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
         $site_option = $site->site_options;
@@ -28,79 +28,81 @@ class ThemeOptionsController extends Controller
             'front_logo' => '',
             'back_logo' => '',
         ];
-		if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->theme_logo;
-            if($results){
+            if ($results) {
                 $dataObj = json_decode($results);
                 $data['favicon'] = $dataObj->favicon;
                 $data['front_logo'] = $dataObj->front_logo;
                 $data['back_logo'] = $dataObj->back_logo;
             }
-		}
+        }
 
-		$datalist = $data;
+        $datalist = $data;
 
-		$media_datalist = Media_option::orderBy('id','desc')->paginate(28);
+        $media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
 
         return view('backend.theme-options', compact('datalist', 'media_datalist'));
     }
 
-	//Save data for Theme Logo
-    public function saveThemeLogo(Request $request){
+    //Save data for Theme Logo
+    public function saveThemeLogo(Request $request)
+    {
         $id = $request->input('site_id');
-		$favicon = $request->input('favicon');
-		$front_logo = $request->input('front_logo');
-		$back_logo = $request->input('back_logo');
+        $favicon = $request->input('favicon');
+        $front_logo = $request->input('front_logo');
+        $back_logo = $request->input('back_logo');
 
-		$validator_array = array(
-			'favicon' => $request->input('favicon'),
-			'front_logo' => $request->input('front_logo'),
-			'back_logo' => $request->input('back_logo')
-		);
+        $validator_array = array(
+            'favicon' => $request->input('favicon'),
+            'front_logo' => $request->input('front_logo'),
+            'back_logo' => $request->input('back_logo')
+        );
 
-		$validator = Validator::make($validator_array, [
-			'favicon' => 'required',
-			'front_logo' => 'required',
-			'back_logo' => 'required'
-		]);
+        $validator = Validator::make($validator_array, [
+            'favicon' => 'required',
+            'front_logo' => 'required',
+            'back_logo' => 'required'
+        ]);
 
-		$errors = $validator->errors();
+        $errors = $validator->errors();
 
-		if($errors->has('favicon')){
-			$res['msgType'] = 'error';
-			$res['msg'] = $errors->first('favicon');
-			return response()->json($res);
-		}
+        if ($errors->has('favicon')) {
+            $res['msgType'] = 'error';
+            $res['msg'] = $errors->first('favicon');
+            return response()->json($res);
+        }
 
-		if($errors->has('front_logo')){
-			$res['msgType'] = 'error';
-			$res['msg'] = $errors->first('front_logo');
-			return response()->json($res);
-		}
+        if ($errors->has('front_logo')) {
+            $res['msgType'] = 'error';
+            $res['msg'] = $errors->first('front_logo');
+            return response()->json($res);
+        }
 
-		if($errors->has('back_logo')){
-			$res['msgType'] = 'error';
-			$res['msg'] = $errors->first('back_logo');
-			return response()->json($res);
-		}
+        if ($errors->has('back_logo')) {
+            $res['msgType'] = 'error';
+            $res['msg'] = $errors->first('back_logo');
+            return response()->json($res);
+        }
 
-		$option = array(
-			'favicon' => $favicon,
-			'front_logo' => $front_logo,
-			'back_logo' => $back_logo
-		);
+        $option = array(
+            'favicon' => $favicon,
+            'front_logo' => $front_logo,
+            'back_logo' => $back_logo
+        );
 
         $site_option = Site_option::where('site_id', $id)->first();
-		$data = array(
-            'site_id'=>$id,
-            'theme_logo' =>  json_encode($option)
-		);
-        $res = saveOptions($site_option,$data);
-		return response()->json($res);
+        $data = array(
+            'site_id' => $id,
+            'theme_logo' => json_encode($option)
+        );
+        $res = saveOptions($site_option, $data);
+        return response()->json($res);
     }
 
     //Theme Options Header page load
-    public function getThemeOptionsHeaderPageLoad() {
+    public function getThemeOptionsHeaderPageLoad()
+    {
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
         $site_option = $site->site_options;
@@ -114,9 +116,9 @@ class ThemeOptionsController extends Controller
             'is_publish' => '',
         ];
 
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->theme_option_header;
-            if($results){
+            if ($results) {
                 $dataObj = json_decode($results);
                 $data['address'] = $dataObj->address;
                 $data['phone'] = $dataObj->phone;
@@ -124,41 +126,43 @@ class ThemeOptionsController extends Controller
             }
         }
 
-		$statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
+        $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
 
-		$datalist = $data;
+        $datalist = $data;
 
         return view('backend.theme-options-header', compact('datalist', 'statuslist'));
     }
 
-	//Save data for Theme Options Header
-    public function saveThemeOptionsHeader(Request $request){
+    //Save data for Theme Options Header
+    public function saveThemeOptionsHeader(Request $request)
+    {
 
         $id = $request->input('site_id');
-		$address = $request->input('address');
-		$phone = $request->input('phone');
-		$is_publish = $request->input('is_publish');
+        $address = $request->input('address');
+        $phone = $request->input('phone');
+        $is_publish = $request->input('is_publish');
 
-		$option = array(
-			'address' => $address,
-			'phone' => $phone,
-			'is_publish' => $is_publish
-		);
+        $option = array(
+            'address' => $address,
+            'phone' => $phone,
+            'is_publish' => $is_publish
+        );
 
-		$data = array(
-            'site_id'=>$id,
-            'theme_option_header' =>  json_encode($option)
-		);
+        $data = array(
+            'site_id' => $id,
+            'theme_option_header' => json_encode($option)
+        );
 
         $site_option = Site_option::where('site_id', $id)->first();
 
-        $res = saveOptions($site_option,$data);
+        $res = saveOptions($site_option, $data);
 
         return response()->json($res);
     }
 
     //Language Switcher page load
-    public function getLanguageSwitcher() {
+    public function getLanguageSwitcher()
+    {
         $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
@@ -170,41 +174,43 @@ class ThemeOptionsController extends Controller
             'title_row' => 'Logo',
             'is_language_switcher' => '2',
         ];
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->language_switcher;
-            if($results){
+            if ($results) {
                 $dataObj = json_decode($results);
                 $data['is_language_switcher'] = $dataObj->is_language_switcher;
             }
         }
 
-		$datalist = $data;
+        $datalist = $data;
         return view('backend.language-switcher', compact('datalist', 'statuslist'));
     }
 
-	//Save data for Language Switcher
-    public function saveLanguageSwitcher(Request $request){
+    //Save data for Language Switcher
+    public function saveLanguageSwitcher(Request $request)
+    {
         $id = $request->input('site_id');
-		$is_language_switcher = $request->input('is_language_switcher');
+        $is_language_switcher = $request->input('is_language_switcher');
 
-		$option = array(
-			'is_language_switcher' => $is_language_switcher
-		);
+        $option = array(
+            'is_language_switcher' => $is_language_switcher
+        );
 
-		$data = array(
-            'site_id'=>$id,
-			'language_switcher' => json_encode($option)
-		);
+        $data = array(
+            'site_id' => $id,
+            'language_switcher' => json_encode($option)
+        );
 
         $site_option = Site_option::where('site_id', $id)->first();
 
-        $res = saveOptions($site_option,$data);
+        $res = saveOptions($site_option, $data);
 
         return response()->json($res);
     }
 
     //Theme Options Footer page load
-    public function getThemeOptionsFooterPageLoad() {
+    public function getThemeOptionsFooterPageLoad()
+    {
         $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
@@ -228,9 +234,9 @@ class ThemeOptionsController extends Controller
             'is_publish_payment' => '2',
         ];
 
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->theme_option_footer;
-            if($results){
+            if ($results) {
                 $dataObj = json_decode($results);
                 $data['about_logo'] = $dataObj->about_logo;
                 $data['about_desc'] = $dataObj->about_desc;
@@ -245,56 +251,58 @@ class ThemeOptionsController extends Controller
                 $data['is_publish_payment'] = $dataObj->is_publish_payment;
             }
         }
-		$datalist = $data;
+        $datalist = $data;
 
-		$media_datalist = Media_option::orderBy('id','desc')->paginate(28);
+        $media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
 
         return view('backend.theme-options-footer', compact('datalist', 'media_datalist', 'statuslist'));
     }
 
-	//Save data for Theme Options Footer
-    public function saveThemeOptionsFooter(Request $request){
+    //Save data for Theme Options Footer
+    public function saveThemeOptionsFooter(Request $request)
+    {
         $id = $request->input('site_id');
-		$about_logo = $request->input('about_logo');
-		$about_desc = $request->input('about_desc');
-		$is_publish_about = $request->input('is_publish_about');
-		$address = $request->input('address');
-		$phone = $request->input('phone');
-		$email = $request->input('email');
-		$is_publish_contact = $request->input('is_publish_contact');
-		$copyright = $request->input('copyright');
-		$is_publish_copyright = $request->input('is_publish_copyright');
-		$payment_gateway_icon = $request->input('payment_gateway_icon');
-		$is_publish_payment = $request->input('is_publish_payment');
+        $about_logo = $request->input('about_logo');
+        $about_desc = $request->input('about_desc');
+        $is_publish_about = $request->input('is_publish_about');
+        $address = $request->input('address');
+        $phone = $request->input('phone');
+        $email = $request->input('email');
+        $is_publish_contact = $request->input('is_publish_contact');
+        $copyright = $request->input('copyright');
+        $is_publish_copyright = $request->input('is_publish_copyright');
+        $payment_gateway_icon = $request->input('payment_gateway_icon');
+        $is_publish_payment = $request->input('is_publish_payment');
 
-		$option = array(
-			'about_logo' => $about_logo,
-			'about_desc' => $about_desc,
-			'is_publish_about' => $is_publish_about,
-			'address' => $address,
-			'phone' => $phone,
-			'email' => $email,
-			'is_publish_contact' => $is_publish_contact,
-			'copyright' => $copyright,
-			'is_publish_copyright' => $is_publish_copyright,
-			'payment_gateway_icon' => $payment_gateway_icon,
-			'is_publish_payment' => $is_publish_payment
-		);
+        $option = array(
+            'about_logo' => $about_logo,
+            'about_desc' => $about_desc,
+            'is_publish_about' => $is_publish_about,
+            'address' => $address,
+            'phone' => $phone,
+            'email' => $email,
+            'is_publish_contact' => $is_publish_contact,
+            'copyright' => $copyright,
+            'is_publish_copyright' => $is_publish_copyright,
+            'payment_gateway_icon' => $payment_gateway_icon,
+            'is_publish_payment' => $is_publish_payment
+        );
 
-		$data = array(
-            'site_id'=>$id,
-			'theme_option_footer' => json_encode($option)
-		);
+        $data = array(
+            'site_id' => $id,
+            'theme_option_footer' => json_encode($option)
+        );
 
         $site_option = Site_option::where('site_id', $id)->first();
 
-        $res = saveOptions($site_option,$data);
+        $res = saveOptions($site_option, $data);
 
         return response()->json($res);
     }
 
     //Custom CSS page load
-    public function getCustomCSSPageLoad() {
+    public function getCustomCSSPageLoad()
+    {
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
         $site_option = $site->site_options;
@@ -306,9 +314,9 @@ class ThemeOptionsController extends Controller
 
             'custom_css' => '',
         ];
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->custom_css;
-            if($results){
+            if ($results) {
                 $data['custom_css'] = $results;
             }
         }
@@ -316,26 +324,28 @@ class ThemeOptionsController extends Controller
         return view('backend.custom-css', compact('datalist'));
     }
 
-	//Save data for Custom CSS
-    public function saveCustomCSS(Request $request){
+    //Save data for Custom CSS
+    public function saveCustomCSS(Request $request)
+    {
 
         $id = $request->input('site_id');
-		$custom_css = $request->input('custom_css');
+        $custom_css = $request->input('custom_css');
 
-		$data = array(
-            'site_id'=>$id,
-			'custom_css' => $custom_css
-		);
+        $data = array(
+            'site_id' => $id,
+            'custom_css' => $custom_css
+        );
 
         $site_option = Site_option::where('site_id', $id)->first();
 
-        $res = saveOptions($site_option,$data);
+        $res = saveOptions($site_option, $data);
 
-		return response()->json($res);
+        return response()->json($res);
     }
 
     //Custom JS page load
-    public function getCustomJSPageLoad() {
+    public function getCustomJSPageLoad()
+    {
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
         $site_option = $site->site_options;
@@ -348,38 +358,40 @@ class ThemeOptionsController extends Controller
             'custom_js' => '',
         ];
 
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->custom_css;
-            if($results){
+            if ($results) {
                 $data['custom_css'] = $results;
             }
         }
 
-		$datalist = $data;
+        $datalist = $data;
 
         return view('backend.custom-js', compact('datalist'));
     }
 
-	//Save data for Custom JS
-    public function saveCustomJS(Request $request){
+    //Save data for Custom JS
+    public function saveCustomJS(Request $request)
+    {
         $id = $request->input('site_id');
-		$custom_js = $request->input('custom_js');
+        $custom_js = $request->input('custom_js');
 
-		$data = array(
-            'site_id'=>$id,
-			'custom_js' => $custom_js
-		);
+        $data = array(
+            'site_id' => $id,
+            'custom_js' => $custom_js
+        );
 
         $site_option = Site_option::where('site_id', $id)->first();
 
-        $res = saveOptions($site_option,$data);
+        $res = saveOptions($site_option, $data);
 
-		return response()->json($res);
+        return response()->json($res);
     }
 
     //Theme Options SEO page load
-    public function getThemeOptionsSEOPageLoad() {
-		$statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
+    public function getThemeOptionsSEOPageLoad()
+    {
+        $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
         $site_option = $site->site_options;
@@ -396,9 +408,9 @@ class ThemeOptionsController extends Controller
             'is_publish' => '2',
         ];
 
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->theme_option_seo;
-            if($results){
+            if ($results) {
                 $dataObj = json_decode($results);
                 $data['og_title'] = $dataObj->og_title;
                 $data['og_image'] = $dataObj->og_image;
@@ -409,43 +421,45 @@ class ThemeOptionsController extends Controller
         }
         $datalist = $data;
 
-		$media_datalist = Media_option::orderBy('id','desc')->paginate(28);
+        $media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
 
         return view('backend.theme-options-seo', compact('datalist', 'media_datalist', 'statuslist'));
     }
 
-	//Save data for Theme Options SEO
-    public function saveThemeOptionsSEO(Request $request){
+    //Save data for Theme Options SEO
+    public function saveThemeOptionsSEO(Request $request)
+    {
 
         $id = $request->input('site_id');
-		$og_title = $request->input('og_title');
-		$og_image = $request->input('og_image');
-		$og_description = $request->input('og_description');
-		$og_keywords = $request->input('og_keywords');
-		$is_publish = $request->input('is_publish');
+        $og_title = $request->input('og_title');
+        $og_image = $request->input('og_image');
+        $og_description = $request->input('og_description');
+        $og_keywords = $request->input('og_keywords');
+        $is_publish = $request->input('is_publish');
 
-		$option = array(
-			'og_title' => $og_title,
-			'og_image' => $og_image,
-			'og_description' => $og_description,
-			'og_keywords' => $og_keywords,
-			'is_publish' => $is_publish
-		);
+        $option = array(
+            'og_title' => $og_title,
+            'og_image' => $og_image,
+            'og_description' => $og_description,
+            'og_keywords' => $og_keywords,
+            'is_publish' => $is_publish
+        );
 
-		$data = array(
-            'site_id'=>$id,
-			'theme_option_seo' => json_encode($option)
-		);
+        $data = array(
+            'site_id' => $id,
+            'theme_option_seo' => json_encode($option)
+        );
 
         $site_option = Site_option::where('site_id', $id)->first();
 
-        $res = saveOptions($site_option,$data);
+        $res = saveOptions($site_option, $data);
 
-		return response()->json($res);
+        return response()->json($res);
     }
 
     //Theme Options Color page load
-    public function getThemeOptionsColorPageLoad() {
+    public function getThemeOptionsColorPageLoad()
+    {
 
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
@@ -466,9 +480,9 @@ class ThemeOptionsController extends Controller
             'black_color' => '',
             'white_color' => '',
         ];
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->theme_color;
-            if($results){
+            if ($results) {
                 $dataObj = json_decode($results);
                 $data['theme_color'] = $dataObj->theme_color;
                 $data['green_color'] = $dataObj->green_color;
@@ -481,517 +495,529 @@ class ThemeOptionsController extends Controller
                 $data['white_color'] = $dataObj->white_color;
             }
         }
-		$datalist = $data;
+        $datalist = $data;
 
         return view('backend.theme-options-color', compact('datalist'));
     }
 
-	//Save data for Theme Options Color
-    public function saveThemeOptionsColor(Request $request){
+    //Save data for Theme Options Color
+    public function saveThemeOptionsColor(Request $request)
+    {
         $id = $request->input('site_id');
 
-		$theme_color = $request->input('theme_color');
-		$green_color = $request->input('green_color');
-		$light_green_color = $request->input('light_green_color');
-		$lightness_green_color = $request->input('lightness_green_color');
-		$gray_color = $request->input('gray_color');
-		$dark_gray_color = $request->input('dark_gray_color');
-		$light_gray_color = $request->input('light_gray_color');
-		$black_color = $request->input('black_color');
-		$white_color = $request->input('white_color');
+        $theme_color = $request->input('theme_color');
+        $green_color = $request->input('green_color');
+        $light_green_color = $request->input('light_green_color');
+        $lightness_green_color = $request->input('lightness_green_color');
+        $gray_color = $request->input('gray_color');
+        $dark_gray_color = $request->input('dark_gray_color');
+        $light_gray_color = $request->input('light_gray_color');
+        $black_color = $request->input('black_color');
+        $white_color = $request->input('white_color');
 
-		$validator_array = array(
-			'theme_color' => $request->input('theme_color'),
-			'green_color' => $request->input('green_color'),
-			'light_green_color' => $request->input('light_green_color'),
-			'lightness_green_color' => $request->input('lightness_green_color'),
-			'gray_color' => $request->input('gray_color'),
-			'dark_gray_color' => $request->input('dark_gray_color'),
-			'light_gray_color' => $request->input('light_gray_color'),
-			'black_color' => $request->input('black_color'),
-			'white_color' => $request->input('white_color')
-		);
+        $validator_array = array(
+            'theme_color' => $request->input('theme_color'),
+            'green_color' => $request->input('green_color'),
+            'light_green_color' => $request->input('light_green_color'),
+            'lightness_green_color' => $request->input('lightness_green_color'),
+            'gray_color' => $request->input('gray_color'),
+            'dark_gray_color' => $request->input('dark_gray_color'),
+            'light_gray_color' => $request->input('light_gray_color'),
+            'black_color' => $request->input('black_color'),
+            'white_color' => $request->input('white_color')
+        );
 
-		$validator = Validator::make($validator_array, [
-			'theme_color' => 'required',
-			'green_color' => 'required',
-			'light_green_color' => 'required',
-			'lightness_green_color' => 'required',
-			'gray_color' => 'required',
-			'dark_gray_color' => 'required',
-			'light_gray_color' => 'required',
-			'black_color' => 'required',
-			'white_color' => 'required'
-		]);
+        $validator = Validator::make($validator_array, [
+            'theme_color' => 'required',
+            'green_color' => 'required',
+            'light_green_color' => 'required',
+            'lightness_green_color' => 'required',
+            'gray_color' => 'required',
+            'dark_gray_color' => 'required',
+            'light_gray_color' => 'required',
+            'black_color' => 'required',
+            'white_color' => 'required'
+        ]);
 
-		$errors = $validator->errors();
+        $errors = $validator->errors();
 
-		if($errors->has('theme_color')){
-			$res['msgType'] = 'error';
-			$res['msg'] = $errors->first('theme_color');
-			return response()->json($res);
-		}
+        if ($errors->has('theme_color')) {
+            $res['msgType'] = 'error';
+            $res['msg'] = $errors->first('theme_color');
+            return response()->json($res);
+        }
 
-		if($errors->has('green_color')){
-			$res['msgType'] = 'error';
-			$res['msg'] = $errors->first('green_color');
-			return response()->json($res);
-		}
+        if ($errors->has('green_color')) {
+            $res['msgType'] = 'error';
+            $res['msg'] = $errors->first('green_color');
+            return response()->json($res);
+        }
 
-		if($errors->has('light_green_color')){
-			$res['msgType'] = 'error';
-			$res['msg'] = $errors->first('light_green_color');
-			return response()->json($res);
-		}
+        if ($errors->has('light_green_color')) {
+            $res['msgType'] = 'error';
+            $res['msg'] = $errors->first('light_green_color');
+            return response()->json($res);
+        }
 
-		if($errors->has('lightness_green_color')){
-			$res['msgType'] = 'error';
-			$res['msg'] = $errors->first('lightness_green_color');
-			return response()->json($res);
-		}
+        if ($errors->has('lightness_green_color')) {
+            $res['msgType'] = 'error';
+            $res['msg'] = $errors->first('lightness_green_color');
+            return response()->json($res);
+        }
 
-		if($errors->has('gray_color')){
-			$res['msgType'] = 'error';
-			$res['msg'] = $errors->first('gray_color');
-			return response()->json($res);
-		}
+        if ($errors->has('gray_color')) {
+            $res['msgType'] = 'error';
+            $res['msg'] = $errors->first('gray_color');
+            return response()->json($res);
+        }
 
-		if($errors->has('dark_gray_color')){
-			$res['msgType'] = 'error';
-			$res['msg'] = $errors->first('dark_gray_color');
-			return response()->json($res);
-		}
+        if ($errors->has('dark_gray_color')) {
+            $res['msgType'] = 'error';
+            $res['msg'] = $errors->first('dark_gray_color');
+            return response()->json($res);
+        }
 
-		if($errors->has('light_gray_color')){
-			$res['msgType'] = 'error';
-			$res['msg'] = $errors->first('light_gray_color');
-			return response()->json($res);
-		}
+        if ($errors->has('light_gray_color')) {
+            $res['msgType'] = 'error';
+            $res['msg'] = $errors->first('light_gray_color');
+            return response()->json($res);
+        }
 
-		if($errors->has('black_color')){
-			$res['msgType'] = 'error';
-			$res['msg'] = $errors->first('black_color');
-			return response()->json($res);
-		}
+        if ($errors->has('black_color')) {
+            $res['msgType'] = 'error';
+            $res['msg'] = $errors->first('black_color');
+            return response()->json($res);
+        }
 
-		if($errors->has('white_color')){
-			$res['msgType'] = 'error';
-			$res['msg'] = $errors->first('white_color');
-			return response()->json($res);
-		}
+        if ($errors->has('white_color')) {
+            $res['msgType'] = 'error';
+            $res['msg'] = $errors->first('white_color');
+            return response()->json($res);
+        }
 
-		$option = array(
-			'theme_color' => $theme_color,
-			'green_color' => $green_color,
-			'light_green_color' => $light_green_color,
-			'lightness_green_color' => $lightness_green_color,
-			'gray_color' => $gray_color,
-			'dark_gray_color' => $dark_gray_color,
-			'light_gray_color' => $light_gray_color,
-			'black_color' => $black_color,
-			'white_color' => $white_color
-		);
+        $option = array(
+            'theme_color' => $theme_color,
+            'green_color' => $green_color,
+            'light_green_color' => $light_green_color,
+            'lightness_green_color' => $lightness_green_color,
+            'gray_color' => $gray_color,
+            'dark_gray_color' => $dark_gray_color,
+            'light_gray_color' => $light_gray_color,
+            'black_color' => $black_color,
+            'white_color' => $white_color
+        );
 
-		$data = array(
-            'site_id'=>$id,
-			'theme_color' => json_encode($option)
-		);
+        $data = array(
+            'site_id' => $id,
+            'theme_color' => json_encode($option)
+        );
 
         $site_option = Site_option::where('site_id', $id)->first();
 
-        $res = saveOptions($site_option,$data);
+        $res = saveOptions($site_option, $data);
 
-		return response()->json($res);
+        return response()->json($res);
     }
 
     //Theme Options Facebook page load
-    public function getThemeOptionsFacebookPageLoad() {
+    public function getThemeOptionsFacebookPageLoad()
+    {
 
-		$statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
+        $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
 
-		$results = Tp_option::where('option_name', 'facebook')->get();
+        $results = Tp_option::where('option_name', 'facebook')->get();
 
-		$id = '';
-		$fb_app_id = '';
-		$is_publish = '2';
-		foreach ($results as $row){
-			$id = $row->id;
-		}
+        $id = '';
+        $fb_app_id = '';
+        $is_publish = '2';
+        foreach ($results as $row) {
+            $id = $row->id;
+        }
 
-		$data = array();
-		if($id != ''){
+        $data = array();
+        if ($id != '') {
 
-			$sData = json_decode($results);
-			$dataObj = json_decode($sData[0]->option_value);
+            $sData = json_decode($results);
+            $dataObj = json_decode($sData[0]->option_value);
 
-			$data['fb_app_id'] = $dataObj->fb_app_id;
-			$data['is_publish'] = $dataObj->is_publish;
-		}else{
-			$data['fb_app_id'] = '';
-			$data['is_publish'] = '2';
-		}
+            $data['fb_app_id'] = $dataObj->fb_app_id;
+            $data['is_publish'] = $dataObj->is_publish;
+        } else {
+            $data['fb_app_id'] = '';
+            $data['is_publish'] = '2';
+        }
 
-		$datalist = $data;
+        $datalist = $data;
 
         return view('backend.theme-options-facebook', compact('datalist', 'statuslist'));
     }
 
-	//Save data for Theme Options Facebook
-    public function saveThemeOptionsFacebook(Request $request){
-		$res = array();
+    //Save data for Theme Options Facebook
+    public function saveThemeOptionsFacebook(Request $request)
+    {
+        $res = array();
 
-		$fb_app_id = $request->input('fb_app_id');
-		$is_publish = $request->input('is_publish');
+        $fb_app_id = $request->input('fb_app_id');
+        $is_publish = $request->input('is_publish');
 
-		$option = array(
-			'fb_app_id' => $fb_app_id,
-			'is_publish' => $is_publish
-		);
+        $option = array(
+            'fb_app_id' => $fb_app_id,
+            'is_publish' => $is_publish
+        );
 
-		$data = array(
-			'option_name' => 'facebook',
-			'option_value' => json_encode($option)
-		);
+        $data = array(
+            'option_name' => 'facebook',
+            'option_value' => json_encode($option)
+        );
 
-		$gData = Tp_option::where('option_name', 'facebook')->get();
-		$id = '';
-		foreach ($gData as $row){
-			$id = $row['id'];
-		}
+        $gData = Tp_option::where('option_name', 'facebook')->get();
+        $id = '';
+        foreach ($gData as $row) {
+            $id = $row['id'];
+        }
 
-		if($id == ''){
-			$response = Tp_option::create($data);
-			if($response){
-				$res['msgType'] = 'success';
-				$res['msg'] = __('New Data Added Successfully');
-			}else{
-				$res['msgType'] = 'error';
-				$res['msg'] = __('Data insert failed');
-			}
-		}else{
-			$response = Tp_option::where('id', $id)->update($data);
-			if($response){
-				$res['msgType'] = 'success';
-				$res['msg'] = __('Data Updated Successfully');
-			}else{
-				$res['msgType'] = 'error';
-				$res['msg'] = __('Data update failed');
-			}
-		}
+        if ($id == '') {
+            $response = Tp_option::create($data);
+            if ($response) {
+                $res['msgType'] = 'success';
+                $res['msg'] = __('New Data Added Successfully');
+            } else {
+                $res['msgType'] = 'error';
+                $res['msg'] = __('Data insert failed');
+            }
+        } else {
+            $response = Tp_option::where('id', $id)->update($data);
+            if ($response) {
+                $res['msgType'] = 'success';
+                $res['msg'] = __('Data Updated Successfully');
+            } else {
+                $res['msgType'] = 'error';
+                $res['msg'] = __('Data update failed');
+            }
+        }
 
-		return response()->json($res);
+        return response()->json($res);
     }
 
     //Theme Options Facebook Pixel page load
-    public function getThemeOptionsFacebookPixelLoad() {
+    public function getThemeOptionsFacebookPixelLoad()
+    {
 
-		$statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
+        $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
 
-		$results = Tp_option::where('option_name', 'facebook-pixel')->get();
+        $results = Tp_option::where('option_name', 'facebook-pixel')->get();
 
-		$id = '';
-		$fb_pixel_id = '';
-		$is_publish = '2';
-		foreach ($results as $row){
-			$id = $row->id;
-		}
+        $id = '';
+        $fb_pixel_id = '';
+        $is_publish = '2';
+        foreach ($results as $row) {
+            $id = $row->id;
+        }
 
-		$data = array();
-		if($id != ''){
+        $data = array();
+        if ($id != '') {
 
-			$sData = json_decode($results);
-			$dataObj = json_decode($sData[0]->option_value);
+            $sData = json_decode($results);
+            $dataObj = json_decode($sData[0]->option_value);
 
-			$data['fb_pixel_id'] = $dataObj->fb_pixel_id;
-			$data['is_publish'] = $dataObj->is_publish;
-		}else{
-			$data['fb_pixel_id'] = '';
-			$data['is_publish'] = '2';
-		}
+            $data['fb_pixel_id'] = $dataObj->fb_pixel_id;
+            $data['is_publish'] = $dataObj->is_publish;
+        } else {
+            $data['fb_pixel_id'] = '';
+            $data['is_publish'] = '2';
+        }
 
-		$datalist = $data;
+        $datalist = $data;
 
         return view('backend.theme-options-facebook-pixel', compact('datalist', 'statuslist'));
     }
 
-	//Save data for Theme Options Facebook Pixel
-    public function saveThemeOptionsFacebookPixel(Request $request){
-		$res = array();
+    //Save data for Theme Options Facebook Pixel
+    public function saveThemeOptionsFacebookPixel(Request $request)
+    {
+        $res = array();
 
-		$fb_pixel_id = $request->input('fb_pixel_id');
-		$is_publish = $request->input('is_publish');
+        $fb_pixel_id = $request->input('fb_pixel_id');
+        $is_publish = $request->input('is_publish');
 
-		$option = array(
-			'fb_pixel_id' => $fb_pixel_id,
-			'is_publish' => $is_publish
-		);
+        $option = array(
+            'fb_pixel_id' => $fb_pixel_id,
+            'is_publish' => $is_publish
+        );
 
-		$data = array(
-			'option_name' => 'facebook-pixel',
-			'option_value' => json_encode($option)
-		);
+        $data = array(
+            'option_name' => 'facebook-pixel',
+            'option_value' => json_encode($option)
+        );
 
-		$gData = Tp_option::where('option_name', 'facebook-pixel')->get();
-		$id = '';
-		foreach ($gData as $row){
-			$id = $row['id'];
-		}
+        $gData = Tp_option::where('option_name', 'facebook-pixel')->get();
+        $id = '';
+        foreach ($gData as $row) {
+            $id = $row['id'];
+        }
 
-		if($id == ''){
-			$response = Tp_option::create($data);
-			if($response){
-				$res['msgType'] = 'success';
-				$res['msg'] = __('New Data Added Successfully');
-			}else{
-				$res['msgType'] = 'error';
-				$res['msg'] = __('Data insert failed');
-			}
-		}else{
-			$response = Tp_option::where('id', $id)->update($data);
-			if($response){
-				$res['msgType'] = 'success';
-				$res['msg'] = __('Data Updated Successfully');
-			}else{
-				$res['msgType'] = 'error';
-				$res['msg'] = __('Data update failed');
-			}
-		}
+        if ($id == '') {
+            $response = Tp_option::create($data);
+            if ($response) {
+                $res['msgType'] = 'success';
+                $res['msg'] = __('New Data Added Successfully');
+            } else {
+                $res['msgType'] = 'error';
+                $res['msg'] = __('Data insert failed');
+            }
+        } else {
+            $response = Tp_option::where('id', $id)->update($data);
+            if ($response) {
+                $res['msgType'] = 'success';
+                $res['msg'] = __('Data Updated Successfully');
+            } else {
+                $res['msgType'] = 'error';
+                $res['msg'] = __('Data update failed');
+            }
+        }
 
-		return response()->json($res);
+        return response()->json($res);
     }
 
     //Theme Options Twitter page load
-    public function getThemeOptionsTwitterPageLoad() {
+    public function getThemeOptionsTwitterPageLoad()
+    {
 
-		$statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
+        $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
 
-		$results = Tp_option::where('option_name', 'twitter')->get();
+        $results = Tp_option::where('option_name', 'twitter')->get();
 
-		$id = '';
-		$twitter_id = '';
-		$is_publish = '2';
-		foreach ($results as $row){
-			$id = $row->id;
-		}
+        $id = '';
+        $twitter_id = '';
+        $is_publish = '2';
+        foreach ($results as $row) {
+            $id = $row->id;
+        }
 
-		$data = array();
-		if($id != ''){
+        $data = array();
+        if ($id != '') {
 
-			$sData = json_decode($results);
-			$dataObj = json_decode($sData[0]->option_value);
+            $sData = json_decode($results);
+            $dataObj = json_decode($sData[0]->option_value);
 
-			$data['twitter_id'] = $dataObj->twitter_id;
-			$data['is_publish'] = $dataObj->is_publish;
-		}else{
-			$data['twitter_id'] = '';
-			$data['is_publish'] = '2';
-		}
+            $data['twitter_id'] = $dataObj->twitter_id;
+            $data['is_publish'] = $dataObj->is_publish;
+        } else {
+            $data['twitter_id'] = '';
+            $data['is_publish'] = '2';
+        }
 
-		$datalist = $data;
+        $datalist = $data;
 
         return view('backend.theme-options-twitter', compact('datalist', 'statuslist'));
     }
 
-	//Save data for Theme Options Twitter
-    public function saveThemeOptionsTwitter(Request $request){
-		$res = array();
+    //Save data for Theme Options Twitter
+    public function saveThemeOptionsTwitter(Request $request)
+    {
+        $res = array();
 
-		$twitter_id = $request->input('twitter_id');
-		$is_publish = $request->input('is_publish');
+        $twitter_id = $request->input('twitter_id');
+        $is_publish = $request->input('is_publish');
 
-		$option = array(
-			'twitter_id' => $twitter_id,
-			'is_publish' => $is_publish
-		);
+        $option = array(
+            'twitter_id' => $twitter_id,
+            'is_publish' => $is_publish
+        );
 
-		$data = array(
-			'option_name' => 'twitter',
-			'option_value' => json_encode($option)
-		);
+        $data = array(
+            'option_name' => 'twitter',
+            'option_value' => json_encode($option)
+        );
 
-		$gData = Tp_option::where('option_name', 'twitter')->get();
-		$id = '';
-		foreach ($gData as $row){
-			$id = $row['id'];
-		}
+        $gData = Tp_option::where('option_name', 'twitter')->get();
+        $id = '';
+        foreach ($gData as $row) {
+            $id = $row['id'];
+        }
 
-		if($id == ''){
-			$response = Tp_option::create($data);
-			if($response){
-				$res['msgType'] = 'success';
-				$res['msg'] = __('New Data Added Successfully');
-			}else{
-				$res['msgType'] = 'error';
-				$res['msg'] = __('Data insert failed');
-			}
-		}else{
-			$response = Tp_option::where('id', $id)->update($data);
-			if($response){
-				$res['msgType'] = 'success';
-				$res['msg'] = __('Data Updated Successfully');
-			}else{
-				$res['msgType'] = 'error';
-				$res['msg'] = __('Data update failed');
-			}
-		}
+        if ($id == '') {
+            $response = Tp_option::create($data);
+            if ($response) {
+                $res['msgType'] = 'success';
+                $res['msg'] = __('New Data Added Successfully');
+            } else {
+                $res['msgType'] = 'error';
+                $res['msg'] = __('Data insert failed');
+            }
+        } else {
+            $response = Tp_option::where('id', $id)->update($data);
+            if ($response) {
+                $res['msgType'] = 'success';
+                $res['msg'] = __('Data Updated Successfully');
+            } else {
+                $res['msgType'] = 'error';
+                $res['msg'] = __('Data update failed');
+            }
+        }
 
-		return response()->json($res);
+        return response()->json($res);
     }
 
     //Google Analytics page load
-    public function getGoogleAnalytics() {
+    public function getGoogleAnalytics()
+    {
 
-		$statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
+        $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
 
-		$results = Tp_option::where('option_name', 'google_analytics')->get();
+        $results = Tp_option::where('option_name', 'google_analytics')->get();
 
-		$id = '';
-		foreach ($results as $row){
-			$id = $row->id;
-		}
+        $id = '';
+        foreach ($results as $row) {
+            $id = $row->id;
+        }
 
-		$data = array();
-		if($id != ''){
+        $data = array();
+        if ($id != '') {
 
-			$sData = json_decode($results);
-			$dataObj = json_decode($sData[0]->option_value);
+            $sData = json_decode($results);
+            $dataObj = json_decode($sData[0]->option_value);
 
-			$data['tracking_id'] = $dataObj->tracking_id;
-			$data['is_publish'] = $dataObj->is_publish;
-		}else{
-			$data['tracking_id'] = '';
-			$data['is_publish'] = '2';
-		}
+            $data['tracking_id'] = $dataObj->tracking_id;
+            $data['is_publish'] = $dataObj->is_publish;
+        } else {
+            $data['tracking_id'] = '';
+            $data['is_publish'] = '2';
+        }
 
-		$datalist = $data;
+        $datalist = $data;
 
         return view('backend.google-analytics', compact('datalist', 'statuslist'));
     }
 
-	//Save data for Google Analytics
-    public function saveGoogleAnalytics(Request $request){
-		$res = array();
+    //Save data for Google Analytics
+    public function saveGoogleAnalytics(Request $request)
+    {
+        $res = array();
 
-		$tracking_id = $request->input('tracking_id');
-		$is_publish = $request->input('is_publish');
+        $tracking_id = $request->input('tracking_id');
+        $is_publish = $request->input('is_publish');
 
-		$option = array(
-			'tracking_id' => $tracking_id,
-			'is_publish' => $is_publish
-		);
+        $option = array(
+            'tracking_id' => $tracking_id,
+            'is_publish' => $is_publish
+        );
 
-		$data = array(
-			'option_name' => 'google_analytics',
-			'option_value' => json_encode($option)
-		);
+        $data = array(
+            'option_name' => 'google_analytics',
+            'option_value' => json_encode($option)
+        );
 
-		$gData = Tp_option::where('option_name', 'google_analytics')->get();
-		$id = '';
-		foreach ($gData as $row){
-			$id = $row['id'];
-		}
+        $gData = Tp_option::where('option_name', 'google_analytics')->get();
+        $id = '';
+        foreach ($gData as $row) {
+            $id = $row['id'];
+        }
 
-		if($id == ''){
-			$response = Tp_option::create($data);
-			if($response){
-				$res['msgType'] = 'success';
-				$res['msg'] = __('New Data Added Successfully');
-			}else{
-				$res['msgType'] = 'error';
-				$res['msg'] = __('Data insert failed');
-			}
-		}else{
-			$response = Tp_option::where('id', $id)->update($data);
-			if($response){
-				$res['msgType'] = 'success';
-				$res['msg'] = __('Data Updated Successfully');
-			}else{
-				$res['msgType'] = 'error';
-				$res['msg'] = __('Data update failed');
-			}
-		}
+        if ($id == '') {
+            $response = Tp_option::create($data);
+            if ($response) {
+                $res['msgType'] = 'success';
+                $res['msg'] = __('New Data Added Successfully');
+            } else {
+                $res['msgType'] = 'error';
+                $res['msg'] = __('Data insert failed');
+            }
+        } else {
+            $response = Tp_option::where('id', $id)->update($data);
+            if ($response) {
+                $res['msgType'] = 'success';
+                $res['msg'] = __('Data Updated Successfully');
+            } else {
+                $res['msgType'] = 'error';
+                $res['msg'] = __('Data update failed');
+            }
+        }
 
-		return response()->json($res);
+        return response()->json($res);
     }
 
     //Google Tag Manager page load
-    public function getGoogleTagManager() {
+    public function getGoogleTagManager()
+    {
 
-		$statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
+        $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
 
-		$results = Tp_option::where('option_name', 'google_tag_manager')->get();
+        $results = Tp_option::where('option_name', 'google_tag_manager')->get();
 
-		$id = '';
-		foreach ($results as $row){
-			$id = $row->id;
-		}
+        $id = '';
+        foreach ($results as $row) {
+            $id = $row->id;
+        }
 
-		$data = array();
-		if($id != ''){
+        $data = array();
+        if ($id != '') {
 
-			$sData = json_decode($results);
-			$dataObj = json_decode($sData[0]->option_value);
+            $sData = json_decode($results);
+            $dataObj = json_decode($sData[0]->option_value);
 
-			$data['google_tag_manager_id'] = $dataObj->google_tag_manager_id;
-			$data['is_publish'] = $dataObj->is_publish;
-		}else{
-			$data['google_tag_manager_id'] = '';
-			$data['is_publish'] = '2';
-		}
+            $data['google_tag_manager_id'] = $dataObj->google_tag_manager_id;
+            $data['is_publish'] = $dataObj->is_publish;
+        } else {
+            $data['google_tag_manager_id'] = '';
+            $data['is_publish'] = '2';
+        }
 
-		$datalist = $data;
+        $datalist = $data;
 
         return view('backend.google-tag-manager', compact('datalist', 'statuslist'));
     }
 
-	//Save data for Google Tag Manager
-    public function saveGoogleTagManager(Request $request){
-		$res = array();
+    //Save data for Google Tag Manager
+    public function saveGoogleTagManager(Request $request)
+    {
+        $res = array();
 
-		$google_tag_manager_id = $request->input('google_tag_manager_id');
-		$is_publish = $request->input('is_publish');
+        $google_tag_manager_id = $request->input('google_tag_manager_id');
+        $is_publish = $request->input('is_publish');
 
-		$option = array(
-			'google_tag_manager_id' => $google_tag_manager_id,
-			'is_publish' => $is_publish
-		);
+        $option = array(
+            'google_tag_manager_id' => $google_tag_manager_id,
+            'is_publish' => $is_publish
+        );
 
-		$data = array(
-			'option_name' => 'google_tag_manager',
-			'option_value' => json_encode($option)
-		);
+        $data = array(
+            'option_name' => 'google_tag_manager',
+            'option_value' => json_encode($option)
+        );
 
-		$gData = Tp_option::where('option_name', 'google_tag_manager')->get();
-		$id = '';
-		foreach ($gData as $row){
-			$id = $row['id'];
-		}
+        $gData = Tp_option::where('option_name', 'google_tag_manager')->get();
+        $id = '';
+        foreach ($gData as $row) {
+            $id = $row['id'];
+        }
 
-		if($id == ''){
-			$response = Tp_option::create($data);
-			if($response){
-				$res['msgType'] = 'success';
-				$res['msg'] = __('New Data Added Successfully');
-			}else{
-				$res['msgType'] = 'error';
-				$res['msg'] = __('Data insert failed');
-			}
-		}else{
-			$response = Tp_option::where('id', $id)->update($data);
-			if($response){
-				$res['msgType'] = 'success';
-				$res['msg'] = __('Data Updated Successfully');
-			}else{
-				$res['msgType'] = 'error';
-				$res['msg'] = __('Data update failed');
-			}
-		}
+        if ($id == '') {
+            $response = Tp_option::create($data);
+            if ($response) {
+                $res['msgType'] = 'success';
+                $res['msg'] = __('New Data Added Successfully');
+            } else {
+                $res['msgType'] = 'error';
+                $res['msg'] = __('Data insert failed');
+            }
+        } else {
+            $response = Tp_option::where('id', $id)->update($data);
+            if ($response) {
+                $res['msgType'] = 'success';
+                $res['msg'] = __('Data Updated Successfully');
+            } else {
+                $res['msgType'] = 'error';
+                $res['msg'] = __('Data update failed');
+            }
+        }
 
-		return response()->json($res);
+        return response()->json($res);
     }
 
     //Theme Options Whatsapp page load
-    public function getThemeOptionsWhatsappPageLoad() {
+    public function getThemeOptionsWhatsappPageLoad()
+    {
 
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
@@ -1008,9 +1034,9 @@ class ThemeOptionsController extends Controller
             'is_publish' => '2',
 
         ];
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->whatsapp;
-            if($results){
+            if ($results) {
                 $dataObj = json_decode($results);
                 $data['whatsapp_id'] = $dataObj->whatsapp_id;
                 $data['whatsapp_text'] = $dataObj->whatsapp_text;
@@ -1019,40 +1045,42 @@ class ThemeOptionsController extends Controller
             }
         }
         $datalist = $data;
-		$statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
+        $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
 
         return view('backend.theme-options-whatsapp', compact('datalist', 'statuslist'));
     }
 
-	//Save data for Theme Options Whatsapp
-    public function saveThemeOptionsWhatsapp(Request $request){
+    //Save data for Theme Options Whatsapp
+    public function saveThemeOptionsWhatsapp(Request $request)
+    {
         $id = $request->input('site_id');
-		$whatsapp_id = $request->input('whatsapp_id');
-		$whatsapp_text = $request->input('whatsapp_text');
-		$position = $request->input('position');
-		$is_publish = $request->input('is_publish');
+        $whatsapp_id = $request->input('whatsapp_id');
+        $whatsapp_text = $request->input('whatsapp_text');
+        $position = $request->input('position');
+        $is_publish = $request->input('is_publish');
 
-		$option = array(
-			'whatsapp_id' => $whatsapp_id,
-			'whatsapp_text' => $whatsapp_text,
-			'position' => $position,
-			'is_publish' => $is_publish
-		);
+        $option = array(
+            'whatsapp_id' => $whatsapp_id,
+            'whatsapp_text' => $whatsapp_text,
+            'position' => $position,
+            'is_publish' => $is_publish
+        );
 
-		$data = array(
-			'site_id' => $id,
-			'whatsapp' => json_encode($option)
-		);
+        $data = array(
+            'site_id' => $id,
+            'whatsapp' => json_encode($option)
+        );
 
         $site_option = Site_option::where('site_id', $id)->first();
 
-        $res = saveOptions($site_option,$data);
+        $res = saveOptions($site_option, $data);
 
-		return response()->json($res);
+        return response()->json($res);
     }
 
     //Theme Options Telegram page load
-    public function getThemeOptionsTelegramPageLoad() {
+    public function getThemeOptionsTelegramPageLoad()
+    {
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
         $site_option = $site->site_options;
@@ -1067,9 +1095,9 @@ class ThemeOptionsController extends Controller
             'is_publish' => '2',
 
         ];
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->telegram;
-            if($results){
+            if ($results) {
                 $dataObj = json_decode($results);
                 $data['telegram_id'] = $dataObj->telegram_id;
                 $data['position'] = $dataObj->position;
@@ -1083,7 +1111,8 @@ class ThemeOptionsController extends Controller
     }
 
     //Save data for Theme Options Telegram
-    public function saveThemeOptionsTelegram(Request $request){
+    public function saveThemeOptionsTelegram(Request $request)
+    {
         $id = $request->input('site_id');
         $telegram_id = $request->input('telegram_id');
         $position = $request->input('position');
@@ -1102,17 +1131,18 @@ class ThemeOptionsController extends Controller
 
         $site_option = Site_option::where('site_id', $id)->first();
 
-        $res = saveOptions($site_option,$data);
+        $res = saveOptions($site_option, $data);
 
         return response()->json($res);
     }
 
     //Theme Options home-video
-    public function getThemeOptionsHomeVideo() {
+    public function getThemeOptionsHomeVideo()
+    {
 
-		$media_datalist = Media_option::orderBy('id','desc')->paginate(28);
+        $media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
 
-		$statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
+        $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
 
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
@@ -1134,9 +1164,9 @@ class ThemeOptionsController extends Controller
 
         ];
 
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->home_video;
-            if($results){
+            if ($results) {
                 $dataObj = json_decode($results);
                 $data['title'] = $dataObj->title;
                 $data['short_desc'] = $dataObj->short_desc;
@@ -1152,41 +1182,43 @@ class ThemeOptionsController extends Controller
         return view('backend.home-video', compact('media_datalist', 'datalist', 'statuslist'));
     }
 
-	//Save data for Home Video Section
-    public function saveThemeOptionsHomeVideo(Request $request){
+    //Save data for Home Video Section
+    public function saveThemeOptionsHomeVideo(Request $request)
+    {
         $site_id = $request->input('site_id');
         $title = $request->input('title');
-		$short_desc = $request->input('short_desc');
-		$url = $request->input('url');
-		$video_url = $request->input('video_url');
-		$button_text = $request->input('button_text');
-		$target = $request->input('target');
-		$image = $request->input('image');
-		$is_publish = $request->input('is_publish');
+        $short_desc = $request->input('short_desc');
+        $url = $request->input('url');
+        $video_url = $request->input('video_url');
+        $button_text = $request->input('button_text');
+        $target = $request->input('target');
+        $image = $request->input('image');
+        $is_publish = $request->input('is_publish');
 
-		$option = array(
-			'title' => $title,
-			'short_desc' => $short_desc,
-			'url' => $url,
-			'video_url' => $video_url,
-			'button_text' => $button_text,
-			'target' => $target,
-			'image' => $image,
-			'is_publish' => $is_publish
-		);
+        $option = array(
+            'title' => $title,
+            'short_desc' => $short_desc,
+            'url' => $url,
+            'video_url' => $video_url,
+            'button_text' => $button_text,
+            'target' => $target,
+            'image' => $image,
+            'is_publish' => $is_publish
+        );
 
-		$data = array(
-			'site_id' => $site_id,
-			'home_video' => json_encode($option)
-		);
+        $data = array(
+            'site_id' => $site_id,
+            'home_video' => json_encode($option)
+        );
 
         $site_option = Site_option::where('site_id', $site_id)->first();
-        $res = saveOptions($site_option,$data);
-		return response()->json($res);
+        $res = saveOptions($site_option, $data);
+        return response()->json($res);
     }
 
     //Page Variation
-    public function getPageVariation() {
+    public function getPageVariation()
+    {
 
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
@@ -1204,9 +1236,9 @@ class ThemeOptionsController extends Controller
 
         ];
 
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->page_variation;
-            if($results){
+            if ($results) {
                 $dataObj = json_decode($results);
                 $data['home_variation'] = $dataObj->home_variation;
                 $data['category_variation'] = $dataObj->category_variation;
@@ -1220,37 +1252,39 @@ class ThemeOptionsController extends Controller
         return view('backend.page-variation', compact('datalist'));
     }
 
-	//Save for Page Variation
-    public function savePageVariation(Request $request){
+    //Save for Page Variation
+    public function savePageVariation(Request $request)
+    {
 
         $id = $request->input('site_id');
-		$home_variation = $request->input('home_variation');
-		$category_variation = $request->input('category_variation');
-		$brand_variation = $request->input('brand_variation');
-		$seller_variation = $request->input('seller_variation');
+        $home_variation = $request->input('home_variation');
+        $category_variation = $request->input('category_variation');
+        $brand_variation = $request->input('brand_variation');
+        $seller_variation = $request->input('seller_variation');
 
-		$option = array(
-			'home_variation' => $home_variation,
-			'category_variation' => $category_variation,
-			'brand_variation' => $brand_variation,
-			'seller_variation' => $seller_variation
-		);
+        $option = array(
+            'home_variation' => $home_variation,
+            'category_variation' => $category_variation,
+            'brand_variation' => $brand_variation,
+            'seller_variation' => $seller_variation
+        );
 
-		$data = array(
-			'site_id' => $id,
-			'page_variation' => json_encode($option)
-		);
+        $data = array(
+            'site_id' => $id,
+            'page_variation' => json_encode($option)
+        );
 
         $site_option = Site_option::where('site_id', $id)->first();
 
-        $res = saveOptions($site_option,$data);
+        $res = saveOptions($site_option, $data);
 
-		return response()->json($res);
+        return response()->json($res);
     }
 
 
     //Theme Options Bank Transfer load
-    public function getThemeOptionsBankTransferPageLoad() {
+    public function getThemeOptionsBankTransferPageLoad()
+    {
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
         $site_option = $site->site_options;
@@ -1265,9 +1299,9 @@ class ThemeOptionsController extends Controller
 
 
         ];
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->bank_transfer;
-            if($results){
+            if ($results) {
                 $dataObj = json_decode($results);
                 $data['description'] = $dataObj->description;
                 $data['isenable'] = $dataObj->isenable;
@@ -1280,14 +1314,15 @@ class ThemeOptionsController extends Controller
     }
 
     //Save data for Bank Transfer Telegram
-    public function saveThemeOptionsBankTransfer(Request $request){
+    public function saveThemeOptionsBankTransfer(Request $request)
+    {
         $id = $request->input('site_id');
         $is_enable = $request->input('isenable_bank');
         $description_bank = $request->input('description_bank');
 
         if ($is_enable == 'true' || $is_enable == 'on') {
             $isenable = 1;
-        }else {
+        } else {
             $isenable = 0;
         }
 
@@ -1303,21 +1338,21 @@ class ThemeOptionsController extends Controller
 
         $site_option = Site_option::where('site_id', $id)->first();
 
-        $res = saveOptions($site_option,$data);
+        $res = saveOptions($site_option, $data);
 
         return response()->json($res);
     }
 
 
-
     //Theme Options Social Media
-    public function getThemeOptionsSocialMediaPageLoad() {
+    public function getThemeOptionsSocialMediaPageLoad()
+    {
         $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
         $site_option = $site->site_options;
         $socials = [
-            'facebook','youtube','twitter','instagram','linkedin','pinterest'
+            'facebook', 'youtube', 'twitter', 'instagram', 'linkedin', 'pinterest'
         ];
 
         $data = [
@@ -1327,19 +1362,19 @@ class ThemeOptionsController extends Controller
             'title_row' => 'Social Media',
         ];
 
-        foreach ($socials as $social){
+        foreach ($socials as $social) {
             $data['socials_media'][$social] = [
-                'url' => 'https://www.'.$social.'.com/',
-                'followers' => rand(50,100),
+                'url' => 'https://www.' . $social . '.com/',
+                'followers' => rand(50, 100),
                 'is_publish' => '2',
             ];
         }
 
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->theme_option_social_media;
-            if($results){
-                $dataObj = json_decode($results,true);
-                foreach ($dataObj as $key=>$item){
+            if ($results) {
+                $dataObj = json_decode($results, true);
+                foreach ($dataObj as $key => $item) {
                     $data['socials_media'][$key] = [
                         'url' => $item['url'],
                         'followers' => $item['followers'],
@@ -1353,23 +1388,25 @@ class ThemeOptionsController extends Controller
     }
 
     //Save data for Theme Options Social Media
-    public function saveThemeOptionsSocialMedia(Request $request){
+    public function saveThemeOptionsSocialMedia(Request $request)
+    {
         $id = $request->input('site_id');
         $socials_media = $request->input('socials_media');
         $data = array(
-            'site_id'=>$id,
+            'site_id' => $id,
             'theme_option_social_media' => json_encode($socials_media)
         );
 
         $site_option = Site_option::where('site_id', $id)->first();
 
-        $res = saveOptions($site_option,$data);
+        $res = saveOptions($site_option, $data);
 
         return response()->json($res);
     }
 
     //Theme Options Ads Manage
-    public function getThemeOptionsAdsManagePageLoad() {
+    public function getThemeOptionsAdsManagePageLoad()
+    {
         $statuslist = DB::table('tp_status')->orderBy('id', 'asc')->get();
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
@@ -1391,10 +1428,9 @@ class ThemeOptionsController extends Controller
         ];
 
 
-
-        if(isset($site_option)){
+        if (isset($site_option)) {
             $results = $site_option->theme_option_ads_manage;
-            if($results){
+            if ($results) {
                 $dataObj = json_decode($results);
 
                 $data['header_code'] = $dataObj->header_code;
@@ -1409,9 +1445,9 @@ class ThemeOptionsController extends Controller
     }
 
     //Save data for Theme Options Ads Manage
-    public function saveThemeOptionsAdsManage(Request $request){
+    public function saveThemeOptionsAdsManage(Request $request)
+    {
         $id = $request->input('site_id');
-
 
 
         $header_code = $request->input('header_code');
@@ -1431,42 +1467,42 @@ class ThemeOptionsController extends Controller
         );
 
         $data = array(
-            'site_id'=>$id,
+            'site_id' => $id,
             'theme_option_ads_manage' => json_encode($option)
         );
 
         $site_option = Site_option::where('site_id', $id)->first();
 
-        $res = saveOptions($site_option,$data);
+        $res = saveOptions($site_option, $data);
 
         return response()->json($res);
     }
 
 
-/**
-    public function saveOptions($site_option,$data){
-        $res = array();
-        if($site_option){
-            $response = $site_option->update($data);
-            if($response){
-                $res['msgType'] = 'success';
-                $res['msg'] = __('Data Updated Successfully');
-            }else{
-                $res['msgType'] = 'error';
-                $res['msg'] = __('Data update failed');
-            }
-        }else{
-            $site_options = Site_option::create($data);
-            $response = $site_options->save();
-            if($response){
-                $res['msgType'] = 'success';
-                $res['msg'] = __('Data Updated Successfully');
-            }else{
-                $res['msgType'] = 'error';
-                $res['msg'] = __('Data update failed');
-            }
-        }
-        return $res;
-    }
- **/
+    /**
+     * public function saveOptions($site_option,$data){
+     * $res = array();
+     * if($site_option){
+     * $response = $site_option->update($data);
+     * if($response){
+     * $res['msgType'] = 'success';
+     * $res['msg'] = __('Data Updated Successfully');
+     * }else{
+     * $res['msgType'] = 'error';
+     * $res['msg'] = __('Data update failed');
+     * }
+     * }else{
+     * $site_options = Site_option::create($data);
+     * $response = $site_options->save();
+     * if($response){
+     * $res['msgType'] = 'success';
+     * $res['msg'] = __('Data Updated Successfully');
+     * }else{
+     * $res['msgType'] = 'error';
+     * $res['msg'] = __('Data update failed');
+     * }
+     * }
+     * return $res;
+     * }
+     **/
 }

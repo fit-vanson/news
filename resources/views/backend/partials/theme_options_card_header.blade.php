@@ -9,7 +9,8 @@
         </div>
         <div class="col-lg-4">
             <div class="float-right">
-                <a href="{{ route('backend.MultipleSites') }}" class="btn warning-btn"><i class="fa fa-reply"></i> {{ __('Back to List') }}</a>
+                <a href="{{ route('backend.MultipleSites') }}" class="btn warning-btn"><i
+                        class="fa fa-reply"></i> {{ __('Back to List') }}</a>
             </div>
         </div>
     </div>

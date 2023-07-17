@@ -2,32 +2,36 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{__('Password Reset')}}</title>
     <style>
-        .email-container{
+        .email-container {
             justify-content: center;
             display: grid;
             background-color: #ccc;
             padding: 0 5%
         }
-        .email-header{
+
+        .email-header {
             text-align: center;
         }
-        .email-header{
+
+        .email-header {
             background-color: orange;
             padding: 10px;
         }
-        .hyper-link
-        {
+
+        .hyper-link {
             color: orangered;
         }
-        .hyper-link:hover
-        {
+
+        .hyper-link:hover {
             color: #1c881c;
         }
-        .email-btn{
+
+        .email-btn {
             border: 1px solid orange;
             padding: 10px;
             border-radius: 5px;
@@ -40,18 +44,18 @@
             text-align: center;
         }
 
-        .email-btn:hover{
+        .email-btn:hover {
             border: 1px solid #2ec618;
             background-color: #22b31d;
             color: #f4f4f4;
         }
 
-        hr{
+        hr {
             border: 1px solid #bbbbbb;
             width: 100%
         }
 
-        .copyright{
+        .copyright {
             color: #248c48;
             font-size: 11px;
             text-align: center;
@@ -79,7 +83,8 @@
 
     <hr>
 
-    <p class="email-footer">{{ __('If you\'re having trouble clicking the "Password Reset Link" button, copy and paste the URL below into your web browser') }}: <span class="hyper-link">{{ $data['url'] }}</span></p>
+    <p class="email-footer">{{ __('If you\'re having trouble clicking the "Password Reset Link" button, copy and paste the URL below into your web browser') }}
+        : <span class="hyper-link">{{ $data['url'] }}</span></p>
     <p class="copyright">&copy; {{ config('app.name') }}. {{ __('All right reserved') }}.</p>
 </div>
 </body>

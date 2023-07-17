@@ -15,11 +15,11 @@ class CreateSocialMediasTable extends Migration
     {
         Schema::create('social_medias', function (Blueprint $table) {
             $table->id();
-			$table->string('title')->nullable();
-			$table->text('url')->nullable();
-			$table->string('social_icon', 120)->nullable();
-			$table->string('target', 100)->nullable();
-			$table->integer('is_publish')->nullable();
+            $table->string('title')->nullable();
+            $table->text('url')->nullable();
+            $table->string('social_icon', 120)->nullable();
+            $table->string('target', 100)->nullable();
+            $table->integer('is_publish')->nullable();
             $table->timestamps();
         });
     }

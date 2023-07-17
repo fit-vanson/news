@@ -15,10 +15,10 @@ class CreateShippingTable extends Migration
     {
         Schema::create('shipping', function (Blueprint $table) {
             $table->id();
-			$table->string('title')->nullable();
-			$table->double('shipping_fee', 8, 2);
-			$table->text('desc')->nullable();
-			$table->integer('is_publish')->nullable();
+            $table->string('title')->nullable();
+            $table->double('shipping_fee', 8, 2);
+            $table->text('desc')->nullable();
+            $table->integer('is_publish')->nullable();
             $table->timestamps();
         });
     }

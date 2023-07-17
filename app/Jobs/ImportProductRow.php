@@ -10,7 +10,6 @@ use App\Models\Product;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Illuminate\Bus\Queueable;
-
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -26,12 +25,14 @@ use Intervention\Image\Facades\Image;
 class ImportProductRow implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
     protected $categoriesCacheKey = 'import_categories';
     protected $brandsCacheKey = 'import_brands';
     protected $row;
 
     public $timeout = 1800;
     public $tries = 5;
+
     public function __construct(array $row)
     {
         ini_set('memory_limit', '2560M');
@@ -58,7 +59,7 @@ class ImportProductRow implements ShouldQueue
         $downloadedImages = $this->downloadImages($this->row['imageurls']);
 
         if (empty($downloadedImages)) {
-            Log::error($this->row['product_name'].' - No images found for the product.');
+            Log::error($this->row['product_name'] . ' - No images found for the product.');
             return;
         }
         $imageFileNames = [];
@@ -107,7 +108,7 @@ class ImportProductRow implements ShouldQueue
                 'end_date' => $this->row['end_date_sale_price'] ?? null,
                 'stock_qty' => $this->row['quantity'] ?? null,
                 'stock_status_id' => $this->row['stock_status'] == 'in_stock' ? 1 : 0,
-                'is_discount' => $this->row['is_discount']?? 0,
+                'is_discount' => $this->row['is_discount'] ?? 0,
                 'is_stock' => $this->row['is_stock'] ?? 1,
                 'collection_id' => $this->row['collection_id'] ?? 1,
                 'is_publish' => $this->row['is_publish'] ?? 1,
@@ -270,7 +271,7 @@ class ImportProductRow implements ShouldQueue
 
             $product_name_short = str_replace(' ', '', ucwords($product_name_formatted));
             $product_name_first_character = substr($product_name_short, 0, 5);
-            $imageName = $dateTime . '-'.time() . $product_name_first_character . '-' . $index . '.' . $extension;
+            $imageName = $dateTime . '-' . time() . $product_name_first_character . '-' . $index . '.' . $extension;
             $originalPath = $originalDir . $imageName;
             $thumbnailPath = $thumbnailDir . $imageName;
 

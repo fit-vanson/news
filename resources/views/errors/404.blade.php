@@ -44,7 +44,7 @@
                     <div class="col-md-6 offset-md-3">
                         <div class="error_card">
                             <div class="error_img">
-                                <img src="{{ asset('frontend/img/404.png') }}" />
+                                <img src="{{ asset('frontend/img/404.png') }}"/>
                             </div>
                             <p>{{ __('This page you are looking for could not be found!') }}</p>
                             <a class="btn theme-btn" href="{{ url('/') }}">{{ __('Back to Home Page') }}</a>

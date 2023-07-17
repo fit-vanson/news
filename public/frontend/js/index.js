@@ -363,8 +363,6 @@ Tags:
     =======================*/
 
 
-
-
     // Preloader JS
     function preloader() {
         if ($('.loader-inner').length) {

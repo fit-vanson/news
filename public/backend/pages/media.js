@@ -3,56 +3,56 @@ var $ = jQuery.noConflict();
 var media_type = 'Thumbnail';
 
 $(function () {
-	"use strict";
+    "use strict";
 
-	$.ajaxSetup({
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		}
-	});
-
-    $("#load_attachment").on('change', function() {
-		upload_form();
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
 
-	$("#submit-form").on("click", function () {
+    $("#load_attachment").on('change', function () {
+        upload_form();
+    });
+
+    $("#submit-form").on("click", function () {
         $("#DataEntry_formId").submit();
     });
 
-	$(document).on('click', '.pagination a', function(event){
-		event.preventDefault();
-		var page = $(this).attr('href').split('page=')[1];
-		onPaginationDataLoad(page);
-	});
+    $(document).on('click', '.pagination a', function (event) {
+        event.preventDefault();
+        var page = $(this).attr('href').split('page=')[1];
+        onPaginationDataLoad(page);
+    });
 
 });
 
 function onPaginationDataLoad(page) {
-	$.ajax({
-		url: base_url +"/backend/getMediaPaginationData?page="+page,
-		success:function(data){
-			$('#media_datalist').html(data);
-		}
-	});
+    $.ajax({
+        url: base_url + "/backend/getMediaPaginationData?page=" + page,
+        success: function (data) {
+            $('#media_datalist').html(data);
+        }
+    });
 }
 
 function onMediaPaginationDataLoad() {
-	$.ajax({
-		url: base_url + "/backend/getMediaPaginationData",
-		success:function(data){
-			$('#media_datalist').html(data);
-		}
-	});
+    $.ajax({
+        url: base_url + "/backend/getMediaPaginationData",
+        success: function (data) {
+            $('#media_datalist').html(data);
+        }
+    });
 }
 
 function onMediaSearch() {
-	var search = $("#search").val();
-	$.ajax({
-		url: base_url + "/backend/getMediaPaginationData?search="+search,
-		success:function(data){
-			$('#media_datalist').html(data);
-		}
-	});
+    var search = $("#search").val();
+    $.ajax({
+        url: base_url + "/backend/getMediaPaginationData?search=" + search,
+        success: function (data) {
+            $('#media_datalist').html(data);
+        }
+    });
 }
 
 function onListPanel() {
@@ -79,8 +79,7 @@ jQuery('#DataEntry_formId').parsley({
         onFieldValidate: function (elem) {
             if (!$(elem).is(':visible')) {
                 return true;
-            }
-            else {
+            } else {
                 showPerslyError();
                 return false;
             }
@@ -97,130 +96,130 @@ jQuery('#DataEntry_formId').parsley({
 function onConfirmWhenAddEdit() {
 
     $.ajax({
-		type : 'POST',
-		url: base_url + '/backend/mediaUpdate',
-		data: $('#DataEntry_formId').serialize(),
-		success: function (response) {
-			var msgType = response.msgType;
-			var msg = response.msg;
+        type: 'POST',
+        url: base_url + '/backend/mediaUpdate',
+        data: $('#DataEntry_formId').serialize(),
+        success: function (response) {
+            var msgType = response.msgType;
+            var msg = response.msg;
 
-			if (msgType == "success") {
-				$('#media_modal_view').modal('hide');
-				onSuccessMsg(msg);
-			} else {
-				onErrorMsg(msg);
-			}
-		}
-	});
+            if (msgType == "success") {
+                $('#media_modal_view').modal('hide');
+                onSuccessMsg(msg);
+            } else {
+                onErrorMsg(msg);
+            }
+        }
+    });
 }
 
 function onMediaModalView(id) {
 
     $.ajax({
-		type : 'POST',
-		url: base_url + '/backend/getMediaById',
-		data: 'id='+id,
-		success: function (response) {
+        type: 'POST',
+        url: base_url + '/backend/getMediaById',
+        data: 'id=' + id,
+        success: function (response) {
 
-			var data = response;
+            var data = response;
 
-			$("#RecordId").val(data.id);
-			$("#title").val(data.title);
-			$("#alternative_text").val(data.alt_title);
-			$("#thumbnail").val(public_path+'/media/'+data.thumbnail);
-			$("#large_image").val(public_path+'/media/'+data.large_image);
+            $("#RecordId").val(data.id);
+            $("#title").val(data.title);
+            $("#alternative_text").val(data.alt_title);
+            $("#thumbnail").val(public_path + '/media/' + data.thumbnail);
+            $("#large_image").val(public_path + '/media/' + data.large_image);
 
-			if(data.thumbnail != null){
-				$("#media_preview_img").html('<img src="'+public_path+'/media/'+data.thumbnail+'">');
-			}else{
-				$("#media_preview_img").html('');
-			}
-			$('#media_modal_view').modal('show');
-		}
+            if (data.thumbnail != null) {
+                $("#media_preview_img").html('<img src="' + public_path + '/media/' + data.thumbnail + '">');
+            } else {
+                $("#media_preview_img").html('');
+            }
+            $('#media_modal_view').modal('show');
+        }
     });
 }
 
 function onMediaDelete(id) {
-	RecordId = id;
-	var msg = TEXT["Do you really want to delete this record"];
-	onCustomModal(msg, "onConfirmWhenDelete");
+    RecordId = id;
+    var msg = TEXT["Do you really want to delete this record"];
+    onCustomModal(msg, "onConfirmWhenDelete");
 }
 
 function onConfirmWhenDelete() {
 
     $.ajax({
-		type : 'POST',
-		url: base_url + '/backend/onMediaDelete',
-		data: 'id='+RecordId,
-		success: function (response) {
-			var msgType = response.msgType;
-			var msg = response.msg;
+        type: 'POST',
+        url: base_url + '/backend/onMediaDelete',
+        data: 'id=' + RecordId,
+        success: function (response) {
+            var msgType = response.msgType;
+            var msg = response.msg;
 
-			if(msgType == "success"){
-				onSuccessMsg(msg);
-				onMediaPaginationDataLoad();
-			}else{
-				onErrorMsg(msg);
-			}
-		}
+            if (msgType == "success") {
+                onSuccessMsg(msg);
+                onMediaPaginationDataLoad();
+            } else {
+                onErrorMsg(msg);
+            }
+        }
     });
 }
 
 //upload attachment
 function upload_form() {
-	$("#upload-loader").show();
+    $("#upload-loader").show();
 
-	var data = new FormData();
-		data.append('FileName', $('#load_attachment')[0].files[0]);
-		data.append('media_type', media_type);
-	var ReaderObj = new FileReader();
-	var imgname  =  $('#load_attachment').val();
-	var size  =  $('#load_attachment')[0].files[0].size;
+    var data = new FormData();
+    data.append('FileName', $('#load_attachment')[0].files[0]);
+    data.append('media_type', media_type);
+    var ReaderObj = new FileReader();
+    var imgname = $('#load_attachment').val();
+    var size = $('#load_attachment')[0].files[0].size;
 
-	var ext = imgname.substr((imgname.lastIndexOf('.') +1));
+    var ext = imgname.substr((imgname.lastIndexOf('.') + 1));
     var ext = imgname.substr((imgname.lastIndexOf('.') + 1)).toLowerCase();
 
     var allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'ico', 'svg'];
 
     if (allowedExtensions.indexOf(ext) !== -1) {
 
-    // if(ext=='jpg' || ext=='JPG' || ext=='jpeg' || ext=='JPEG' || ext=='png' || ext=='PNG' || ext=='gif' || ext=='ico' || ext=='ICO' || ext=='svg' || ext=='SVG'){
+        // if(ext=='jpg' || ext=='JPG' || ext=='jpeg' || ext=='JPEG' || ext=='png' || ext=='PNG' || ext=='gif' || ext=='ico' || ext=='ICO' || ext=='svg' || ext=='SVG'){
 
-		$.ajax({
-			url: base_url + '/backend/MediaUpload',
-			type: "POST",
-			dataType : "json",
-			data:  data,
-			contentType: false,
-			processData:false,
-			enctype: 'multipart/form-data',
-			mimeType:"multipart/form-data",
-			success: function(response){
-				var dataList = response;
-				var msgType = dataList.msgType;
-				var msg = dataList.msg;
-				var thumbnail = dataList.thumbnail;
-				var id = dataList.id;
+        $.ajax({
+            url: base_url + '/backend/MediaUpload',
+            type: "POST",
+            dataType: "json",
+            data: data,
+            contentType: false,
+            processData: false,
+            enctype: 'multipart/form-data',
+            mimeType: "multipart/form-data",
+            success: function (response) {
+                var dataList = response;
+                var msgType = dataList.msgType;
+                var msg = dataList.msg;
+                var thumbnail = dataList.thumbnail;
+                var id = dataList.id;
 
-				if (msgType == "success") {
+                if (msgType == "success") {
 
-					$("#upload-loader").hide();
-					onSuccessMsg(msg);
+                    $("#upload-loader").hide();
+                    onSuccessMsg(msg);
 
-					onMediaPaginationDataLoad();
-				} else {
-					onErrorMsg(msg);
+                    onMediaPaginationDataLoad();
+                } else {
+                    onErrorMsg(msg);
                     $("#upload-loader").css("display", "none");
-				}
-			},
-			error: function(){
+                }
+            },
+            error: function () {
                 $("#upload-loader").css("display", "none");
                 return false;
-			}
-		});
+            }
+        });
 
-	}else{
-		onErrorMsg(TEXT['Sorry only you can upload jpg, png and gif file type']);
+    } else {
+        onErrorMsg(TEXT['Sorry only you can upload jpg, png and gif file type']);
         $("#upload-loader").css("display", "none");
-	}
+    }
 }

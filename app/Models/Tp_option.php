@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Tp_option extends Model
 {
     use HasFactory;
-	
+
     protected $fillable = [
-        'option_name', 
-		'option_value', 
-    ];	
+        'option_name',
+        'option_value',
+    ];
 }

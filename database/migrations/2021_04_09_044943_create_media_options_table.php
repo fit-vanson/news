@@ -15,11 +15,11 @@ class CreateMediaOptionsTable extends Migration
     {
         Schema::create('media_options', function (Blueprint $table) {
             $table->id();
-			$table->text('title')->nullable();
-			$table->text('alt_title')->nullable();
-			$table->text('thumbnail')->nullable();
-			$table->text('large_image')->nullable();
-			$table->longText('option_value')->nullable();
+            $table->text('title')->nullable();
+            $table->text('alt_title')->nullable();
+            $table->text('thumbnail')->nullable();
+            $table->text('large_image')->nullable();
+            $table->longText('option_value')->nullable();
             $table->timestamps();
         });
     }

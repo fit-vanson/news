@@ -2,85 +2,85 @@ var $ = jQuery.noConflict();
 var logo_type = '';
 
 $(function () {
-	"use strict";
+    "use strict";
 
-	$.ajaxSetup({
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		}
-	});
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
     $("#select_MultipleSites").addClass("active");
 
-	$("#submit-form").on("click", function () {
+    $("#submit-form").on("click", function () {
         $("#DataEntry_formId").submit();
     });
 
-	$("#on_favicon").on("click", function () {
-		logo_type = 'favicon';
-		onGlobalMediaModalView();
+    $("#on_favicon").on("click", function () {
+        logo_type = 'favicon';
+        onGlobalMediaModalView();
     });
 
-	$("#on_front_logo").on("click", function () {
-		logo_type = 'front_logo';
-		onGlobalMediaModalView();
+    $("#on_front_logo").on("click", function () {
+        logo_type = 'front_logo';
+        onGlobalMediaModalView();
     });
 
-	$("#on_back_logo").on("click", function () {
-		logo_type = 'back_logo';
-		onGlobalMediaModalView();
+    $("#on_back_logo").on("click", function () {
+        logo_type = 'back_logo';
+        onGlobalMediaModalView();
     });
 
-	$("#media_select_file").on("click", function () {
+    $("#media_select_file").on("click", function () {
 
-		var thumbnail = $("#thumbnail").val();
+        var thumbnail = $("#thumbnail").val();
 
-		if(logo_type == 'favicon'){
+        if (logo_type == 'favicon') {
 
-			if(thumbnail !=''){
-				$("#favicon").val(thumbnail);
-				$("#view_favicon").html('<img src="'+public_path+'/media/'+thumbnail+'">');
-			}
+            if (thumbnail != '') {
+                $("#favicon").val(thumbnail);
+                $("#view_favicon").html('<img src="' + public_path + '/media/' + thumbnail + '">');
+            }
 
-			$("#remove_favicon").show();
+            $("#remove_favicon").show();
 
-		} else if (logo_type == 'front_logo') {
-			if(thumbnail !=''){
-				$("#front_logo").val(thumbnail);
-				$("#view_front_logo").html('<img src="'+public_path+'/media/'+thumbnail+'">');
-			}
+        } else if (logo_type == 'front_logo') {
+            if (thumbnail != '') {
+                $("#front_logo").val(thumbnail);
+                $("#view_front_logo").html('<img src="' + public_path + '/media/' + thumbnail + '">');
+            }
 
-			$("#remove_front_logo").show();
+            $("#remove_front_logo").show();
 
-		} else if (logo_type == 'back_logo') {
+        } else if (logo_type == 'back_logo') {
 
-			if(thumbnail !=''){
-				$("#back_logo").val(thumbnail);
-				$("#view_back_logo").html('<img src="'+public_path+'/media/'+thumbnail+'">');
-			}
+            if (thumbnail != '') {
+                $("#back_logo").val(thumbnail);
+                $("#view_back_logo").html('<img src="' + public_path + '/media/' + thumbnail + '">');
+            }
 
-			$("#remove_back_logo").show();
-		}
+            $("#remove_back_logo").show();
+        }
 
-		$('#global_media_modal_view').modal('hide');
+        $('#global_media_modal_view').modal('hide');
     });
 });
 
 function onMediaImageRemove(type) {
-	if(type == 'favicon'){
+    if (type == 'favicon') {
 
-		$('#favicon').val('');
-		$("#remove_favicon").hide();
+        $('#favicon').val('');
+        $("#remove_favicon").hide();
 
-	}else if(type == 'front_logo'){
+    } else if (type == 'front_logo') {
 
-		$('#front_logo').val('');
-		$("#remove_front_logo").hide();
+        $('#front_logo').val('');
+        $("#remove_front_logo").hide();
 
-	}else if(type == 'back_logo'){
-		$('#back_logo').val('');
-		$("#remove_back_logo").hide();
-	}
+    } else if (type == 'back_logo') {
+        $('#back_logo').val('');
+        $("#remove_back_logo").hide();
+    }
 }
 
 function showPerslyError() {
@@ -109,18 +109,18 @@ jQuery('#DataEntry_formId').parsley({
 function onConfirmWhenAddEdit() {
 
     $.ajax({
-		type : 'POST',
-		url: base_url + '/backend/saveThemeLogo',
-		data: $('#DataEntry_formId').serialize(),
-		success: function (response) {
-			var msgType = response.msgType;
-			var msg = response.msg;
-			if (msgType == "success") {
-				onSuccessMsg(msg);
-			} else {
-				onErrorMsg(msg);
-			}
-		}
-	});
+        type: 'POST',
+        url: base_url + '/backend/saveThemeLogo',
+        data: $('#DataEntry_formId').serialize(),
+        success: function (response) {
+            var msgType = response.msgType;
+            var msg = response.msg;
+            if (msgType == "success") {
+                onSuccessMsg(msg);
+            } else {
+                onErrorMsg(msg);
+            }
+        }
+    });
 }
 

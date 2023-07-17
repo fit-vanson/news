@@ -14,7 +14,7 @@ class AddColumnToSectionManagesTable extends Migration
     public function up()
     {
         Schema::table('section_manages', function (Blueprint $table) {
-            $table->dropColumn(['manage_type', 'url','image']);
+            $table->dropColumn(['manage_type', 'url', 'image']);
         });
     }
 

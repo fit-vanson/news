@@ -37,8 +37,8 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-			\App\Http\Middleware\Localization::class, //localization middleware
-			\App\Http\Middleware\isActive::class, //User is Active
+            \App\Http\Middleware\Localization::class, //localization middleware
+            \App\Http\Middleware\isActive::class, //User is Active
         ],
 
         'api' => [

@@ -3,25 +3,21 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\MultipleSites;
-use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Models\Slider;
-use App\Models\Pro_category;
-use App\Models\Offer_ad;
 use App\Models\Brand;
-use App\Models\Tp_option;
+use App\Models\Offer_ad;
+use App\Models\Pro_category;
+use App\Models\Product;
 use App\Models\Section_manage;
+use App\Models\Slider;
 
 class HomeFrontendController extends Controller
 {
-	//Get Frontend Data
+    //Get Frontend Data
     public function homePageLoad()
-	{
+    {
         $site = getSite();
 
-        if(!$site){
+        if (!$site) {
             return 1;
         }
 
@@ -45,7 +41,7 @@ class HomeFrontendController extends Controller
         $newsViewers = ($limit > 0) ? $newsQuery->orderBy('news.viewers', 'desc')->take($limit)->get() : collect();
         $newsBreaking = $newsQuery->where('news.breaking_news', 1)->take($limit)->get();
 
-        return view('frontend.pages.home',compact('categories','newsLatest','newsViewers','newsRandom','newsBreaking'));
+        return view('frontend.pages.home', compact('categories', 'newsLatest', 'newsViewers', 'newsRandom', 'newsBreaking'));
 
     }
 }

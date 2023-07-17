@@ -1,28 +1,28 @@
 var $ = jQuery.noConflict();
 
 $(function () {
-	"use strict";
+    "use strict";
 
-	$.ajaxSetup({
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		}
-	});
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
-	$("#submit-form").on("click", function () {
+    $("#submit-form").on("click", function () {
         $("#DataEntry_formId").submit();
     });
 
-	$("#media_select_file").on("click", function () {
+    $("#media_select_file").on("click", function () {
 
-		var thumbnail = $("#thumbnail").val();
-		if(thumbnail !=''){
-			$("#og_image").val(thumbnail);
-			$("#view_og_image").html('<img src="'+public_path+'/media/'+thumbnail+'">');
-		}
+        var thumbnail = $("#thumbnail").val();
+        if (thumbnail != '') {
+            $("#og_image").val(thumbnail);
+            $("#view_og_image").html('<img src="' + public_path + '/media/' + thumbnail + '">');
+        }
 
-		$("#remove_og_image").show();
-		$('#global_media_modal_view').modal('hide');
+        $("#remove_og_image").show();
+        $('#global_media_modal_view').modal('hide');
     });
 });
 
@@ -30,7 +30,7 @@ $("#select_MultipleSites").addClass("active");
 
 function onMediaImageRemove(type) {
     $('#og_image').val('');
-	$("#remove_og_image").hide();
+    $("#remove_og_image").hide();
 }
 
 function showPerslyError() {
@@ -59,18 +59,18 @@ jQuery('#DataEntry_formId').parsley({
 function onConfirmWhenAddEdit() {
 
     $.ajax({
-		type : 'POST',
-		url: base_url + '/backend/saveThemeOptionsSEO',
-		data: $('#DataEntry_formId').serialize(),
-		success: function (response) {
-			var msgType = response.msgType;
-			var msg = response.msg;
-			if (msgType == "success") {
-				onSuccessMsg(msg);
-			} else {
-				onErrorMsg(msg);
-			}
-		}
-	});
+        type: 'POST',
+        url: base_url + '/backend/saveThemeOptionsSEO',
+        data: $('#DataEntry_formId').serialize(),
+        success: function (response) {
+            var msgType = response.msgType;
+            var msg = response.msg;
+            if (msgType == "success") {
+                onSuccessMsg(msg);
+            } else {
+                onErrorMsg(msg);
+            }
+        }
+    });
 }
 

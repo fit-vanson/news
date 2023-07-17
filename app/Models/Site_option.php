@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Site_option extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'site_id',
         'general_settings',
