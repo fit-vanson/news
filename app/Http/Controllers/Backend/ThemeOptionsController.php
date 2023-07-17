@@ -1421,10 +1421,10 @@ class ThemeOptionsController extends Controller
 
 
             'header_code' => '',
-            'header_ads' => '',
-            'sidebar_ads' => '',
-            'before_ads' => '',
-            'after_ads' => '',
+            'header_adss' => '',
+            'sidebar_adss' => '',
+            'before_adss' => '',
+            'after_adss' => '',
         ];
 
 
@@ -1434,14 +1434,14 @@ class ThemeOptionsController extends Controller
                 $dataObj = json_decode($results);
 
                 $data['header_code'] = $dataObj->header_code;
-                $data['header_ads'] = $dataObj->header_ads;
-                $data['sidebar_ads'] = $dataObj->sidebar_ads;
-                $data['before_ads'] = $dataObj->before_ads;
-                $data['after_ads'] = $dataObj->after_ads;
+                $data['header_adss'] = $dataObj->header_ads;
+                $data['sidebar_adss'] = $dataObj->sidebar_ads;
+                $data['before_adss'] = $dataObj->before_ads;
+                $data['after_adss'] = $dataObj->after_ads;
             }
         }
         $datalist = $data;
-        return view('backend.theme-options-ads-manage', compact('datalist', 'statuslist'));
+        return view('backend.theme-options-adss-manage', compact('datalist', 'statuslist'));
     }
 
     //Save data for Theme Options Ads Manage
@@ -1451,10 +1451,10 @@ class ThemeOptionsController extends Controller
 
 
         $header_code = $request->input('header_code');
-        $header_ads = $request->input('header_ads');
-        $sidebar_ads = $request->input('sidebar_ads');
-        $before_ads = $request->input('before_ads');
-        $after_ads = $request->input('after_ads');
+        $header_ads = $request->input('header_adss');
+        $sidebar_ads = $request->input('sidebar_adss');
+        $before_ads = $request->input('before_adss');
+        $after_ads = $request->input('after_adss');
 
 
         $option = array(

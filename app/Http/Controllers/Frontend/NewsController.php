@@ -101,10 +101,13 @@ class NewsController extends Controller
             'device_name_full' => $agent->getUserAgent(),
             'platform_name' => $agent->platform() !=0 ? $agent->platform() : 'other',
             'country' => $location['country'],
-            'created_at' => Carbon::now()
+            'created_at' => Carbon::now()->startOfDay()
         ];
 
-        return $news->trackNews()->updateOrCreate($track_news)->increment('count', 1);
+
+        return $news->trackNews()
+            ->updateOrCreate($track_news)
+            ->increment('count', 1);
     }
 
 

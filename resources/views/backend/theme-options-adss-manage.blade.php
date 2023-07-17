@@ -30,32 +30,32 @@
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="about_desc">{{ __('Header Ads') }}</label>
-                                                <textarea name="header_ads" id="header_ads" class="form-control"
-                                                          rows="8">{{ $datalist['header_ads'] }}</textarea>
+                                                <textarea name="header_adss" id="header_adss" class="form-control"
+                                                          rows="8">{{ $datalist['header_adss'] }}</textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="about_desc">{{ __('Sidebar Ads') }}</label>
-                                                <textarea name="sidebar_ads" id="sidebar_ads" class="form-control"
-                                                          rows="8">{{ $datalist['sidebar_ads'] }}</textarea>
+                                                <textarea name="sidebar_adss" id="sidebar_adss" class="form-control"
+                                                          rows="8">{{ $datalist['sidebar_adss'] }}</textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="about_desc">{{ __('Before Ads') }}</label>
-                                                <textarea name="before_ads" id="before_ads" class="form-control"
-                                                          rows="8">{{ $datalist['before_ads'] }}</textarea>
+                                                <textarea name="before_adss" id="before_adss" class="form-control"
+                                                          rows="8">{{ $datalist['before_adss'] }}</textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="about_desc">{{ __('After Ads') }}</label>
-                                                <textarea name="after_ads" id="after_ads" class="form-control"
-                                                          rows="8">{{ $datalist['after_ads'] }}</textarea>
+                                                <textarea name="after_adss" id="after_adss" class="form-control"
+                                                          rows="8">{{ $datalist['after_adss'] }}</textarea>
                                             </div>
                                         </div>
 
@@ -80,14 +80,12 @@
     </div>
     <!-- /main Section -->
 
-    <!--Global Media-->
-    {{--@include('backend.partials.global_media')--}}
-    <!--/Global Media/-->
+
 
 @endsection
 
 @push('scripts')
 
-    <script src="{{asset('backend/pages/theme_option_ads_manage.js')}}"></script>
+    <script src="{{asset('backend/pages/theme_option_adss_manage.js')}}"></script>
 
 @endpush

@@ -9,4 +9,9 @@ class TrackNewsUrl extends Model
 {
     use HasFactory;
     protected $guarded= [];
+
+    public function news()
+    {
+        return $this->belongsTo(News::class, 'news_id');
+    }
 }

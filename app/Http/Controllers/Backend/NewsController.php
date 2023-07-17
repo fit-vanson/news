@@ -8,6 +8,7 @@ use App\Models\Media_option;
 use App\Models\MultipleSites;
 use App\Models\News;
 use App\Models\Pro_category;
+use App\Models\TrackNewsUrl;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Validator;
 
 class NewsController extends Controller
 {
-    //Categories page load
+    //News page load
     public function getNewsPageLoad()
     {
         $media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
@@ -44,7 +45,7 @@ class NewsController extends Controller
 
     }
 
-    //Get data for Categories Pagination
+    //Get data for News Pagination
     public function getNewsTableData(Request $request)
     {
 
@@ -57,7 +58,7 @@ class NewsController extends Controller
             if ($search != '') {
                 $news = $site->news()
                     ->where(function ($query) use ($search) {
-                        $query->whereRaw("title LIKE '%" . rawurlencode($search) . "%'");
+                        $query->whereRaw("LOWER(title) LIKE '%" . strtolower(rawurlencode($search)) . "%'");
                     })
                     ->where(function ($query) use ($category_id) {
                         $query->whereRaw("categories.id = '" . $category_id . "' OR '" . $category_id . "' = '0'");
@@ -76,7 +77,7 @@ class NewsController extends Controller
         }
     }
 
-    //Save data for Categories
+    //Save data for News
     public function saveNewsData(Request $request)
     {
         $res = array();
@@ -213,7 +214,7 @@ class NewsController extends Controller
         return response()->json($res);
     }
 
-    //Get data for Categories by id
+    //Get data for News by id
     public function getNewsById(Request $request)
     {
 
@@ -222,7 +223,7 @@ class NewsController extends Controller
         return response()->json($data);
     }
 
-    //Delete data for Categories
+    //Delete data for News
     public function deleteNews(Request $request)
     {
 
@@ -251,7 +252,7 @@ class NewsController extends Controller
         return response()->json($res);
     }
 
-    //Bulk Action for Categories
+    //Bulk Action for News
     public function bulkActionNews(Request $request)
     {
 
@@ -297,7 +298,7 @@ class NewsController extends Controller
         return response()->json($res);
     }
 
-    //has Category Slug
+    //has News Slug
     public function hasNewsSlug(Request $request)
     {
         $res = array();
@@ -314,7 +315,7 @@ class NewsController extends Controller
         return response()->json($res);
     }
 
-    //Save data for Categories Bulk
+    //Save data for News Bulk
     public function saveNewsBulk(Request $request)
     {
         $file = $request->file('csv_file');
@@ -369,5 +370,56 @@ class NewsController extends Controller
             $res['msg'] = __('Data update failed');
         }
         return response()->json($res);
+    }
+
+
+    //News page load
+    public function getTrackNewsPageLoad()
+    {
+
+        $id = \request()->site_id;
+        $site = MultipleSites::findorFail($id);
+        $data = [
+            'id' => $id,
+            'title_row' => 'News',
+            'name' => $site->site_name,
+            'web' => $site->site_web,
+        ];
+        $datalist = $data;
+
+        $news_id = $site->news->pluck('id')->toArray();
+
+        $trackNews = TrackNewsUrl::query()->whereIn('news_id',$news_id)->orderBy('track_news_urls.created_at', 'desc')->paginate(10);
+
+
+        return view('backend.track_news', compact(  'datalist', 'trackNews'));
+
+    }
+
+    //Get data for News Pagination
+    public function getTrackNewsTableData(Request $request)
+    {
+
+        $search = $request->search;
+        $site_id = $request->site_id;
+
+        $site = MultipleSites::findorFail($site_id);
+        if ($request->ajax()) {
+            if ($search != '') {
+                $news = $site->news()
+                    ->where(function ($query) use ($search) {
+                        $query->whereRaw("LOWER(title) LIKE '%" . strtolower(rawurlencode($search)) . "%'");
+                    })
+
+                    ->orderBy('news.id', 'desc')
+                    ->paginate(10);
+            } else {
+                $news = $site->news()
+                    ->orderBy('news.id', 'desc')
+
+                    ->paginate(10);
+            }
+            return view('backend.partials.news_table', compact('news'))->render();
+        }
     }
 }

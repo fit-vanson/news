@@ -14,4 +14,7 @@
                 class="fa fa-cog"></i>{{ __('Social Media') }}</a></li>
     <li><a href="{{ route('backend.theme-options-ads-manage', ['site_id' => @$datalist['id']]) }}"><i
                 class="fa fa-cog"></i>{{ __('ADS Manage') }}</a></li>
+
+    <li><a href="{{ route('backend.track_news', ['site_id' => @$datalist['id']]) }}"><i
+                class="fa fa-cog"></i>{{ __('Track') }}</a></li>
 </ul>

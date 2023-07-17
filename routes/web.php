@@ -158,6 +158,13 @@ Route::prefix('backend')->group(function () {
     Route::get('/theme-options-footer', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'getThemeOptionsFooterPageLoad'])->name('backend.theme-options-footer')->middleware(['auth', 'is_admin_or_editor']);
     Route::post('/saveThemeOptionsFooter', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'saveThemeOptionsFooter'])->name('backend.saveThemeOptionsFooter')->middleware(['auth', 'is_admin_or_editor']);
 
+    //Theme Track New
+//    Route::get('/theme-options-track-news', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'getThemeOptionsTrackNewsPageLoad'])->name('backend.theme-options-track-news')->middleware(['auth', 'is_admin_or_editor']);
+//    Route::post('/saveThemeOptionsTrack', [App\Http\Controllers\Backend\ThemeOptionsController::class, 'saveThemeOptionsFooter'])->name('backend.saveThemeOptionsFooter')->middleware(['auth', 'is_admin_or_editor']);
+
+    Route::get('/track-news', [App\Http\Controllers\Backend\NewsController::class, 'getTrackNewsPageLoad'])->name('backend.track_news')->middleware(['auth', 'is_admin_or_editor']);
+    Route::get('/getTrackNewsTableData', [App\Http\Controllers\Backend\NewsController::class, 'getTrackNewsTableData'])->name('backend.getTrackNewsTableData')->middleware(['auth', 'is_admin_or_editor']);
+
 });
 
 
