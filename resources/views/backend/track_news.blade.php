@@ -19,7 +19,6 @@
                                 <div id="list-panel">
                                     <div class="row">
 
-
                                         <div class="col-lg-3">
                                             <div class="form-group search-box">
                                                 <input type="text" name="site_id" id="site_id" class="dnone"

@@ -376,7 +376,6 @@ class NewsController extends Controller
     //News page load
     public function getTrackNewsPageLoad()
     {
-
         $id = \request()->site_id;
         $site = MultipleSites::findorFail($id);
         $data = [
@@ -399,7 +398,6 @@ class NewsController extends Controller
     //Get data for News Pagination
     public function getTrackNewsTableData(Request $request)
     {
-
         $search = $request->search;
         $site_id = $request->site_id;
 
@@ -424,6 +422,39 @@ class NewsController extends Controller
                     ->paginate(10);
             }
             return view('backend.partials.track_news_table', compact('trackNews'))->render();
+        }
+    }
+
+
+    //Read Time  page load
+    public function getTrackReadTimePageLoad()
+    {
+        $trackReadTime = TrackNewsUrl::orderBy('created_at', 'desc')->paginate(10);
+        return view('backend.track_read_time', compact(  'trackReadTime'));
+
+    }
+
+    //Get data for Read Time Pagination
+    public function getTrackReadTimeTableData(Request $request)
+    {
+        $search = $request->search;
+
+        if ($request->ajax()) {
+            if ($search != '') {
+                $trackReadTime = TrackNewsUrl::query()
+                    ->whereHas('news.categories.site', function ($query) use ($search) {
+                        $query->whereRaw("LOWER(title) LIKE '%" . strtolower(rawurlencode($search)) . "%'")
+                            ->orwhereRaw("site_web LIKE '%" . $search . "%'");
+                    })
+                    ->OrwhereRaw("ip_address LIKE '%" . $search . "%'")
+                    ->orderBy('track_news_urls.created_at', 'desc')
+                    ->paginate(10);
+            } else {
+                $trackReadTime = TrackNewsUrl::query()
+                    ->orderBy('track_news_urls.created_at', 'desc')
+                    ->paginate(10);
+            }
+            return view('backend.partials.track_read_time_table', compact('trackReadTime'))->render();
         }
     }
 }
