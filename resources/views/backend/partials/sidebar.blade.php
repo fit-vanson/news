@@ -14,7 +14,7 @@
             <li><a href="{{ route('backend.MultipleSites') }}" id="select_MultipleSites"><i
                         class="fa fa-globe"></i>{{ __('Multiple Sites') }}</a></li>
             <li><a href="{{ route('backend.users') }}"><i class="fa fa-user-plus"></i>{{ __('Users') }}</a></li>
-            <li><a href="{{ route('backend.track_read_time') }}"><i class="fa fa-user-plus"></i>{{ __('Track Read Time') }}</a></li>
+            <li><a href="{{ route('backend.track_read_time') }}"><i class="fa fa-line-chart"></i>{{ __('Track Read Time') }}</a></li>
         @elseif (Auth::user()->role_id == 3)
             <li><a href="{{ route('backend.MultipleSites') }}" id="select_MultipleSites"><i
                         class="fa fa-globe"></i>{{ __('Sites') }}</a></li>
