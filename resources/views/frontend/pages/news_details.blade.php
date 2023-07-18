@@ -308,4 +308,19 @@
         <!-- Maan Related Posts End -->
     </main>
 
+    <script>
+        window.pageLoadTime = Math.floor(Date.now() / 1000); // Chia cho 1000 để chuyển sang giây
+        // Gửi thông tin thời gian đọc trang về máy chủ
+        window.addEventListener('beforeunload', function () {
+            var readTime = Math.floor(Date.now() / 1000) - window.pageLoadTime; // Chia cho 1000 để chuyển sang giây
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/track-read-time', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                readTime: readTime,
+                news_id: {{$news->id}}
+            }));
+        });
+    </script>
+
 @endsection

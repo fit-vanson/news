@@ -6,26 +6,14 @@ use App\Http\Controllers\Controller;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Jenssegers\Agent\Agent;
 use Torann\GeoIP\Facades\GeoIP;
 
 class NewsController extends Controller
 {
-    public function maanNewsComment(Request $request, $id)
-    {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'comment' => 'required'
-        ]);
-        $newscomments = new Newscomment();
-        $newscomments->news_id = $id;
-        $newscomments->name = $request->name;
-        $newscomments->email = $request->email;
-        $newscomments->comment = $request->comment;
-        $newscomments->save();
-        return redirect()->back();
-    }
+
 
     public function news($category)
     {
@@ -70,7 +58,7 @@ class NewsController extends Controller
         $news = $newsQuery->findOrFail($id);
         $news->increment('viewers');
 
-        $this->tracknews($news);
+//        $this->tracknews($news);
 
         $relatedNews = $newsQuery
             ->orderByDesc('news.id')
@@ -86,10 +74,9 @@ class NewsController extends Controller
         return view('frontend.pages.news_details', compact('news', 'relatedNews', 'social_media'));
     }
 
-    public function tracknews($news){
+/*    public function tracknews($news)
+    {
         $ip_address = getIp();
-
-        $location = GeoIP::getLocation($ip_address);
         $agent = new Agent();
 
         $track_news = [
@@ -99,16 +86,50 @@ class NewsController extends Controller
             'ip_address' => $ip_address,
             'device_name' => $agent->device(),
             'device_name_full' => $agent->getUserAgent(),
-            'platform_name' => $agent->platform() !=0 ? $agent->platform() : 'other',
-            'country' => $location['country'],
+            'platform_name' => $agent->platform() != 0 ? $agent->platform() : 'other',
+            'country' => GeoIP::getLocation($ip_address)['country'],
             'created_at' => Carbon::now()->startOfDay()
         ];
 
+        $news->trackNews()->updateOrCreate($track_news, ['count' => DB::raw('count + 1')]);
+        return $news;
+    }*/
 
-        return $news->trackNews()
-            ->updateOrCreate($track_news)
-            ->increment('count', 1);
+    public function trackReadTime(Request $request)
+    {
+        $site = getSite();
+        if (!$site) {
+            return 1;
+        }
+
+        $newsQuery = $site->news();
+        $executionTime = $request->readTime;
+        $newsId = $request->news_id;
+
+        $ip_address = getIp();
+        $agent = new Agent();
+
+        $track_news = [
+            'news_id' => $newsId,
+            'is_robot' => $agent->isRobot(),
+            'robot' => $agent->robot(),
+            'ip_address' => $ip_address,
+            'device_name' => $agent->device(),
+            'device_name_full' => $agent->getUserAgent(),
+            'platform_name' => $agent->platform() != 0 ? $agent->platform() : 'other',
+            'country' => GeoIP::getLocation($ip_address)['country'],
+            'created_at' => Carbon::now()->startOfDay()
+        ];
+
+        $news = $newsQuery->findOrFail($newsId);
+        $news->trackNews()->updateOrCreate($track_news, [
+            'count' => DB::raw('count + 1'),
+            'execution_time' => $executionTime
+        ]);
+
+        return $news;
     }
+
 
 
 }

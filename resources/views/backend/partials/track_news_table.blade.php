@@ -10,7 +10,8 @@
             <th class="text-left" style="width:30%">{{ __('Device Name') }}</th>
             <th class="text-left" style="width:10%">{{ __('Country') }} </th>
             <th class="text-left" style="width:10%">{{ __('Robot') }}</th>
-            <th class="text-left" style="width:10%">{{ __('Count') }}</th>
+            <th class="text-left" style="width:5%">{{ __('Count') }}</th>
+            <th class="text-left" style="width:5%">{{ __('Read Time') }}</th>
         </tr>
         </thead>
         <tbody>
@@ -19,19 +20,17 @@
             @foreach($trackNews as $row)
 {{--                @dd($row->news)--}}
                 <tr>
-                    <td class="checkboxlist text-center"><input name="item_ids[]" value="{{ $row->id }}"
-                                                                class="tp-checkbox selected_item" type="checkbox"></td>
-
-                        <?php $url = '//' . $row->news->categories->site->site_web . '/' . $row->news->categories->slug . '/details/' . $row->news->id . '/' . $row->news->slug; ?>
+                    <td class="checkboxlist text-center">
+                        <input name="item_ids[]" value="{{ $row->id }}" class="tp-checkbox selected_item" type="checkbox">
+                    </td>
                     <td class="text-left click_search">{{ htmlDecode(rawurldecode($row->news->title))  }}</td>
-
-
                     <td class="text-left click_search">{{ $row->ip_address }}</td>
                     <td class="text-left">{{ $row->platform_name}} - {{ $row->device_name}}  </td>
                     <td class="text-left">{{ $row->device_name_full}} </td>
                     <td class="text-left">{{ $row->country}} </td>
                     <td class="text-left">{{ $row->robot}} </td>
                     <td class="text-left">{{ $row->count}} </td>
+                    <td class="text-left">{{ $row->execution_time}} </td>
                 </tr>
             @endforeach
         @else

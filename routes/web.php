@@ -164,13 +164,13 @@ Route::prefix('backend')->group(function () {
 
     Route::get('/track-news', [App\Http\Controllers\Backend\NewsController::class, 'getTrackNewsPageLoad'])->name('backend.track_news')->middleware(['auth', 'is_admin_or_editor']);
     Route::get('/getTrackNewsTableData', [App\Http\Controllers\Backend\NewsController::class, 'getTrackNewsTableData'])->name('backend.getTrackNewsTableData')->middleware(['auth', 'is_admin_or_editor']);
-
 });
 
 
 foreach (allCategories() as $category) {
     Route::get($category->slug . '/{newscategory?}', [\App\Http\Controllers\Frontend\NewsController::class, 'news'])->name($category->slug);
     Route::get($category->slug . '/details/{id}/{slug?}', [\App\Http\Controllers\Frontend\NewsController::class, 'newsDetails'])->name($category->slug . '.details');
-
 }
+
+Route::post('/track-read-time', [\App\Http\Controllers\Frontend\NewsController::class, 'trackReadTime'])->name('trackReadTime');
 
