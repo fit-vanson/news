@@ -38,9 +38,5 @@ class News extends Model
     }
 
 
-    public function site()
-    {
-        return $this->belongsTo(MultipleSites::class, 'site_id');
-    }
 
 }

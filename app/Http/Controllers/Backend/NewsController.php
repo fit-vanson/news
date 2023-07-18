@@ -388,7 +388,7 @@ class NewsController extends Controller
 
         $news_id = $site->news->pluck('id')->toArray();
 
-        $trackNews = TrackNewsUrl::query()->whereIn('news_id',$news_id)->orderBy('track_news_urls.created_at', 'desc')->paginate(10);
+        $trackNews = TrackNewsUrl::query()->whereIn('news_id',$news_id)->orderBy('created_at', 'desc')->paginate(10);
 
 
         return view('backend.track_news', compact(  'datalist', 'trackNews'));
@@ -413,7 +413,7 @@ class NewsController extends Controller
 
                     })
                     ->OrwhereRaw("ip_address LIKE '%" . $search . "%'")
-                    ->orderBy('track_news_urls.created_at', 'desc')
+                    ->orderBy('created_at', 'desc')
                     ->paginate(10);
             } else {
                 $trackNews = TrackNewsUrl::query()
@@ -447,11 +447,11 @@ class NewsController extends Controller
                             ->orwhereRaw("site_web LIKE '%" . $search . "%'");
                     })
                     ->OrwhereRaw("ip_address LIKE '%" . $search . "%'")
-                    ->orderBy('track_news_urls.created_at', 'desc')
+                    ->orderBy('created_at', 'desc')
                     ->paginate(10);
             } else {
                 $trackReadTime = TrackNewsUrl::query()
-                    ->orderBy('track_news_urls.created_at', 'desc')
+                    ->orderBy('created_at', 'desc')
                     ->paginate(10);
             }
             return view('backend.partials.track_read_time_table', compact('trackReadTime'))->render();
