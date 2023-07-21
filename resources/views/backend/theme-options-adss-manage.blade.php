@@ -59,6 +59,14 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="about_desc">{{ __('Ads Txt') }}</label>
+                                                <textarea name="adssss_txt" id="adssss_txt" class="form-control"
+                                                          rows="8">{{ $datalist['adssss_txt'] }}</textarea>
+                                            </div>
+                                        </div>
+
 
                                     </div>
 

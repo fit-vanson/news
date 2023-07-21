@@ -1425,6 +1425,7 @@ class ThemeOptionsController extends Controller
             'sidebar_adss' => '',
             'before_adss' => '',
             'after_adss' => '',
+            'adssss_txt' => '',
         ];
 
 
@@ -1433,11 +1434,12 @@ class ThemeOptionsController extends Controller
             if ($results) {
                 $dataObj = json_decode($results);
 
-                $data['header_code'] = $dataObj->header_code;
-                $data['header_adss'] = $dataObj->header_ads;
-                $data['sidebar_adss'] = $dataObj->sidebar_ads;
-                $data['before_adss'] = $dataObj->before_ads;
-                $data['after_adss'] = $dataObj->after_ads;
+                $data['header_code'] = $dataObj->header_code ?? null;
+                $data['header_adss'] = $dataObj->header_ads ?? null;
+                $data['sidebar_adss'] = $dataObj->sidebar_ads ?? null;
+                $data['before_adss'] = $dataObj->before_ads ?? null;
+                $data['after_adss'] = $dataObj->after_ads ?? null;
+                $data['adssss_txt'] = $dataObj->adssss_txt ?? null;
             }
         }
         $datalist = $data;
@@ -1455,6 +1457,7 @@ class ThemeOptionsController extends Controller
         $sidebar_ads = $request->input('sidebar_adss');
         $before_ads = $request->input('before_adss');
         $after_ads = $request->input('after_adss');
+        $adssss_txt = $request->input('adssss_txt');
 
 
         $option = array(
@@ -1463,6 +1466,7 @@ class ThemeOptionsController extends Controller
             'sidebar_ads' => $sidebar_ads,
             'before_ads' => $before_ads,
             'after_ads' => $after_ads,
+            'adssss_txt' => $adssss_txt,
 
         );
 

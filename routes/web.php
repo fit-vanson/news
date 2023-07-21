@@ -179,3 +179,19 @@ foreach (allCategories() as $category) {
 
 Route::post('/track-read-time', [\App\Http\Controllers\Frontend\NewsController::class, 'trackReadTime'])->name('trackReadTime');
 
+Route::get('/ads.txt', function (){
+    $site = getSite();
+    if ($site) {
+        $site_option = $site->site_options;
+    }
+    $data = array();
+    $theme_option_ads_manage = $site_option->theme_option_ads_manage ?? null;
+    if ($theme_option_ads_manage) {
+        $theme_option_ads_manageaArr = json_decode($theme_option_ads_manage, true);
+        foreach ($theme_option_ads_manageaArr as $key => $ads_manage) {
+            $data[$key] = $ads_manage;
+        }
+    }
+    return $data['adssss_txt'] ?? null;
+})->name('frontend.adss_txt');
+
