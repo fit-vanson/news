@@ -169,6 +169,11 @@ Route::prefix('backend')->group(function () {
     //Track News Site
     Route::get('/track-read-time', [App\Http\Controllers\Backend\NewsController::class, 'getTrackReadTimePageLoad'])->name('backend.track_read_time')->middleware(['auth', 'is_admin_or_editor']);
     Route::get('/getTrackReadTimeTableData', [App\Http\Controllers\Backend\NewsController::class, 'getTrackReadTimeTableData'])->name('backend.getTrackReadTimeTableData')->middleware(['auth', 'is_admin_or_editor']);
+
+
+    //Track News Site
+    Route::get('/site-note', [App\Http\Controllers\Backend\MultipleSitesController::class, 'getSiteNote'])->name('backend.site_note')->middleware(['auth', 'is_admin_or_editor']);
+    Route::post('/saveSiteNote', [App\Http\Controllers\Backend\MultipleSitesController::class, 'saveSiteNote'])->name('backend.saveSiteNote')->middleware(['auth', 'is_admin_or_editor']);
 });
 
 

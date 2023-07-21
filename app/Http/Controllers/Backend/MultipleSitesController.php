@@ -249,4 +249,45 @@ class MultipleSitesController extends Controller
 
         return response()->json($res);
     }
+
+
+    //Theme Options Ads Manage
+    public function getSiteNote()
+    {
+        $id = \request()->site_id;
+        $site = MultipleSites::findorFail($id);
+
+
+
+        $datalist = [
+            'id' => $id,
+            'name' => $site->site_name,
+            'web' => $site->site_web,
+            'title_row' => 'Note',
+            'site_note' => $site->note,
+        ];
+
+        return view('backend.site_note', compact('datalist'));
+    }
+
+    //Save data for Theme Options Ads Manage
+    public function saveSiteNote(Request $request)
+    {
+        $id = $request->input('site_id');
+        $site_note = $request->input('site_note');
+
+        $site = MultipleSites::find($id);
+        $option = array(
+            'note' => $site_note ,
+        );
+        $site->update($option);
+        if ($site) {
+            $res['msgType'] = 'success';
+            $res['msg'] = __('Successfully');
+        } else {
+            $res['msgType'] = 'error';
+            $res['msg'] = __('Failed');
+        }
+        return response()->json($res);
+    }
 }

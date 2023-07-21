@@ -13,6 +13,7 @@ class MultipleSites extends Model
         'site_name',
         'site_web',
         'is_publish',
+        'note',
     ];
 
     public static function boot()

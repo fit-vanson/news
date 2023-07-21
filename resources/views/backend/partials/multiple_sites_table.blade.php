@@ -22,7 +22,10 @@
                     </td>
 
                     <td class="text-left">
-                        <a href="{{ route('backend.site', [$row->id]) }}" title="{{ __('Edit') }}">{{ $row->site_name }}</a>
+                        <a href="{{ route('backend.site', [$row->id]) }}" >{{ $row->site_name }}</a>
+                        @if ($row->note)
+                            <i class="fa fa-info-circle" title="{{ $row->note }}"> </i>
+                        @endif
                     </td>
                     <td class="text-left"><a href="//{{ $row->site_web }}" target="_blank">{{ $row->site_web }}</a></td>
                     <td class="text-left">{{ count($row->categories) }}</td>

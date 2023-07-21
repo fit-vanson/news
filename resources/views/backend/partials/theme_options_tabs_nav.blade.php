@@ -17,4 +17,7 @@
 
     <li><a href="{{ route('backend.track_news', ['site_id' => @$datalist['id']]) }}"><i
                 class="fa fa-cog"></i>{{ __('Track') }}</a></li>
+
+    <li><a href="{{ route('backend.site_note', ['site_id' => @$datalist['id']]) }}"><i
+                class="fa fa-cog"></i>{{ __('Note') }}</a></li>
 </ul>
