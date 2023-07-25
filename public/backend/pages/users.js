@@ -14,12 +14,12 @@ $(function () {
         }
     });
 
-    start_date = moment().startOf('month')
+/*    start_date = moment().startOf('month')
     end_date = moment().endOf('month');
 
     $("#start_date").val(start_date.format('YYYY-MM-D'))
     $("#end_date").val(end_date.format('YYYY-MM-D'))
-    onFilterAction()
+    onFilterAction()*/
 
 
     resetForm("DataEntry_formId");
