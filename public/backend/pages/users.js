@@ -13,7 +13,6 @@ $(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-
 /*    start_date = moment().startOf('month')
     end_date = moment().endOf('month');
 
