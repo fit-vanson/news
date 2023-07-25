@@ -176,7 +176,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <span>{{ __('Orders') }}</span>
+                                    <span>{{ __('Chart News ') }}</span>
                                 </div>
                             </div>
                         </div>
