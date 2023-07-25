@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Media_option;
+use App\Models\News;
 use App\Models\User;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -19,15 +22,6 @@ class UsersController extends Controller
         $statuslist = DB::table('user_status')->orderBy('id', 'asc')->get();
         $roleslist = DB::table('user_roles')->whereNotIn('id', [2])->orderBy('id', 'asc')->get();
         $media_datalist = Media_option::orderBy('id', 'desc')->paginate(28);
-
-//		$datalist = DB::table('users')
-//			->join('user_roles', 'users.role_id', '=', 'user_roles.id')
-//			->join('user_status', 'users.status_id', '=', 'user_status.id')
-//			->select('users.id', 'users.name', 'users.email', 'users.phone', 'users.address', 'users.photo', 'user_roles.role', 'user_status.status', 'users.status_id')
-////			->where('users.role_id', 1)
-//			->orderBy('users.name','asc')
-//			->paginate(20);
-
 
         $datalist = User::orderBy('users.name', 'asc')
             ->paginate(20);
@@ -317,5 +311,42 @@ class UsersController extends Controller
         }
 
         return response()->json($res);
+    }
+
+    public function getNewsChartData( Request $request,$client = null)
+    {
+        $input = $request->all();
+        $start_date = Carbon::parse($input['start_date'])->format('Y-m-d');
+        $end_date = Carbon::parse($input['end_date'])->format('Y-m-d');
+
+        $period = CarbonPeriod::create($start_date, $end_date);
+        $dates = $period->toArray();
+
+        $total_news = News::whereBetween('news.created_at', [$start_date, $end_date]) // Chỉ định rõ ràng cột 'created_at' thuộc về bảng 'news'
+        ->select('user_id', 'users.name', DB::raw('DATE(news.created_at) as date'), DB::raw('COUNT(*) as total_news_user'))
+            ->join('users', 'users.id', '=', 'news.user_id')
+            ->groupBy('user_id', 'users.name', DB::raw('DATE(news.created_at)')) // Chỉ định rõ ràng cột 'created_at' thuộc về bảng 'news'
+            ->orderBy('date', 'asc')
+            ->get()
+            ->groupBy('name'); // Nhóm theo 'name' thay vì 'user_id'
+
+        $labelsData = [];
+        $incomeOverviewData = [];
+
+        foreach ($dates as $date) {
+            $formattedDate = $date->format('Y-m-d');
+            $labelsData[] = $date->format('M d');
+
+            foreach ($total_news as $name => $userNews) {
+                $newsForDate = $userNews->firstWhere('date', $formattedDate);
+                $newsCount = $newsForDate ? $newsForDate->total_news_user : 0;
+                $incomeOverviewData[$name][] = $newsCount;
+            }
+        }
+
+        $data['labels'] = $labelsData;
+        $data['total_news'] = $incomeOverviewData;
+
+        return $data;
     }
 }

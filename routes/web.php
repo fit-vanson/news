@@ -91,6 +91,8 @@ Route::prefix('backend')->group(function () {
 
     Route::post('/getUserById', [App\Http\Controllers\Backend\UsersController::class, 'getUserById'])->name('backend.getUserById')->middleware(['auth', 'is_admin_or_editor']);
 
+    Route::get('/getNewsChartData', [App\Http\Controllers\Backend\UsersController::class, 'getNewsChartData'])->name('backend.getNewsChartData')->middleware(['auth', 'is_admin']);
+
     //Profile Page
     Route::get('/profile', [App\Http\Controllers\Backend\UsersController::class, 'getProfilePageLoad'])->name('backend.profile')->middleware(['auth', 'is_admin_or_editor']);
     Route::post('/profileUpdate', [App\Http\Controllers\Backend\UsersController::class, 'profileUpdate'])->name('backend.profileUpdate')->middleware(['auth', 'is_admin_or_editor']);

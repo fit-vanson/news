@@ -170,6 +170,34 @@
                         <!--/Data Entry Form-->
                     </div>
                 </div>
+
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <span>{{ __('Orders') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Data grid-->
+                        <div class="card-body">
+                            <div class="row mb-12">
+                                <div class="filter-form-group pull-right">
+                                    <input name="start_date" id="start_date" type="text" class="form-control" placeholder="yyyy-mm-dd">
+                                    <input name="end_date" id="end_date" type="text" class="form-control" placeholder="yyyy-mm-dd">
+                                    <button type="submit" onClick="onFilterAction()" class="btn btn-theme">{{ __('Filter') }}</button>
+                                </div>
+                            </div>
+                                <div id="yearly_overview-container" class="pt-2">
+                                    <canvas id="yearly_chart_canvas" height="200" width="905"></canvas>
+                                </div>
+{{--                                @include('backend.partials.orders_table')--}}
+                            </div>
+                        </div>
+                        <!--/Data grid/-->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -182,6 +210,9 @@
 @endsection
 
 @push('scripts')
+    <link rel="stylesheet" href="{{asset('backend/bootstrap-datetimepicker/bootstrap-fonticon.css')}}">
+    <link rel="stylesheet" href="{{asset('backend/bootstrap-datetimepicker/bootstrap-datetimepicker.css')}}">
+    <script src="{{asset('backend/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js')}}"></script>
     <!-- css/js -->
     <script type="text/javascript">
         var media_type = 'Thumbnail';
@@ -193,7 +224,26 @@
         TEXT['Do you really want to delete this records'] = "{{ __('Do you really want to delete this records') }}";
         TEXT['Please select action'] = "{{ __('Please select action') }}";
         TEXT['Please select record'] = "{{ __('Please select record') }}";
+
+        $(function () {
+            "use strict";
+            $("#start_date").datetimepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayBtn: true,
+                minView: 2
+            });
+
+            $("#end_date").datetimepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                todayBtn: true,
+                minView: 2
+            });
+        });
     </script>
     <script src="{{asset('backend/pages/users.js')}}"></script>
     <script src="{{asset('backend/pages/global-media.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 @endpush

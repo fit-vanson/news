@@ -2,6 +2,8 @@ var $ = jQuery.noConflict();
 var RecordId = '';
 var BulkAction = '';
 var ids = [];
+var start_date = '';
+var end_date = '';
 
 $(function () {
     "use strict";
@@ -11,6 +13,14 @@ $(function () {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    start_date = moment().startOf('month')
+    end_date = moment().endOf('month');
+
+    $("#start_date").val(start_date.format('YYYY-MM-D'))
+    $("#end_date").val(end_date.format('YYYY-MM-D'))
+    onFilterAction()
+
 
     resetForm("DataEntry_formId");
 
@@ -319,5 +329,105 @@ function onConfirmBulkAction() {
             onCheckAll();
         }
     });
+}
+
+function onFilterAction() {
+    var start_date = $("#start_date").val();
+    var end_date = $("#end_date").val();
+
+    $.ajax({
+        url: base_url + "/backend/getNewsChartData?start_date="+start_date+"&end_date="+end_date,
+        cache: false,
+    }).done(viewChart);
+}
+
+function viewChart(result){
+    $('#yearly_overview').html('');
+    let incomeOverviewData = {
+        labels: result.labels,
+        datasets: []
+    };
+    const colors = ['red', 'blue', 'green', 'orange', 'purple', 'yellow']; // và các màu khác tuỳ ý
+
+    let i = 0;
+    for (const [name, data] of Object.entries(result.total_news)) {
+        incomeOverviewData.datasets.push({
+            type: 'line',
+            tension: 0.1,
+            label: name,
+            data: data,
+            fill: false,
+            borderColor: colors[i % colors.length], // Chọn màu tương ứng cho dòng
+
+        });
+        i++;
+    }
+
+    // if (result.total_news.every(value => value === 0)) {
+    //     $('#yearly_overview').empty();
+    //     $('#yearly_overview').
+    //     append('<div align="center" class="no-record">' +
+    //         'no_record_found'+
+    //         '</div>');
+    //     return true;
+    // } else {
+        $('#yearly_overview').html('');
+        $('#yearly_overview').
+        append(
+            '<canvas id="yearly_chart_canvas" height="400"></canvas>');
+    // }
+    let ctx = document.getElementById('yearly_chart_canvas').
+    getContext('2d');
+    ctx.canvas.style.height = '500px';
+
+    let myChart = new Chart(ctx, {
+        type: 'line',
+        data: incomeOverviewData,
+        options: {
+
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            plugins: {
+                legend: {
+                    display: false,
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return '' + context.formattedValue;
+                        },
+                    },
+                },
+            },
+            scales: {
+                y: {
+                    suggestedMin: 0,
+                    beginAtZero: true,
+                    grid: {
+                        display: false,
+                    },
+                    ticks: {
+                        precision: 0, // Đặt precision thành 0 để chỉ hiển thị số nguyên
+                        min: 0,
+                        stepSize: 1, // Nếu muốn đặt khoảng cách giữa các số nguyên
+                        callback: function (label) {
+                            return label;
+                        },
+                    },
+                },
+                x: {
+                    beginAtZero: true,
+                    grid: {
+                        display: false,
+                    },
+                },
+            },
+        },
+    });
+
+
 }
 
