@@ -98,6 +98,11 @@ Route::prefix('backend')->group(function () {
     Route::post('/profileUpdate', [App\Http\Controllers\Backend\UsersController::class, 'profileUpdate'])->name('backend.profileUpdate')->middleware(['auth', 'is_admin_or_editor']);
 
 
+    Route::get('/getUserNewsPageLoad', [App\Http\Controllers\Backend\UsersController::class, 'getUserNewsPageLoad'])->name('backend.getUserNewsPageLoad')->middleware(['auth', 'is_admin']);
+    Route::get('/getUserNewsTableData', [App\Http\Controllers\Backend\UsersController::class, 'getUserNewsTableData'])->name('backend.getUserNewsTableData')->middleware(['auth', 'is_admin']);
+    Route::get('/user_news-excel-export', [App\Http\Controllers\Backend\UsersController::class, 'excelExportUserNews'])->name('backend.excelExportUserNews')->middleware(['auth', 'is_admin']);
+
+
     //Multiple sites
     Route::get('/multiple-sites', [App\Http\Controllers\Backend\MultipleSitesController::class, 'getMultipleSitesPageLoad'])->name('backend.MultipleSites')->middleware(['auth', 'is_admin_or_editor']);
     Route::get('/getMultipleSitesTableData', [App\Http\Controllers\Backend\MultipleSitesController::class, 'getMultipleSitesTableData'])->name('backend.getMultipleSitesTableData')->middleware(['auth', 'is_admin_or_editor']);

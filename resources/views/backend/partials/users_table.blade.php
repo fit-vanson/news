@@ -20,7 +20,7 @@
                 <tr>
                     <td class="checkboxlist text-center"><input name="item_ids[]" value="{{ $row->id }}"
                                                                 class="tp-checkbox selected_item" type="checkbox"></td>
-                    <td class="text-left">{{ $row->name }}</td>
+                    <td class="text-left"><a href="{{route('backend.getUserNewsPageLoad',['id'=>$row->id])}}">{{ $row->name }}</a> </td>
                     <td class="text-left">{{ $row->email }}</td>
                     <td class="text-left">{{ $row->phone }}</td>
                     <td class="text-left">{{ $row->address }}</td>
